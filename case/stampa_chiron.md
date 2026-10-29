@@ -1,10 +1,10 @@
 # Case stampato in casa: Anycubic Chiron in PETG
 
-Una delle tre strade per il contenitore (vedi `../CLAUDE.md`, Stato). Il modello è `case.py`; qui stanno solo
+Una delle tre strade per il contenitore (vedi `../docs/stato.md`). Il modello è `case.py`; qui stanno solo
 le istruzioni di stampa. Stato al 29/09: G-code pronti; **la prima prova, `TELAIO_1`, si è staccata al primo
 strato**. Edo non ha la colla stick.
 
-**22/10: setup della macchina in `<progetti>/chiron-setup/`** (`TUTORIAL.md` + G-code di prova del primo strato). Si fa prima di riprovare `TELAIO_1`.
+**22/10: setup della macchina** in un progetto a parte, `chiron-setup` (tutorial e G-code di prova del primo strato, non incluso qui). Si fa prima di riprovare `TELAIO_1`.
 
 ## 29/09: TELAIO_1 staccata al primo strato
 
@@ -21,7 +21,6 @@ strato**. Edo non ha la colla stick.
   3. prova del foglio al centro;
   4. colla;
   5. controllo della skirt nei primi 30 s e del brim: le linee devono essere schiacciate e unite.
-  La sessione della stampa ha offerto a Edo un file di prova del primo strato sull'area della vasca.
 - **Profili corretti il 29/09:** la CLI di Orca, con la `--datadir` temporanea di `slice_chiron.py`, non
   risolveva l'ereditarietà dei profili e usava i suoi default. I G-code dicevano `filament_type = PLA` col PETG, e
   la macchina aveva ritrazione al cambio strato e wipe spenti (nel profilo Chiron sono accesi). Temperature,
@@ -46,8 +45,8 @@ da quei pezzi.
 ## La macchina e le impostazioni v4
 
 La Chiron di Edo: 400 × 400 × 450, Bowden, ugello 0,4, vetro rivestito, 260 °C al massimo all'ugello, avvio
-col G-code di Cura. La pipeline sta nel progetto a4-stand (`<progetti>/a4-stand/README.md`,
-script `slice_chiron.py`). Parte dal profilo ufficiale OrcaSlicer della Chiron e ci mette sopra le correzioni
+col G-code di Cura. La pipeline sta in un progetto a parte, a4-stand (non incluso qui; script
+`slice_chiron.py`). Parte dal profilo ufficiale OrcaSlicer della Chiron e ci mette sopra le correzioni
 della v4 (28/09).
 
 Le correzioni vengono da due stampe dei rialzi per l'A4, entrambe senza colla:
@@ -63,9 +62,9 @@ Le impostazioni v4:
 - primo strato lento (15 mm/s) e largo (0,5 mm), ugello a 245 °C, poi 240;
 - ritrazione 6 mm a 40 mm/s.
 
-Il primo collaudo della v4: il rialzo v4 da 2 h preparato dalla sessione dello stand (a4-stand, non è sulla SD),
-oppure la piastra di prova `TELAIO_1`. La sessione dello stand aspetta anche l'ok di Edo per il commit della v4 e
-per spostare lo script in un posto condiviso.
+Il primo collaudo della v4: il rialzo v4 da 2 h preparato in a4-stand (non è sulla SD),
+oppure la piastra di prova `TELAIO_1`. La v4 dello script è ancora da committare in a4-stand, e lo script è da spostare in un posto
+condiviso.
 
 ## Regole di disegno che ne derivano (già applicate in case.py)
 
@@ -84,7 +83,7 @@ per spostare lo script in un posto condiviso.
 uv run stampabilita.py              # isole nel vuoto, ponti, sbalzi, pareti sottili: "OK ... senza supporti"
 uv run stampabilita.py --autotest   # difetti costruiti apposta: devono uscire tutti RILEVATO
 uv run piatto_unico.py              # tutti i pezzi su un piatto solo, in out/piatto_unico.stl
-python3 <progetti>/a4-stand/slice_chiron.py --stl "$PWD/out/vasca.stl" --out "$PWD/stampa" --bed 85 --brim 10 --copies 1 [--layer 0.2]
+python3 <percorso di a4-stand>/slice_chiron.py --stl "$PWD/out/vasca.stl" --out "$PWD/stampa" --bed 85 --brim 10 --copies 1 [--layer 0.2]
 python3 gcode_check.py              # rilegge i G-code di stampa/: temperature, ventola, brim, ponti
 ```
 
@@ -179,11 +178,9 @@ Fonti: manuale Anycubic Chiron (ManualsLib, pp. 20-28) e firmware ufficiale
   centro: circa 7 cm dai fianchi e 11 cm da davanti e da dietro. Il primo strato della vasca, skirt compresa, va da
   X 68,5 a 331,5 e da Y 106,5 a 293,5 (263 × 187 mm centrati); TELAIO_1 da X 113,5 a 286,5 e da Y 157,5 a 242,5.
   È l'area che deve tenere per le 8 ore.
-- Se serve, si può preparare un file di prova del primo strato sulla sola area della vasca (proposto a Edo il
-  29/09, nessuna risposta).
+- Se serve, si può preparare un file di prova del primo strato sulla sola area della vasca.
 
-Sulla SD (FAT32, volume `NO NAME`) copia senza i file `._` che macOS aggiunge sulle schede FAT (indicazione
-della sessione a4-stand):
+Sulla SD (FAT32, volume `NO NAME`) copia senza i file `._` che macOS aggiunge sulle schede FAT:
 
 ```
 cp -X stampa/vasca_x1_Chiron_PETG_0.2mm.gcode "/Volumes/NO NAME/"

@@ -1,6 +1,6 @@
 # Case stampato da un servizio professionale
 
-Una delle tre strade per il contenitore (vedi `../CLAUDE.md`, Stato). Stesso modello del case stampato in casa
+Una delle tre strade per il contenitore (vedi `../docs/stato.md`). Stesso modello del case stampato in casa
 (`case.py`), esportato in una variante per le tecnologie a polvere. Stato al 28/09 sera: **preventivi fatti,
 giudicati troppo cari da Edo, nessun ordine**.
 
@@ -43,9 +43,9 @@ mutazioni RILEVATO.
 
 ## Preventivi del 28/09
 
-Caricati con l'ok esplicito di Edo, dal suo Chrome, senza account e senza ordinare.
+Caricati sui siti dei servizi, senza ordinare.
 
-**Weerg** (Italia, HP MJF), configurazione [codice rimosso]. PA12 grigio grezzo, modalità Fast (-15 %), IVA esclusa:
+**Weerg** (Italia, HP MJF). PA12 grigio grezzo, modalità Fast (-15 %), IVA esclusa:
 
 | Pezzo | € |
 |---|---|
@@ -56,10 +56,9 @@ Caricati con l'ok esplicito di Edo, dal suo Chrome, senza account e senza ordina
 
 Totale per data di spedizione: 96,75 € il 9/10, 116,11 € il 6/10, 135,46 € il 5/10, 193,52 € l'1/10. Con la
 tinta "Nero Top" solo sulla vasca (47,80 €): 101,53 € con spedizione il 12/10. Gli altri pezzi non sono stati
-passati a nero. 
+passati a nero.
 
-**Craftcloud**, 5 pezzi, totale con spedizione (i Termini d'uso li ha accettati Edo; i 4 STEP sono caricati in
-una sessione senza account):
+**Craftcloud**, 5 pezzi, totale con spedizione:
 - SLS PA12 da 127,71 € + 14,77 €;
 - MJF PA12 grigio 172,77 €; tinto nero 174,13 € (3DPnxt, Cina, possibili dazi) o 174,49 € (Amuse 3D, India);
 - levigatura a vapore 215,65 €;
@@ -68,11 +67,9 @@ una sessione senza account):
 
 ## La pagina della richiesta
 
-Sorgente `richiesta_stampa.html`, pubblicata come artifact privato:
-[link rimosso]. Per la rev. B: correggi il sorgente, ripubblicalo passando
-quell'URL, rifai PDF e zip.
+Sorgente `richiesta_stampa.html`. Per la rev. B: correggi il sorgente, rifai PDF e zip.
 
-Rigenerare il PDF: il sorgente non ha `html`/`head`/`body` (formato artifact). Avvolgilo in
+Rigenerare il PDF: il sorgente non ha `html`/`head`/`body` (è un frammento). Avvolgilo in
 `<!doctype html><html lang=it><head><meta charset=utf-8></head><body>…</body></html>` e stampalo con Chrome
 headless. Serve una `--user-data-dir` separata, altrimenti Chrome, già aperto, si blocca:
 

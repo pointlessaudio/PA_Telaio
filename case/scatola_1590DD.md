@@ -1,6 +1,6 @@
 # Scatola in alluminio pressofuso 1590DD
 
-Una delle tre strade per il contenitore (vedi `../CLAUDE.md`, Stato). Nata il 28/09 quando la stampa
+Una delle tre strade per il contenitore (vedi `../docs/stato.md`). Nata il 28/09 quando la stampa
 professionale è sembrata cara. Stato al 28/09 sera: **verifica d'ingombro passata**, dima e coordinate pronte,
 nessun acquisto. Pezzi interni stampati disegnati e affettati (39 min).
 

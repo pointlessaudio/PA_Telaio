@@ -1,6 +1,6 @@
 # Circuito: tre strade a confronto (29/10/2026)
 
-Nessuna scelta presa. Prezzi JLCPCB dalla stima del 28/09 in `CLAUDE.md`; gli altri costi sono stime da verificare
+Nessuna scelta presa. Prezzi JLCPCB dalla stima del 28/09 in `docs/progetto.md`; gli altri costi sono stime da verificare
 prima di ordinare.
 
 | | Veroboard | PCB montata da JLCPCB | PCB fresata in casa (CNC) |

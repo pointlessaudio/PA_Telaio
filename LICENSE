@@ -1,0 +1,41 @@
+PA-TELAIO — licenze
+
+Copyright (c) 2026 Pointless Audio
+
+Il progetto usa due licenze, più un'esclusione per il marchio.
+
+1. Hardware: CERN-OHL-S-2.0 (CERN Open Hardware Licence Version 2 - Strongly Reciprocal)
+   Testo completo: LICENSES/CERN-OHL-S-2.0.txt
+
+   Copre il progetto dell'hardware e la sua documentazione:
+   - hardware/layout.py (sorgente del circuito e della veroboard), hardware/*.md,
+     hardware/prototipo-veroboard-seed3.html;
+   - case/case.py e case/scatola.py (sorgenti del case e della scatola), case/*.md,
+     case/richiesta_stampa.html;
+   - docs/;
+   - tutto ciò che si genera da questi file (STL, STEP, G-code, render, pagine).
+
+2. Software: MIT
+   Testo completo: LICENSES/MIT.txt
+
+   Copre il firmware e gli strumenti di supporto:
+   - firmware/;
+   - hardware/page.py, hardware/render.py, hardware/test_layout.py;
+   - case/test_case.py, case/stampabilita.py, case/gcode_check.py, case/piatto_unico.py,
+     case/render/*.py.
+
+3. Marchio: escluso da entrambe le licenze
+
+   Il nome e il logo Pointless Audio (case/marchio/pointless_logo.svg, inciso nel pannello
+   superiore dal modello) sono marchi di Pointless Audio e non sono concessi da nessuna delle due
+   licenze. Il file è nel repository solo perché il modello si possa costruire e verificare così
+   com'è. Chi distribuisce o produce il case, modificato o no, toglie il logo o lo sostituisce con
+   il proprio: in case/case.py basta cambiare LOGO_SVG. Per altri usi serve un permesso scritto.
+
+libDaisy (firmware/libDaisy, da clonare a parte) ha la sua licenza MIT, di Electro-Smith.
+
+---
+
+English summary: hardware design sources and documentation are licensed under CERN-OHL-S-2.0;
+firmware and support scripts under MIT. The Pointless Audio name and logo are trademarks and are
+not licensed under either: remove or replace the logo before distributing or manufacturing the case.

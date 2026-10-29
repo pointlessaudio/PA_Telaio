@@ -5,7 +5,7 @@ Deciso:
 - operazionali **TLC2272 in DIP-8**, niente adattatori SOIC;
 - il **Seed3 c'è già** (`docs/storico/PA_ordine_125b_Seed3.xlsx`, "Già acquistato").
 
-**Tutte le strade restano aperte** (vedi `../CLAUDE.md`, Stato). Il contenitore decide jack da 6,35, jack DC,
+**Tutte le strade restano aperte** (vedi `../docs/stato.md`). Il contenitore decide jack da 6,35, jack DC,
 cappucci dei tasti e minuteria; il resto è uguale per tutte. Niente è ancora ordinato.
 
 Prezzi letti il 28/09 sulle pagine prodotto. "n.v." = non verificato su una pagina. Tayda in dollari: al
@@ -99,7 +99,7 @@ no (esaurite). In alternativa per le staffe: le svasate Tayda A-8940 M2,5×10 a 
 
 ### Jack 6,35: le tre combinazioni
 
-La sessione della stampa ha verificato sui datasheet, e nel modello, che nella 1590DD entrano tutti:
+Si è verificato sui datasheet, e nel modello, che nella 1590DD entrano tutti:
 - **Switchcraft 12A** (IN L/R): metallo, contatto di commutazione sulla punta, telaio Ø 19,1 × 26,6.
 - **Tayda A-1121** (OUT L/R e pedale): stereo in metallo, filetto 3/8"-32, corpo 15,8×15,8, profondo 23,5 più
   3,6 di pin. Entra anche meglio del 12A. Sulle uscite il contatto di commutazione non serve; il pedale vuole
@@ -149,7 +149,7 @@ cappucci dei tasti, TLC2272 (ha il TLC2262, stessa famiglia ma più lento) né l
 Il case stampato è disegnato su pezzi diversi da quelli dei carrelli 1590DD. Due possibilità:
 - comprare i pezzi che `case.py` si aspetta (sotto);
 - oppure comprare i pezzi dei carrelli 1590DD e **riallineare `case.py` prima di stampare i pannelli**: jack DC
-  foro 12, jack 12A/A-1121 più grandi dell'ingombro previsto, cappucci Tayda (vedi `../CLAUDE.md`, Case).
+  foro 12, jack 12A/A-1121 più grandi dell'ingombro previsto, cappucci Tayda (vedi `../docs/progetto.md`, Case).
 
 **Banzai** (Germania), parti da pedale che entrano nel case così com'è: 51,14 € + 8,95 € di spedizione =
 60,09 €.

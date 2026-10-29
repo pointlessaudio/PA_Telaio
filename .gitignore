@@ -9,4 +9,6 @@ case/render/*_prova.png
 case/out/
 case/out.zip
 case/stampa/
-case/render/
+case/render/*
+!case/render/esporta.py
+!case/render/scena_blender.py

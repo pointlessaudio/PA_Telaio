@@ -17,7 +17,7 @@
  *  - OLED SSD1306/SSD1309 I2C sui pin di default di libDaisy (SCL=D11, SDA=D12)
  *  - picchi d'ingresso L/R in dBFS e versione della scheda rilevata
  *
- * Mappa pin: vedi hardware/layout.py e CLAUDE.md. Non cambiarla senza aggiornare il layout.
+ * Mappa pin: vedi hardware/layout.py e docs/progetto.md. Non cambiarla senza aggiornare il layout.
  */
 #include "daisy_seed.h"
 #include "dev/oled_ssd130x.h"
@@ -89,7 +89,7 @@ int main(void)
     hw.Init(true); // 480 MHz
     hw.SetAudioBlockSize(48);
     // 48 kHz di default. Per provare 96 o 192 kHz sul Seed3 cambiare qui
-    // e verificare a banco: vedi CLAUDE.md, sezione "Da verificare".
+    // e verificare a banco: vedi docs/progetto.md, sezione "Da verificare".
     hw.SetAudioSampleRate(SaiHandle::Config::SampleRate::SAI_48KHZ);
 
     // Pot 1-6 su A0-A5

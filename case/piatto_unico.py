@@ -9,7 +9,7 @@ orecchie e sopra il pannello superiore; a destra il pannello posteriore e le due
 girati in piedi sul piatto. Poi si affetta come un pezzo solo:
 
     uv run piatto_unico.py
-    python3 <progetti>/a4-stand/slice_chiron.py --stl "$PWD/out/piatto_unico.stl" --out "$PWD/stampa" --bed 85 --brim 10 --copies 1
+    python3 <percorso di a4-stand>/slice_chiron.py --stl "$PWD/out/piatto_unico.stl" --out "$PWD/stampa" --bed 85 --brim 10 --copies 1
 """
 import math
 from pathlib import Path

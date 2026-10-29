@@ -29,7 +29,7 @@ from build123d import (Axis, Box, Color, Compound, Cylinder, Plane, Pos, Rectang
 
 QUI = Path(__file__).resolve().parent
 OUT = QUI / "out"
-LOGO_SVG = QUI.parent.parent / "_studio" / "brand" / "assets" / "pointless_logo.svg"
+LOGO_SVG = QUI / "marchio" / "pointless_logo.svg"   # marchio Pointless Audio, escluso dalla licenza
 sys.path.insert(0, str(QUI.parent / "hardware"))
 import layout as L  # noqa: E402  (veroboard verificata)
 
