@@ -1,0 +1,12 @@
+firmware/libDaisy/
+firmware/*/build/
+__pycache__/
+*.pyc
+case/render/parti/
+case/render/*_prova.png
+.DS_Store
+# derivati, si rigenerano da case.py / scatola.py / piatto_unico.py
+case/out/
+case/out.zip
+case/stampa/
+case/render/

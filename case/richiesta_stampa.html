@@ -1,0 +1,254 @@
+<title>Stampa case PA-TELAIO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --carta: #f5f6f7;
+    --foglio: #ffffff;
+    --inchiostro: #16191d;
+    --tenue: #59626c;
+    --riga: #d4d9df;
+    --accento: #1f5fa8;
+    --accento-tenue: #e7eef8;
+    --avviso: #8a5a00;
+    --avviso-tenue: #fbf2df;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --carta: #0f1215;
+      --foglio: #161a1e;
+      --inchiostro: #e3e7eb;
+      --tenue: #9aa4ae;
+      --riga: #2b3239;
+      --accento: #8ab8ee;
+      --accento-tenue: #182433;
+      --avviso: #f0c36a;
+      --avviso-tenue: #2a2210;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --carta: #0f1215;
+    --foglio: #161a1e;
+    --inchiostro: #e3e7eb;
+    --tenue: #9aa4ae;
+    --riga: #2b3239;
+    --accento: #8ab8ee;
+    --accento-tenue: #182433;
+    --avviso: #f0c36a;
+    --avviso-tenue: #2a2210;
+  }
+
+  body {
+    background: var(--carta);
+    color: var(--inchiostro);
+    font-family: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.55;
+    padding-inline: 16px;
+    padding-block: 32px 64px;
+  }
+  .foglio {
+    max-width: 880px;
+    margin: 0 auto;
+    background: var(--foglio);
+    border: 1px solid var(--riga);
+    padding: clamp(20px, 4vw, 48px);
+    display: grid;
+    gap: 36px;
+  }
+  h1, h2, h3 { text-wrap: balance; margin: 0; font-weight: 600; }
+  h1 { font-size: 26px; line-height: 1.2; letter-spacing: -0.01em; }
+  h2 {
+    font-size: 17px;
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--riga);
+  }
+  h2 .n { font-family: "IBM Plex Mono", ui-monospace, Menlo, monospace; font-weight: 500; color: var(--accento); font-size: 14px; }
+  p { margin: 0; max-width: 68ch; }
+  section { display: grid; gap: 14px; }
+  .mono, code { font-family: "IBM Plex Mono", ui-monospace, Menlo, monospace; font-size: 0.92em; }
+  .tenue { color: var(--tenue); }
+  ul { margin: 0; padding-left: 1.2em; display: grid; gap: 6px; max-width: 72ch; }
+
+  /* cartiglio, come nell'angolo di un disegno tecnico */
+  .testa { display: grid; gap: 18px; }
+  .sigla { font-family: "IBM Plex Mono", ui-monospace, Menlo, monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accento); }
+  .cartiglio {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    border: 1px solid var(--inchiostro);
+  }
+  .cartiglio div { padding: 8px 12px; border-right: 1px solid var(--riga); border-bottom: 1px solid var(--riga); display: grid; gap: 2px; }
+  .cartiglio dt { font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--tenue); }
+  .cartiglio dd { margin: 0; font-weight: 500; font-variant-numeric: tabular-nums; }
+  .cartiglio .vuoto { color: var(--tenue); font-weight: 400; }
+
+  .nota {
+    background: var(--avviso-tenue);
+    border-left: 3px solid var(--avviso);
+    padding: 10px 14px;
+    max-width: none;
+  }
+
+  .tabella { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; font-variant-numeric: tabular-nums; }
+  th, td { text-align: left; vertical-align: top; padding: 7px 10px; border-bottom: 1px solid var(--riga); }
+  th { font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--tenue); font-weight: 500; border-bottom: 1px solid var(--inchiostro); }
+  td.cod { font-family: "IBM Plex Mono", ui-monospace, Menlo, monospace; color: var(--accento); white-space: nowrap; }
+  td.num { white-space: nowrap; }
+  tr.gruppo td { padding-top: 14px; font-weight: 600; border-bottom: 1px solid var(--riga); }
+  .scelta { display: inline-block; font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; padding: 1px 7px; border: 1px solid var(--accento); color: var(--accento); background: var(--accento-tenue); white-space: nowrap; }
+  .scelta.no { border-color: var(--tenue); color: var(--tenue); background: transparent; }
+
+  @media print {
+    body { background: #fff; padding: 0; font-size: 11pt; }
+    .foglio { border: 0; padding: 0; max-width: none; gap: 22px; }
+    tr, .cartiglio, .nota, section:not(.lunga) { break-inside: avoid; }
+    h2 { break-after: avoid; }
+  }
+</style>
+
+<div class="foglio">
+
+  <header class="testa">
+    <span class="sigla">Richiesta di stampa 3D professionale</span>
+    <h1>Case PA-TELAIO: vasca, pannello superiore, pannello posteriore, staffe</h1>
+    <dl class="cartiglio">
+      <div><dt>Progetto</dt><dd>PA-TELAIO, strumento audio da tavolo</dd></div>
+      <div><dt>Revisione</dt><dd>A · 28/09/2026</dd></div>
+      <div><dt>Quantità</dt><dd>1 set, 5 pezzi</dd></div>
+      <div><dt>Unità</dt><dd>mm</dd></div>
+      <div><dt>File</dt><dd>STEP e STL</dd></div>
+      <div><dt>Committente</dt><dd class="vuoto">da compilare</dd></div>
+    </dl>
+    <p class="nota">Revisione A, per il preventivo. I fori del pannello posteriore (C03) si confermano nella revisione B, dopo l'acquisto dei connettori. Gli altri file sono definitivi.</p>
+  </header>
+
+  <section>
+    <h2><span class="n">1</span>Cosa chiediamo</h2>
+    <p>Preventivo e stampa di un set di cinque pezzi, quattro codici, per il case di uno strumento elettronico da tavolo. È un esemplare unico. I pezzi si montano fra loro con viti M3 e portano potenziometri, jack, un footswitch e un display: le quote dei fori e gli accoppiamenti contano più della finitura.</p>
+    <p>Prima di produrre, segnalateci qualsiasi problema che vedete nei file.</p>
+  </section>
+
+  <section>
+    <h2><span class="n">2</span>Processo, materiale, finitura</h2>
+    <div class="tabella">
+      <table>
+        <thead><tr><th></th><th>Processo</th><th>Materiale</th><th>Finitura</th></tr></thead>
+        <tbody>
+          <tr><td><span class="scelta">Prima scelta</span></td><td>HP Multi Jet Fusion (MJF)</td><td>PA12</td><td>Tinto nero, sabbiato</td></tr>
+          <tr><td><span class="scelta">Opzione</span></td><td>Come sopra</td><td>PA12</td><td>In più, levigatura a vapore (vapor smoothing) su tutti i pezzi</td></tr>
+          <tr><td><span class="scelta">Alternativa</span></td><td>SLS</td><td>PA12 o PA11</td><td>Tinto nero</td></tr>
+          <tr><td><span class="scelta no">No</span></td><td>SLA, DLP con resine standard</td><td></td><td>Troppo fragili per le torrette con inserti a caldo e per le viti</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Stesso processo, stessa tintura e possibilmente stesso lotto per tutti i pezzi, perché si vedono affiancati. Per la levigatura a vapore indicate il prezzo a parte.</p>
+  </section>
+
+  <section>
+    <h2><span class="n">3</span>Pezzi e file</h2>
+    <div class="tabella">
+      <table>
+        <thead><tr><th>Codice</th><th>Pezzo</th><th>File</th><th>Ingombro</th><th>Volume</th><th>Q.tà</th><th>Faccia a vista</th></tr></thead>
+        <tbody>
+          <tr><td class="cod">C01</td><td>Vasca</td><td class="mono">vasca</td><td class="num">210 × 134 × 44</td><td class="num">103,3 cm³</td><td>1</td><td>Pareti esterne</td></tr>
+          <tr><td class="cod">C02</td><td>Pannello superiore</td><td class="mono">pannello_superiore</td><td class="num">210 × 136,3 × 33,1</td><td class="num">90,9 cm³</td><td>1</td><td>Faccia superiore, col logo inciso</td></tr>
+          <tr><td class="cod">C03</td><td>Pannello posteriore</td><td class="mono">pannello_posteriore</td><td class="num">194 × 40,1 × 2,4</td><td class="num">17,3 cm³</td><td>1</td><td>Faccia esterna</td></tr>
+          <tr><td class="cod">C04</td><td>Staffa del display</td><td class="mono">staffa_oled</td><td class="num">75 × 4,5 × 3,7</td><td class="num">0,8 cm³</td><td>2</td><td>Nessuna, è interna</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Ogni pezzo c'è in <span class="mono">.step</span> e in <span class="mono">.stl</span>. Sono in piano, con la faccia a vista in alto: l'orientamento di stampa lo scegliete voi. <span class="mono">assieme.step</span> mostra tutti i pezzi montati con i componenti, come riferimento: non va stampato.</p>
+  </section>
+
+  <section class="lunga">
+    <h2><span class="n">4</span>Quote critiche</h2>
+    <p>Nei file i fori per i componenti sono già maggiorati di 0,3 mm rispetto al diametro nominale del componente. Se il vostro processo chiede una compensazione diversa, ditecelo prima di produrre: la applichiamo noi nel file.</p>
+    <div class="tabella">
+      <table>
+        <thead><tr><th>Elemento</th><th>Nel file</th><th>Serve per</th></tr></thead>
+        <tbody>
+          <tr class="gruppo"><td colspan="3">C02 · pannello superiore, spesso 3,0</td></tr>
+          <tr><td>6 fori per potenziometri</td><td class="num">Ø 7,3</td><td>Boccola M7, dado sopra il pannello</td></tr>
+          <tr><td>6 tasche da sotto, ai potenziometri</td><td class="num">13,5 × 12,0 × 0,6</td><td>Portano il pannello a 2,4 per la boccola corta</td></tr>
+          <tr><td>Foro encoder</td><td class="num">Ø 7,3</td><td>Boccola M7</td></tr>
+          <tr><td>Foro footswitch</td><td class="num">Ø 12,3</td><td>Boccola M12, dado sopra</td></tr>
+          <tr><td>2 fori per tasti</td><td class="num">Ø 12,7</td><td>Cappucci tondi Ø 11,8, devono scorrere liberi</td></tr>
+          <tr><td>2 fori LED</td><td class="num">Ø 3,3</td><td>LED da 3 mm</td></tr>
+          <tr><td>Finestra del display</td><td class="num">57,2 × 29,7</td><td>Svasata a 45° verso l'esterno; lascia vedere tutti i pixel</td></tr>
+          <tr><td>Sede del vetro, da sotto</td><td class="num">61,1 × 38,8 × 1,0</td><td>Vetro del display Waveshare 2,42"</td></tr>
+          <tr><td>5 fori per inserti a caldo</td><td class="num">Ø 4,0 × 6,0</td><td>Inserti M3 nelle torrette Ø 10</td></tr>
+          <tr><td>Fori pilota</td><td class="num">Ø 2,2</td><td>Viti autofilettanti M2,5: staffe del display, scheda dei tasti</td></tr>
+          <tr><td>Logo inciso</td><td class="num">48 largo, profondo 1,0</td><td>Tratto più sottile 0,50: da non riempire in finitura</td></tr>
+          <tr class="gruppo"><td colspan="3">C01 · vasca, pareti e fondo spessi 2,4</td></tr>
+          <tr><td>5 fori passanti per viti</td><td class="num">Ø 3,7, lamatura Ø 6,3 × 3,2</td><td>Viti M3 dal fondo verso gli inserti di C02</td></tr>
+          <tr><td>4 fori pilota nelle colonnine</td><td class="num">Ø 2,6</td><td>Viti autofilettanti M3 della scheda elettronica</td></tr>
+          <tr><td>Taglio sulla parete sinistra</td><td class="num">13 × 7</td><td>Connettore USB-C</td></tr>
+          <tr><td>Fessura sulla parete sinistra</td><td class="num">13 × 2,6</td><td>Scheda microSD</td></tr>
+          <tr class="gruppo"><td colspan="3">C03 · pannello posteriore, spesso 2,4</td></tr>
+          <tr><td>5 fori jack 6,35</td><td class="num">Ø 9,9</td><td>Boccola 3/8"</td></tr>
+          <tr><td>2 fori jack 3,5</td><td class="num">Ø 6,3</td><td>Boccola M6</td></tr>
+          <tr><td>Foro deviatore</td><td class="num">Ø 6,3</td><td>Boccola M6</td></tr>
+          <tr><td>Foro jack di alimentazione</td><td class="num">Ø 11,3</td><td>Da confermare nella revisione B, possibile Ø 12,3</td></tr>
+          <tr class="gruppo"><td colspan="3">C04 · staffa del display</td></tr>
+          <tr><td>2 fori passanti</td><td class="num">Ø 2,8</td><td>Viti M2,5. Parete di 0,85 mm intorno al foro: segnalateci se è troppo sottile</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="n">5</span>Accoppiamenti e tolleranze</h2>
+    <ul>
+      <li>Tolleranza generale ±0,3 mm, quella tipica della MJF.</li>
+      <li>Fra pezzi stampati c'è un gioco di 0,3 mm per lato. C02 si appoggia su C01; C03 entra fra la parete posteriore di C01 e due montanti. Se vi serve più gioco, ditecelo: lo allarghiamo nel file.</li>
+      <li>C03 è una lastra di 194 × 40 × 2,4 e deve restare piana: si stringe contro la parete con i dadi dei connettori.</li>
+      <li>Togliete la polvere da logo, fori pilota, fori degli inserti e tasche sotto C02.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2><span class="n">6</span>Inserti filettati, se li montate voi</h2>
+    <p>Cinque inserti M3 in ottone a caldo, per foro Ø 4,0 e lunghi 5,7 mm (tipo ruthex RX-M3x5,7), nelle cinque torrette di C02. Se offrite il montaggio, indicatelo nel preventivo; altrimenti li montiamo noi.</p>
+  </section>
+
+  <section>
+    <h2><span class="n">7</span>Aspetto</h2>
+    <ul>
+      <li>Nero uniforme su tutti i pezzi.</li>
+      <li>Facce a vista: C02 sopra, C01 pareti esterne e fondo, C03 faccia esterna.</li>
+      <li>Niente codici, numeri di lotto o marcature sulle facce a vista. Se vi servono, metteteli sulle facce interne.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2><span class="n">8</span>Nel preventivo ci serve</h2>
+    <ul>
+      <li>Prezzo per pezzo, con processo, materiale e finitura.</li>
+      <li>Prezzo a parte della levigatura a vapore e del montaggio degli inserti.</li>
+      <li>Tempi di produzione e spedizione in Italia.</li>
+      <li>Le vostre osservazioni sui file, prima di produrre.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2><span class="n">9</span>Revisioni</h2>
+    <div class="tabella">
+      <table>
+        <thead><tr><th>Rev.</th><th>Data</th><th>Modifica</th></tr></thead>
+        <tbody>
+          <tr><td class="cod">A</td><td class="num">28/09/2026</td><td>Prima emissione, per il preventivo.</td></tr>
+          <tr><td class="cod">B</td><td class="tenue">da emettere</td><td class="tenue">Fori di C03 confermati sui connettori acquistati, a partire dal jack di alimentazione.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</div>
