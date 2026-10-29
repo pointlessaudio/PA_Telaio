@@ -187,6 +187,8 @@ PADS = [
     ("IO GND", (12, 0), "GND", "Massa scheda I/O esterna"),
     ("3V3D", (12, 2), "3V3D", "OLED VCC"),
     ("IO 3V3D", (13, 2), "3V3D", "Alimentazione scheda I/O esterna"),
+    ("VA EXT", (14, 36), "VA", "VA verso schedina preamp e LED del bypass (R sul 3PDT); intrecciato con PRE GND"),
+    ("PRE GND", (15, 34), "GND", "Massa della schedina preamp, intrecciata con VA EXT"),
     ("A5", (12, 13), "POT6", "Pot 6 cursore"),
     ("A4", (12, 14), "POT5", "Pot 5 cursore"),
     ("A3", (12, 15), "POT4", "Pot 4 cursore"),

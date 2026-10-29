@@ -17,8 +17,13 @@ Niente è ancora comprato, costruito o stampato. Edo vuole **tenere aperte tutte
      nero), giudicati troppo cari. Pagina `case/servizio_stampa.md`;
   3. **scatola in alluminio 1590DD** (Tayda forata a macchina, o Musikding forata a mano): ingombro verificato,
      dima e coordinate pronte, pezzi interni stampati in lavorazione. Pagina `case/scatola_1590DD.md`.
-  Le strade 1 e 2 usano lo stesso modello (`case/case.py`), che va riallineato ai pezzi comprati prima di
-  stampare i pannelli.
+  Le strade 1 e 2 usano lo stesso modello (`case/case.py`).
+- **Versione da stampare (29/10):** `case.py` è disegnato sui pezzi dei carrelli Banzai + TME (Switchcraft
+  112AX/112BX, DC Lumberg a D, tasti Omron B3F + B32), con dentro veroboard, schedina preamp, scheda MIDI, microSD
+  sul pannello posteriore, PRE e GAIN sul retro, vite di massa L0 e torretta L1. `OK: 5 pezzi, 106 componenti
+  controllati, nessuna collisione`, 35 mutazioni su 35 RILEVATO; stampabilità: 6 pezzi senza supporti. G-code nuovi
+  in `case/stampa/2026-10-29/`. Cablaggio (76 fili, lunghezze di taglio) in `case/cablaggio.md`, schermatura e
+  masse in `docs/schermatura_massa.md`. Ancora stimati: pot doppio GAIN, zoccolo microSD, spessore flangia DC.
 - **Componenti:** lista completa e carrelli per ogni strada in `hardware/ordine_componenti.md`. Nessun ordine
   fatto.
 - **Firmware:** `firmware/collaudo` aggiornato il 28/09, **non compilato**: su questo Mac manca la toolchain
@@ -35,21 +40,26 @@ Niente è ancora comprato, costruito o stampato. Edo vuole **tenere aperte tutte
 
 Decisioni aperte, per Edo:
 1. contenitore (una delle tre strade);
-2. jack da 6,35: combinazione mista, tutti Switchcraft o tutti Tayda (vedi `hardware/ordine_componenti.md`);
-3. jack MIDI e lettore microSD: subito o dopo il primo collaudo;
+2. jack da 6,35: per la versione stampata Switchcraft 112AX/112BX (29/10); per la 1590DD aperta (vedi
+   `hardware/ordine_componenti.md`);
+5. deviatore PRE: con un DPDT (un polo per canale) commuta solo l'uscita del preamp e l'ingresso della schedina
+   resta sul nodo INST/LINE, quindi con PRE spento la chitarra vede ~500 kΩ invece di 1 MΩ (`case/cablaggio.md`).
+   Da scegliere: deviatore 4PDT (due poli per canale), oppure accettarlo;
+3. jack MIDI e lettore microSD: per la versione stampata dentro da subito (29/10); per la 1590DD aperta;
 4. per la 1590DD: grezza o verniciata (e colore), stampa UV sì o no.
 
 ## Punti aperti (29/09)
 
 - **Preamp (29/10):** procurarsi J201 genuini e tenere quelli con IDSS ≥ 0,5 mA;
-  ingombro vero del pot doppio (in `case.py` è stimato); orientamento della schedina nel case col cablaggio; PRE e
-  GAIN anche in `scatola.py` (1590DD) e nella dima; rumore col GAIN al minimo da giudicare a orecchio.
+  ingombro vero del pot doppio (in `case.py` è stimato); PRE e GAIN anche in `scatola.py` (1590DD) e nella dima;
+  rumore col GAIN al minimo da giudicare a orecchio; deviatore PRE (decisione 5).
 - **Chiron:** `TELAIO_1` (29/09) si è staccata al primo strato, la terza stampa su questa macchina che cede lì:
   il problema è l'altezza dell'ugello. Prima di riprovare: pulizia, livellamento a 85 °C nel modo giusto (manuale
   o assistito), prova del foglio, colla (Edo non ce l'ha), controllo della skirt; tutto in `case/stampa_chiron.md`.
   I profili di `slice_chiron.py` sono corretti dal 29/09 (prima `filament_type = PLA`, ritrazione al cambio strato
   e wipe spenti); lo script è nel progetto a4-stand (esterno), con la v4 ancora da committare.
-- **Case stampato:** riallineare `case.py` ai pezzi comprati prima di stampare i pannelli (vedi `progetto.md`, Case).
+- **Case stampato:** allineato il 29/10 ai pezzi dei carrelli; prima dei pannelli definitivi stampare le due
+  piastre di prova (`stampa/2026-10-29/`) e misurare col pezzo in mano pot doppio e zoccolo microSD.
 - **Servizio di stampa:** la rev. B della richiesta va emessa dopo aver comprato i connettori.
 - **1590DD:** pezzi interni disegnati e affettati (39 min, non stampati); orientamento della scatola nel Box Tool di Tayda da
   verificare con la dima; misurare all'arrivo le pareti della scatola clone; cavo USB-C con la spina sottile;

@@ -254,6 +254,10 @@ Più:
   M3×6 e M2,5×8 (due kit, 21,38 €), piedini, colla stick (6,19 €, se in casa);
 - **Exploding Shed** per i jack MIDI, come sopra.
 
+- **Schermatura del case** (non compresa nel totale): nastro di rame conduttivo 20 mm ×5 m, capocorda M3, viti M3×8
+  con dado e rondella dentellata, cavetto schermato +1,5 m, termorestringente, Kapton. Elenco e quantità in
+  «Minuteria col case stampato»; prezzi da verificare, fornitore non scelto.
+
 Da un servizio si aggiunge la stampa: preventivi del 28/09 da 96,75 € + IVA (Weerg, MJF grigio) a 261 € (MJF
 nero prodotto in Europa). Dettagli in `../case/servizio_stampa.md`.
 
@@ -381,7 +385,8 @@ Tutti i componenti, anche quelli che hai già: spunta quello che c'è.
 | Resistenza 47K | 5 | pull-up microSD |
 | Resistenza 10K | 2 | Rs INST/LINE |
 | Resistenza 3K3 | 2 | Rsh INST/LINE |
-| Resistenza 1K | 2 | LED di stato e LED del bypass |
+| Resistenza 1K | 1 | LED di stato (scheda tasti) |
+| Resistenza 4,7K | 1 | LED del bypass, saldata sul lug comune del polo C del 3PDT, da VA EXT (~1,5 mA; 29/10) |
 | Ceramico 100 nF | 2 | opto, manica MIDI IN |
 | Jack 3,5 stereo | 2 | MIDI IN, MIDI OUT (vedi sopra) |
 | Lettore microSD (Adafruit 4682) | 1 | rimandato |
@@ -426,3 +431,14 @@ Tutti i componenti, anche quelli che hai già: spunta quello che c'è.
 | Autofilettanti per plastica 2,5×8 | 6 | staffe OLED e scheda tasti |
 | Piedini adesivi Ø 12,7 × 3,5 | 4 | |
 | Colla stick | 1 | solo per la stampa in casa |
+| Nastro di rame, **adesivo conduttivo** (tipo schermatura EMI), larghezza 20 mm | 1 rotolo, almeno 5 m | stima 3,9 m dalle superfici di `case.py` (fondo 1,7 m, pareti 0,6, pannello superiore 0,35, anelli e ponti 0,4, fascia posteriore 0,1, +25 % di scarti); l'adesivo da hobby è isolante: non va. Prezzo: da verificare |
+| Capocorda ad anello per M3 (foro 3,2) | 4 (2 in uso: L0, L1; scorta 2) | massa dello schermo; anche a saldare sul filo |
+| Vite M3×8 + dado M3 + rondella dentellata M3 | 2 + 2 + 2 | L0 (pannello posteriore, dado fuori) |
+| Vite autofilettante M3×6 | 1 (+1 scorta) | L1, sulla torretta di massa del fondo |
+| Filo 0,5 mm² verde/giallo | 0,2 m | F0 (~25 mm) e F1 (~45 mm) |
+| Cavetto schermato mono (anima + calza), 3,5-4 mm | 1,5 m in più rispetto ai ~2 m già in lista | jack IN L/R -> PRE -> schedina -> veroboard, 2 canali, stima ~1 m + 30 % |
+| Guaina termorestringente 2:1, assortimento Ø 2-6 mm | ~1 m | capi liberi delle calze, saldature dei manicotti |
+| Nastro Kapton 20 mm (o acetato 0,2 mm) | ~1,5 m | isolamento sul rame sotto veroboard e schedina |
+
+Dove si compra il materiale di schermatura: non cercato né verificato (nessun prezzo qui). Progetto in
+`../docs/schermatura_massa.md`.

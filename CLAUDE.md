@@ -26,6 +26,8 @@ norns e Torso S-4. Questa è la fase prototipo: una sola unità.
 | Tre strade per il circuito (veroboard, PCB JLCPCB, CNC) | `hardware/strade_circuito.md` |
 | Case stampato: modello e verifiche (sorgente di verità) | `case/case.py`, `case/test_case.py` |
 | Case stampato in casa sulla Chiron | `case/stampa_chiron.md` |
+| Cablaggio interno: fili, lunghezze di taglio, orientamento della schedina | `case/cablaggio.py`, `case/cablaggio.md` |
+| Schermatura in rame e masse a stella | `docs/schermatura_massa.md` |
 | Case stampato da un servizio | `case/servizio_stampa.md` |
 | Scatola 1590DD: modello, dima, coordinate Tayda | `case/scatola.py`, `case/scatola_1590DD.md` |
 | Firmware di collaudo | `firmware/collaudo/` |
@@ -36,6 +38,7 @@ norns e Torso S-4. Questa è la fase prototipo: una sola unità.
 ```
 cd hardware && python3 layout.py && python3 test_layout.py && python3 page.py
 cd case && uv run case.py && uv run test_case.py
+cd case && uv run cablaggio.py && uv run test_cablaggio.py && uv run stampabilita.py
 ```
 
 `layout.py` deve stampare "OK ... nessun corto, nessun aperto", `case.py` "OK ... nessuna collisione", i test di

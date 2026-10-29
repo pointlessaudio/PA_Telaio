@@ -112,8 +112,13 @@ OLED = dict(pcb=(61.51, 39.51, 1.6), vetro=(60.5, 37.0), va=(57.01, 29.49), aa=(
             staffa=(75.0, 4.5, 2.2), piedino=(4.0, 4.0, 1.5), piedino_x=27.75,
             staffa_y=17.5, vite_x=34.5)
 OLED_PIATTINA_DAVANTI = True     # piattina del vetro verso chi suona: da confermare al collaudo
-# Tasti: tattili 12x12x7,3 con cappuccio tondo, su una millefori sotto il pannello.
-TASTO = dict(cappuccio=11.8, gioco=0.3, pila=10.0, sporgenza=1.5)
+# Tasti: Omron B3F-4055 (12x12, plunger sporgente) + cappuccio tondo Omron B32-1610, su una millefori sotto il
+# pannello. Fonti: datasheet Omron B3F (Cat. A070-E1-08, pagina "Projected Plunger Type", B3F-4050/4055): corpo
+# 12 x 12 alto 4,3 mm, plunger Ø 3,8, altezza totale 7,3 mm dal piano della scheda; datasheet Omron B32
+# (Cat. A077-E1-07, disegno B32-16x0): cappuccio Ø 9,5 +-0,2, alto 7,0, sede sul plunger profonda 2,8, quota
+# "11,5 +-0,4" dalla scheda alla cima del cappuccio, foro consigliato nel pannello Ø 9,7 (pannello 1-2 mm).
+# Il cappuccio sta quindi 0,2 mm sopra il corpo (11,5 - 7,0 - 4,3), la corsa del tasto e` 0,25.
+TASTO = dict(cappuccio=9.5, cappuccio_h=7.0, corpo_h=4.3, foro=9.7, pila=11.5, sporgenza=1.8, sporge_min=1.5)
 SCHEDA_TASTI = dict(x=(26.0, 76.0), y=(11.0, 36.5), fori=((44.0, 15.0), (44.0, 32.5)))
 LED = dict(d=3.0)
 # Footswitch 3PDT (9 terminali, boccola M12x0,75): corpo 17,5x17,5, alto 22,5 mm con i terminali.
@@ -140,7 +145,11 @@ RETRO = [
 TIPI_RETRO = {
     "jack635": dict(foro=9.6, max_pannello=5.0, corpo=(16.0, 17.0, 30.0)),   # 6,35 mm, boccola 3/8"
     "jack35": dict(foro=6.0, max_pannello=3.0, corpo=(9.0, 10.5, 10.5)),     # Thonkiconn PJ366ST
-    "dc": dict(foro=11.0, max_pannello=4.0, corpo=(13.0, 13.0, 22.0)),       # DC 2,1 da pannello
+    # Lumberg NEB/J 21C (dati in hardware/ordine_componenti.md): foro a D, tondo Ø 12,8 con due piatti a 11,8
+    # (piatti ai lati, in x: il jack non ruota); flangia Ø 16 fuori dal pannello (spessore stimato 1,0), dado da 14
+    # dentro, corpo lungo 18,3 contato per intero dietro il pannello (conservativo)
+    "dc": dict(foro=12.8, piatto=11.8, flangia=16.0, flangia_h=1.0, dado=14.0, max_pannello=4.0,
+               corpo=(14.0, 14.0, 18.3)),
     "levetta": dict(foro=6.0, max_pannello=6.0, corpo=(13.0, 13.0, 20.0)),   # mini deviatore DPDT
 }
 # Preamp JFET d'ingresso (hardware/preamp/risultati.md, V4a): GAIN doppio da 9 mm e deviatore PRE sul retro, a
@@ -148,29 +157,49 @@ TIPI_RETRO = {
 # jack da 6,35: il deviatore sta alla quota dei jack, il pot sopra di lui (stesso x). Il pannello posteriore
 # li riceve come gli altri; RETRO e TIPI_RETRO restano intatti perché li importa scatola.py.
 # Pot doppio Alpha 9 mm, serie RD902F (boccola M7x0,75 come il singolo RD901F, albero 6 mm lungo 15).
-# INGOMBRO STIMATO, NON DA DATASHEET: non ho trovato il disegno quotato dell'RD902F-40-15R1 (il catalogo Alpha
-# 9 mm multigang e` solo in PDF con testo illeggibile). Uso il corpo del singolo (11,5 largo, 10 alto, qui
-# arrotondati a 12) con profondita` stimata 18 mm = 7 del singolo + ~8 della seconda gang + 3 dei pin.
-# Da confrontare con il disegno Alpha/Mouser prima di stampare il pannello.
-POT_DOPPIO = dict(foro=7.0, max_pannello=3.0, corpo=(12.0, 12.0, 18.0), manopola=(16.0, 15.0), dado=2.0)
+# INGOMBRO STIMATO, NON DA DATASHEET (29/10): il disegno quotato del doppio 9 mm non e` reperibile. Cusack
+# POT-09-DG su stompboxparts.com (pezzo con cui si compra, SKU POT-09-DG, albero tondo 6,35, gambe da PCB) ha
+# solo la foto del disegno, senza quote leggibili; l'Alpha RD902F ha il catalogo in PDF senza testo. Stima
+# CONSERVATIVA: corpo del singolo (11,5 x 10) portato a 12,5 x 12,5, profondita` 20 mm = 7 del singolo + ~8 della
+# seconda gang + 3 dei pin, piu` 2 di margine. Da misurare col pezzo in mano prima di stampare il pannello.
+POT_DOPPIO = dict(foro=7.0, max_pannello=3.0, corpo=(12.5, 12.5, 20.0), manopola=(16.0, 15.0), dado=2.0)
 GAIN_X, GAIN_Z = 109.0, 33.5     # pot sopra il deviatore: foro a 33,5 - 18,5 = 15 mm dal centro del PRE
 PRE_X, PRE_Z = 109.0, Z_RETRO    # mini deviatore DPDT (boccola M6) come INST/LINE: tipo "levetta"
-RETRO_PRE = [("GAIN", GAIN_X, GAIN_Z, "pot_doppio"), ("PRE", PRE_X, PRE_Z, "levetta")]
+# Punto unico di massa della schermatura (docs/schermatura_massa.md): vite M3 nel pannello posteriore sopra i
+# jack d'ingresso, testa fuori, capocorda L0 e dado dentro (corpo = capocorda + dado + punta della vite).
+MASSA_L0 = ("massa L0", 135.5, 32.0, "vite_massa")
+RETRO_PRE = [("GAIN", GAIN_X, GAIN_Z, "pot_doppio"), ("PRE", PRE_X, PRE_Z, "levetta"), MASSA_L0]
 TIPI_PRE = {"pot_doppio": dict(foro=POT_DOPPIO["foro"], max_pannello=POT_DOPPIO["max_pannello"],
-                               corpo=POT_DOPPIO["corpo"]), "levetta": TIPI_RETRO["levetta"]}
+                               corpo=POT_DOPPIO["corpo"]), "levetta": TIPI_RETRO["levetta"],
+            "vite_massa": dict(foro=3.4, max_pannello=6.0, corpo=(8.0, 8.0, 6.0))}
+# Torretta del capocorda L1 sul fondo (filo F1 da L0; docs/schermatura_massa.md): Ø 8 x 4 con pilota M3
+MASSA_L1 = dict(x=109.5, y=101.5, d=8.0, h=4.0)
 
 # Volume della schedina preamp davanti ai jack d'ingresso (IN L/R, OUT L/R), nella vasca: colonnine 4 mm +
 # scheda 1,6 + componenti 11,5 (hardware/preamp/layout_preamp.py) = 17,1, arrotondato a 17,5.
 # Colonnine sui fori di hardware/preamp/layout_preamp.py, FORI_FISSAGGIO = [(21, 1), (21, 16)], con il foro 0
-# della striscia verso x minore e la striscia 0 verso y minore. ORIENTAMENTO PROVVISORIO: da fissare col
-# cablaggio verso jack, PRE e GAIN.
+# della striscia verso x minore e la striscia 0 verso y minore. Orientamento scelto dal confronto delle 8
+# opzioni in cablaggio.py (29/10): fili d'ingresso e del GAIN piu' corti.
 SCHEDINA = dict(x=(122.0, 184.0), y=(51.0, 98.0), alt=17.5, colonnina=4.0, colonnina_d=6.0)
 SCHEDINA_FORI = [(21, 1), (21, 16)]           # copia di layout_preamp.FORI_FISSAGGIO (quello importa numpy)
 SCHEDINA_COLONNINE = [(SCHEDINA["x"][0] + (fx + 0.5) * 2.54, SCHEDINA["y"][0] + (fy + 0.5) * 2.54)
                       for fx, fy in SCHEDINA_FORI]
 # Scheda MIDI (millefori saldata sui due Thonkiconn) e scheda microSD
 MIDI_SCHEDA = dict(x=(34.0, 66.0), z=(12.5, 35.0), prof=16.0)
-SD = dict(x=(T_WALL, 25.0), y=(34.0, 54.0), z=(12.0, 16.5), fessura=(13.0, 2.6), z_fessura=14.4)
+# microSD: lettore push-push (zoccolo microSD nudo su adattatore 2,54, 6 fili saldati) su una sua piastrina, con
+# la fessura nel PANNELLO POSTERIORE sopra il jack DC (x 23, z 31,5), scheda orizzontale, inserita da fuori verso
+# la vasca. Perche` qui: (1) il pannello posteriore si stampa piatto, la fessura 13 x 2,6 e` un foro passante
+# senza ponti (nella parete laterale sarebbe un ponte di 13 mm); (2) i pad D4-D6 del Seed (SD D0/CMD/CK, strisce
+# 4-6 della veroboard, x 16-21, y 93,7) distano circa 2-3 cm dalla piastrina: fili corti, ben sotto i 15 cm;
+# (3) lo spazio c'e`: sopra il DC (corpo fino a z 25,5), a sinistra della scheda MIDI (x >= 34) e a destra della
+# torretta del pannello (x <= 13,5). Lo zoccolo push-push e` meglio del modulo SPI con buffer: espone CMD/CLK/DAT0
+# senza traduttori di livello (la pagina del prototipo vuole i pull-up da 47 k a +3V3D, vedi la sezione microSD)
+# e a scheda inserita il bordo resta circa a filo (la "bocca" dello zoccolo entra di 1,4 mm nella fessura). La
+# piastrina (15 x 21 x 1) sta su una culla stampata sul pannello posteriore (incollata o col biadesivo).
+# Misure da datasheet microSD generico (scheda 11 x 15 x 1,0; zoccolo push-push ~12 largo, 1,9 alto): STIME
+# conservative, da verificare col pezzo.
+SD = dict(x=23.0, z=31.5, fessura=(13.0, 2.6), pcb=(15.0, 21.0, 1.0), guscio=(12.4, 15.0, 1.9), bocca=1.4,
+          culla=(15.0, 18.0, 3.0), scheda_z=0.9)
 # Seed3 (modello STEP ufficiale): USB-C sporge 1,28 mm oltre il circuito, centrata sulla larghezza
 SEED = dict(usb_oltre_pin1=2.71, pcb_oltre_pin20=1.43, larghezza=18.0, header_f=8.5,
             header_m=2.54, pcb=1.6, sopra_pcb=2.2, usb_lungo=7.7, usb_z=2.92, usb_alto=3.26,
@@ -308,7 +337,7 @@ def pannello_superiore(logo=None):
 
     # tasti e LED
     for (x, y) in TASTI:
-        p -= sul_top(x, y) * cil(TASTO["cappuccio"] + 2 * TASTO["gioco"] + TOL_FORI, 20)
+        p -= sul_top(x, y) * cil(TASTO["foro"] + TOL_FORI, 20)
     p -= sul_top(*LED_C) * cil(LED["d"] + TOL_FORI, 20)
 
     # footswitch 3PDT: foro, torre di sostegno fino al fondo, fessura per i fili verso l'interno
@@ -392,18 +421,19 @@ def vasca():
         v += Pos(x, y, T_FLOOR + DISTANZIALE / 2 - 0.01) * cil(DISTANZIALE_D, DISTANZIALE + 0.02)
         v -= Pos(x, y, Z_SCHEDA - 5.5 / 2 + 0.01) * cil(PILOTA_M3, 5.5)
 
-    # colonnine della schedina preamp (PROVVISORIE: vedi SCHEDINA)
+    # colonnine della schedina preamp (fori di layout_preamp.py, orientamento in cablaggio.py)
     for (x, y) in SCHEDINA_COLONNINE:
         v += Pos(x, y, T_FLOOR + SCHEDINA["colonnina"] / 2 - 0.01) * cil(SCHEDINA["colonnina_d"], SCHEDINA["colonnina"] + 0.02)
         v -= Pos(x, y, T_FLOOR + SCHEDINA["colonnina"] - 5.5 / 2 + 0.01) * cil(PILOTA_M3, 5.5)
 
-    # USB-C del Seed e fessura microSD sulla parete sinistra
+    # torretta del capocorda di massa L1
+    v += Pos(MASSA_L1["x"], MASSA_L1["y"], T_FLOOR + MASSA_L1["h"] / 2 - 0.01) * cil(MASSA_L1["d"], MASSA_L1["h"] + 0.02)
+    v -= Pos(MASSA_L1["x"], MASSA_L1["y"], T_FLOOR + MASSA_L1["h"] - 5.5 / 2 + 0.01) * cil(PILOTA_M3, 5.5)
+
+    # USB-C del Seed sulla parete sinistra
     uy, uz = seed_y_centro(), usb_z()
     ut = SEED["usb_taglio"]
     v -= Pos(T_WALL / 2, uy, uz) * Rot(0, 90, 0) * extrude(Pos(0, 0, -5) * RectangleRounded(ut[1], ut[0], 2.0), 10)
-    fw, fh = SD["fessura"]
-    v -= (Pos(T_WALL / 2, (SD["y"][0] + SD["y"][1]) / 2, SD["z_fessura"]) * Rot(0, 90, 0)
-          * extrude(Pos(0, 0, -5) * RectangleRounded(fh, fw, 1.0), 10))
 
     # sedi per i piedini adesivi (con PIEDINO_PROF = 0 il fondo resta pieno)
     if PIEDINO_PROF > 0:
@@ -428,6 +458,14 @@ def vasca_stampa(v):
 
 
 # =========================================================== pannello posteriore
+def sagoma_foro(t):
+    """solido di taglio per un foro del retro (asse Z): tondo, con i piatti in x se il tipo ne ha (foro a D)"""
+    s = cil(t["foro"] + TOL_FORI, 20)
+    if "piatto" in t:
+        s = s & Box(t["piatto"] + TOL_FORI, 40, 40)
+    return s
+
+
 def pannello_posteriore():
     """lastra piatta dentro la vasca, contro la parete: la finestra le fa da cornice. Si stampa piatta,
     a faccia in giù, senza sporgenze; angoli raccordati perché non si alzino dal piatto"""
@@ -435,9 +473,15 @@ def pannello_posteriore():
     p = box(R_PIANTA, W - R_PIANTA, Y_PANNELLO_INT, Y_PANNELLO_EST, T_FLOOR + GIOCO, z1)
     p = fillet(p.edges().filter_by(Axis.Y), R_PANNELLO)
     for (nome, x, tipo) in RETRO:
-        p -= Pos(x, D, Z_RETRO) * Rot(90, 0, 0) * cil(TIPI_RETRO[tipo]["foro"] + TOL_FORI, 20)
+        p -= Pos(x, D, Z_RETRO) * Rot(90, 0, 0) * sagoma_foro(TIPI_RETRO[tipo])
     for (nome, x, z, tipo) in RETRO_PRE:
-        p -= Pos(x, D, z) * Rot(90, 0, 0) * cil(TIPI_PRE[tipo]["foro"] + TOL_FORI, 20)
+        p -= Pos(x, D, z) * Rot(90, 0, 0) * sagoma_foro(TIPI_PRE[tipo])
+    # fessura della microSD e culla della piastrina (sporge dalla faccia interna: si stampa in piedi sulla lastra)
+    fw, fh = SD["fessura"]
+    p -= Pos(SD["x"], D, SD["z"]) * Rot(90, 0, 0) * extrude(Pos(0, 0, -10) * RectangleRounded(fw, fh, 1.0), 20)
+    cw, cd, ch = SD["culla"]
+    z_pcb_basso = SD["z"] - SD["scheda_z"] - SD["pcb"][2]
+    p += box(SD["x"] - cw / 2, SD["x"] + cw / 2, Y_PANNELLO_INT - cd, Y_PANNELLO_INT + 0.01, z_pcb_basso - ch, z_pcb_basso)
     return p
 
 
@@ -487,6 +531,9 @@ def componenti():
     for (hx, hy) in FORI_FISSAGGIO:
         x, y = foro_xy(hx, hy)
         c.append((f"testa vite veroboard ({hx},{hy})", Pos(x, y, Z_SCHEDA_TOP + 0.02 + th / 2) * cil(td, th), "viti"))
+    # capocorda L1 sulla torretta di massa: occhiello Ø 10 + testa della vite, 4 mm, e 3 mm d'aria per la mano
+    c.append(("capocorda massa L1", Pos(MASSA_L1["x"], MASSA_L1["y"], T_FLOOR + MASSA_L1["h"] + 0.02 + 3.5)
+              * cil(10.0, 7.0), "viti"))
 
     # sotto il pannello: pot, encoder, OLED, scheda tasti
     for x in POT_X:
@@ -513,8 +560,9 @@ def componenti():
     c.append(("scheda tasti", lk * Pos(0, 0, W_TASTI_PCB - (1.6 + 1.5) / 2)
               * Box(sx1 - sx0, (sy1 - sy0) / math.cos(ALPHA), 1.6 + 1.5), "comandi"))
     for i, (x, y) in enumerate(TASTI):
-        c.append((f"tasto K{i + 1}", sul_top(x, y) * Pos(0, 0, W_TASTI_PCB + 3.5 / 2) * Box(12, 12, 3.5), "comandi"))
-        hc = TASTO["pila"] - 3.5
+        bh = TASTO["corpo_h"]
+        c.append((f"tasto K{i + 1}", sul_top(x, y) * Pos(0, 0, W_TASTI_PCB + bh / 2) * Box(12, 12, bh), "comandi"))
+        hc = TASTO["cappuccio_h"]
         c.append((f"cappuccio K{i + 1}", sul_top(x, y) * Pos(0, 0, TASTO["sporgenza"] - hc / 2)
                   * cil(TASTO["cappuccio"], hc), "comandi"))
     c.append(("LED", sul_top(*LED_C) * Pos(0, 0, W_TASTI_PCB / 2) * cil(LED["d"], -W_TASTI_PCB), "comandi"))
@@ -539,6 +587,14 @@ def componenti():
     for (nome, x, z, tipo) in RETRO_PRE:
         bw, bh, bd = TIPI_PRE[tipo]["corpo"]
         c.append((nome, box(x - bw / 2, x + bw / 2, yi - bd, yi, z - bh / 2, z + bh / 2), "retro"))
+    for (nome, x, tipo) in RETRO:
+        if tipo == "dc":
+            t = TIPI_RETRO[tipo]
+            # boccola filettata (Ø 12,8 con i piatti) dentro il foro; flangia Ø 16 fuori dal pannello
+            c.append((f"boccola {nome}", Pos(x, (Y_PANNELLO_INT + Y_PANNELLO_EST) / 2, Z_RETRO) * Rot(90, 0, 0)
+                      * (cil(t["foro"], T_REAR - 0.04) & Box(t["piatto"], 40, 40)), "retro"))
+            c.append((f"flangia {nome}", Pos(x, Y_PANNELLO_EST + 0.02 + t["flangia_h"] / 2, Z_RETRO) * Rot(90, 0, 0)
+                      * cil(t["flangia"], t["flangia_h"]), "retro"))
     mg, md = POT_DOPPIO["manopola"], POT_DOPPIO["dado"]
     c.append(("manopola GAIN", Pos(GAIN_X, Y_PANNELLO_EST + md + 0.5 + mg[1] / 2, GAIN_Z) * Rot(90, 0, 0)
               * cil(mg[0], mg[1]), "manopole"))
@@ -547,7 +603,12 @@ def componenti():
     c.append(("schedina preamp", box(*sx, *sy, z0, T_FLOOR + SCHEDINA["alt"]), "schedina"))
     mx0, mx1 = MIDI_SCHEDA["x"]
     c.append(("scheda MIDI", box(mx0, mx1, yi - MIDI_SCHEDA["prof"], yi, *MIDI_SCHEDA["z"]), "retro"))
-    c.append(("scheda microSD", box(SD["x"][0] + 0.02, SD["x"][1], *SD["y"], *SD["z"]), "sd"))
+    pw, pd, ph = SD["pcb"]
+    gw, gd, gh = SD["guscio"]
+    z_pcb_alto = SD["z"] - SD["scheda_z"]
+    c.append(("piastrina microSD", box(SD["x"] - pw / 2, SD["x"] + pw / 2, yi - 0.2 - pd, yi - 0.2,
+                                       z_pcb_alto - ph, z_pcb_alto - 0.02), "sd"))
+    c.append(("zoccolo microSD", box(SD["x"] - gw / 2, SD["x"] + gw / 2, yi - gd, Y_PANNELLO_INT + SD["bocca"], z_pcb_alto, z_pcb_alto + gh), "sd"))
     return c
 
 
@@ -579,7 +640,7 @@ def verifica(pezzi, comp):
     for i in range(len(comp)):
         for j in range(i + 1, len(comp)):
             (na, sa, ga), (nb, sb, gb) = comp[i], comp[j]
-            if ga == gb and ga in ("scheda", "oled", "manopole"):
+            if ga == gb and ga in ("scheda", "oled", "manopole", "sd"):
                 continue
             v = urti(sa, sb)
             if v:
@@ -625,16 +686,77 @@ def verifica(pezzi, comp):
     for (nome, x, z, tipo) in RETRO_PRE:
         if T_REAR > TIPI_PRE[tipo]["max_pannello"]:
             errori.append(f"pannello posteriore troppo spesso per {nome}")
-        # foro nel pannello: dentro la lastra e a distanza dai fori vicini (bordo-bordo, minimo 3 mm)
-        r = TIPI_PRE[tipo]["foro"] / 2 + TOL_FORI / 2
-        altri = [(x2, Z_RETRO, TIPI_RETRO[t2]["foro"]) for (_, x2, t2) in RETRO] + \
-                [(x2, z2, TIPI_PRE[t2]["foro"]) for (n2, x2, z2, t2) in RETRO_PRE if n2 != nome]
-        for (x2, z2, f2) in altri:
-            gap = math.dist((x, z), (x2, z2)) - r - (f2 / 2 + TOL_FORI / 2)
-            if gap < 3.0:
-                errori.append(f"foro di {nome} a {gap:.1f} mm da un altro foro del retro (minimo 3)")
-        if z + r > z_sotto(Y_PANNELLO_INT) - GIOCO - 2.0 or x - r < R_PIANTA or x + r > W - R_PIANTA:
-            errori.append(f"foro di {nome} fuori dalla lastra del pannello posteriore")
+    # fori del retro: ognuno dentro la lastra e a >= 3 mm bordo-bordo da ogni altro (nessun ponte sottile: il
+    # pannello si stampa piatto). Fori tondi (raggio = foro/2 + tolleranza; il foro a D conta col cerchio intero)
+    # e la fessura microSD (rettangolo).
+    fori = [(n, x, Z_RETRO, ("c", TIPI_RETRO[t]["foro"] / 2 + TOL_FORI / 2)) for (n, x, t) in RETRO]
+    fori += [(n, x, z, ("c", TIPI_PRE[t]["foro"] / 2 + TOL_FORI / 2)) for (n, x, z, t) in RETRO_PRE]
+    fori.append(("fessura microSD", SD["x"], SD["z"], ("r", SD["fessura"][0] / 2, SD["fessura"][1] / 2)))
+
+    def gap(a, b):
+        (_, xa, za, fa), (_, xb, zb, fb) = a, b
+        if fa[0] == "r":
+            a, b, xa, za, xb, zb, fa, fb = b, a, xb, zb, xa, za, fb, fa
+        if fb[0] == "c":
+            return math.dist((xa, za), (xb, zb)) - fa[1] - fb[1]
+        dx = max(abs(xa - xb) - fb[1], 0.0)
+        dz = max(abs(za - zb) - fb[2], 0.0)
+        return math.hypot(dx, dz) - fa[1]
+    z_alto = z_sotto(Y_PANNELLO_INT) - GIOCO - 2.0
+    for i, a in enumerate(fori):
+        n, x, z, f = a
+        hx, hz = (f[1], f[1]) if f[0] == "c" else (f[1], f[2])
+        if z + hz > z_alto or x - hx < R_PIANTA or x + hx > W - R_PIANTA or z - hz < T_FLOOR + GIOCO + 2.0:
+            errori.append(f"foro di {n} fuori dalla lastra del pannello posteriore")
+        for b in fori[i + 1:]:
+            g = gap(a, b)
+            if g < 3.0:
+                errori.append(f"foro di {n} a {g:.1f} mm dal foro di {b[0]} (minimo 3)")
+    gmin = min(gap(a, b) for i, a in enumerate(fori) for b in fori[i + 1:])
+    note.append(f"fori del retro: {len(fori)}, distanza minima bordo-bordo {gmin:.1f} mm (minimo 3)")
+
+    # jack DC Lumberg: foro a D. La boccola (tonda Ø 12,8 con piatti a 11,8) deve entrare nel pannello come e`
+    # e NON poter ruotare: girata di 90 gradi deve urtare i piatti del foro
+    t = TIPI_RETRO["dc"]
+    dc_x = next(x for (n, x, tp) in RETRO if tp == "dc")
+    boccola = Pos(dc_x, (Y_PANNELLO_INT + Y_PANNELLO_EST) / 2, Z_RETRO) * Rot(90, 0, 0) * (
+        cil(t["foro"], T_REAR + 4) & Box(t["piatto"], 40, 40))
+    girata = Pos(dc_x, (Y_PANNELLO_INT + Y_PANNELLO_EST) / 2, Z_RETRO) * Rot(90, 0, 0) * Rot(0, 0, 90) * (
+        cil(t["foro"], T_REAR + 4) & Box(t["piatto"], 40, 40))
+    pr = pezzi["pannello posteriore"]
+    if urti(pr, boccola):
+        errori.append("jack DC: la boccola non entra nel foro a D")
+    if not urti(pr, girata, 0.5):
+        errori.append("jack DC: il foro non ha i piatti, la boccola ruota")
+    if t["flangia"] / 2 + 0.5 > min(dc_x - R_PIANTA, Z_RETRO - T_FLOOR - GIOCO):
+        errori.append("jack DC: flangia Ø 16 fuori dalla lastra")
+    note.append(f"jack DC: foro a D Ø {t['foro'] + TOL_FORI:.1f} con piatti a {t['piatto'] + TOL_FORI:.1f}, boccola che non ruota")
+
+    # tasti: cappuccio B32-1610 nel foro, sporgenza sufficiente, cappuccio staccato dal corpo del tasto
+    tf = TASTO["foro"] + TOL_FORI
+    if tf < TASTO["cappuccio"] + 0.4 or tf > TASTO["cappuccio"] + 1.5:
+        errori.append(f"foro dei tasti Ø {tf:.1f} non adatto al cappuccio Ø {TASTO['cappuccio']} (serve +0,4...+1,5)")
+    if TASTO["sporgenza"] < TASTO["sporge_min"]:
+        errori.append(f"cappuccio dei tasti sporge {TASTO['sporgenza']:.1f} mm dal pannello (minimo {TASTO['sporge_min']})")
+    luce = TASTO["pila"] - TASTO["cappuccio_h"] - TASTO["corpo_h"]
+    if luce < 0.1:
+        errori.append(f"cappuccio dei tasti a {luce:.2f} mm dal corpo del tasto (serve >= 0,1: corsa)")
+    if TASTO["sporgenza"] > T_TOP:
+        errori.append("cappuccio dei tasti sporge piu' dello spessore del pannello")
+    note.append(f"tasti: foro Ø {tf:.1f} per cappuccio Ø {TASTO['cappuccio']}, sporge {TASTO['sporgenza']:.1f} mm, "
+                f"{luce:.1f} mm di luce sopra il corpo")
+
+    # microSD: fili verso i pad D4-D6 del Seed corti, piastrina sotto la lastra e lontana dalle torrette
+    pad = [foro_xy(0, k) for k in (4, 5, 6)]
+    pad_x = sum(q[0] for q in pad) / 3
+    pad_y = sum(q[1] for q in pad) / 3
+    lungh = math.dist((pad_x, pad_y), (SD["x"], Y_PANNELLO_INT - SD["pcb"][1] / 2))
+    if lungh > 80:
+        errori.append(f"microSD a {lungh:.0f} mm dai pad D4-D6: fili troppo lunghi per 'corti' (massimo 150 mm col percorso)")
+    if SD["z"] + SD["fessura"][1] / 2 > z_sotto(Y_PANNELLO_INT - SD["pcb"][1]) - 3.0:
+        errori.append("microSD: la fessura sale troppo vicino al pannello superiore")
+    note.append(f"microSD: fessura nel pannello posteriore a x {SD['x']:.0f}, z {SD['z']:.1f}; "
+                f"piastrina a ~{lungh:.0f} mm in linea d'aria dai pad D4-D6")
 
     # spazio fra le manopole (bordo-bordo)
     pots = [(x, y) for x in POT_X for y in POT_Y]
@@ -686,7 +808,7 @@ def prova_superiore():
     p -= Pos(12, 12, 0) * cil(POT["foro"] + TOL_FORI, 20)
     p -= Pos(12, 12, POT["tasca"] / 2 - 0.01) * Box(*POT["tasca_xy"], POT["tasca"] + 0.02)
     p -= Pos(12, 32, 0) * cil(ENC["foro"] + TOL_FORI, 20)
-    p -= Pos(12, 50, 0) * cil(TASTO["cappuccio"] + 2 * TASTO["gioco"] + TOL_FORI, 20)
+    p -= Pos(12, 50, 0) * cil(TASTO["foro"] + TOL_FORI, 20)
     p -= Pos(27, 50, 0) * cil(LED["d"] + TOL_FORI, 20)
     va_w, va_h = OLED["va"][0] + 0.2, OLED["va"][1] + 0.2
     ox, oy = 72.0, 31.0
@@ -698,12 +820,19 @@ def prova_superiore():
 
 
 def prova_posteriore():
-    """2,4 mm come il pannello I/O: un foro per tipo e il taglio della USB-C"""
-    p = box(0, 110, 0, 30, 0, T_REAR)
-    for i, (tipo, t) in enumerate(TIPI_RETRO.items()):
-        p -= Pos(14 + i * 22, 15, 0) * cil(t["foro"] + TOL_FORI, 20)
+    """2,4 mm come il pannello I/O: un foro per ogni tipo del retro (DC a D compreso, con sagoma_foro come nel
+    pannello), il taglio della USB-C e la fessura della microSD"""
+    tipi = list(TIPI_RETRO.values()) + [t for k, t in TIPI_PRE.items() if k != "levetta"]
+    passo = 22.0
+    larg = 14 + passo * len(tipi) + 34
+    p = box(0, larg, 0, 30, 0, T_REAR)
+    for i, t in enumerate(tipi):
+        p -= Pos(14 + i * passo, 15, 0) * sagoma_foro(t)
+    xu = 14 + passo * len(tipi) - 4
     ut = SEED["usb_taglio"]
-    p -= Pos(98, 15, -5) * extrude(RectangleRounded(ut[0], ut[1], 2.0), 10)
+    p -= Pos(xu, 9, -5) * extrude(RectangleRounded(ut[0], ut[1], 2.0), 10)
+    fw, fh = SD["fessura"]
+    p -= Pos(xu, 23, -5) * extrude(RectangleRounded(fw, fh, 1.0), 10)
     return p
 
 

@@ -116,7 +116,7 @@ riga 2 fori 2 e 29, riga 38 foro 29, riga 44 foro 8.
 ```
 cd case
 uv run case.py            # costruisce, verifica, esporta in case/out/: "OK ... nessuna collisione"
-uv run test_case.py       # 21 mutazioni, ogni riga RILEVATO (qualche minuto)
+uv run test_case.py       # 35 mutazioni, ogni riga RILEVATO (circa 40 minuti; si può filtrare per nome)
 uv run stampabilita.py    # stampabilità strato per strato (vedi stampa_chiron.md)
 uv run render/esporta.py && /Applications/Blender.app/Contents/MacOS/Blender -b -P render/scena_blender.py
 ```
@@ -129,7 +129,7 @@ un ingombro (altezze per tipo in `ALTEZZE`). Poi controlla:
 - aria fra le manopole;
 - logo inciso davvero e finestra dell'OLED aperta su tutti i pixel.
 
-Preamp JFET d'ingresso (30/10): sul retro GAIN (pot doppio 9 mm, x 109 z 33,5, ingombro STIMATO) e PRE (deviatore, x 109 z 18,5), nella vasca il volume 62 × 47 × 16 della schedina (x 122-184, y 51-98) con 2 colonnine PROVVISORIE; vedi `RETRO_PRE` e `SCHEDINA` in `case.py`.
+Preamp JFET d'ingresso (29/10): sul retro GAIN (pot doppio 9 mm, x 109 z 33,5, ingombro STIMATO) e PRE (deviatore, x 109 z 18,5), nella vasca il volume 62 × 47 × 16 della schedina (x 122-184, y 51-98) con 2 colonnine PROVVISORIE; vedi `RETRO_PRE` e `SCHEDINA` in `case.py`.
 
 Gli ingombri stanno nei dizionari in testa a `case.py`: se compri un pezzo diverso, cambialo lì e
 rilancia. Uscite: `out/` (STL già orientati per la stampa, STEP, `assieme.step` e `.glb`),
@@ -145,14 +145,25 @@ Verificato il 29/09: `OK: 5 pezzi, 97 componenti controllati, nessuna collisione
 della veroboard). 16 mutazioni su 16 RILEVATO (giro completo del 29/09), comprese le 3 dei fori di fissaggio.
 29/10, col preamp: `OK: 5 pezzi, 101 componenti controllati, nessuna collisione`; 21 mutazioni su 21 RILEVATO (18 nel
 giro completo, le 3 della schedina rilanciate dopo aver portato il volume a 17,5 mm).
+29/10, case allineato ai pezzi dei carrelli (DC Lumberg a D, tasti Omron B3F-4055 + B32-1610, microSD sul pannello
+posteriore): `OK: 5 pezzi, 104 componenti controllati, nessuna collisione`; 33 mutazioni su 33 RILEVATO (giro completo,
+12 nuove: 3 tasti, 4 DC, 5 microSD); fori del retro a 5,1 mm bordo-bordo al minimo (soglia 3).
+29/10 sera, con vite di massa L0 sul retro e torretta L1 nella vasca (`docs/schermatura_massa.md`): `OK: 5 pezzi,
+106 componenti controllati, nessuna collisione`; 35 mutazioni su 35 RILEVATO (giro completo); `stampabilita.py`:
+`OK: 6 pezzi stampabili senza supporti`. Cablaggio: `case/cablaggio.py`.
 
-**Il modello è disegnato sui pezzi di partenza, non su quelli dei carrelli.** Prima di stampare i pannelli
-va riallineato:
-- jack DC: `TIPI_RETRO["dc"]` ha foro 11, i jack DC trovati ne vogliono 12 (o 12,8 a D);
-- jack da 6,35: `TIPI_RETRO["jack635"]` è 16 × 17 × 30. Gli Switchcraft 12A sono Ø 19,1 × 26,6 e i Tayda A-1121
-  15,8 × 15,8 × 27,1: con quei pezzi la verifica va rifatta. Gli Switchcraft 112AX/112BX (Banzai) entrano così
-  come sono;
-- tasti: `TASTO` ha cappuccio 11,8 e pila 10,0; il cappuccio Tayda A-4814 è Ø 11,5 con flangia Ø 12,8, pila 10,5.
+**Il modello è disegnato sui pezzi dei carrelli Banzai + TME** (29/10), tranne le voci "stimato" sotto:
+- jack DC Lumberg NEB/J 21C: foro a D (tondo Ø 12,8, piatti a 11,8, in x), flangia Ø 16 fuori, dado da 14, corpo
+  18,3; la verifica controlla che la boccola entri e che girata di 90 gradi urti i piatti;
+- tasti Omron B3F-4055 + cappuccio B32-1610: dati dai datasheet Omron B3F (Cat. A070-E1-08: corpo 12 × 12 × 4,3,
+  totale 7,3, plunger Ø 3,8) e B32 (Cat. A077-E1-07: cappuccio Ø 9,5 × 7,0, quota 11,5 dalla scheda alla cima, foro
+  consigliato Ø 9,7); foro nel pannello Ø 10,0, cappuccio che sporge 1,8 mm, 0,2 mm sopra il corpo del tasto;
+- jack da 6,35: Switchcraft 112AX/112BX (Banzai) entrano così come sono (`TIPI_RETRO["jack635"]` 16 × 17 × 30);
+  con Switchcraft 12A (Ø 19,1 × 26,6) o Tayda A-1121 (15,8 × 15,8 × 27,1) la verifica va rifatta;
+- microSD: fessura 13 × 2,6 nel pannello posteriore (vedi sotto), zoccolo push-push su piastrina propria;
+- ancora STIMATI: pot doppio GAIN (12,5 × 12,5 × 20, disegno quotato non trovato: Cusack POT-09-DG e Alpha RD902F
+  non hanno quote leggibili, misurare col pezzo), spessore della flangia DC (1,0), zoccolo e piastrina microSD,
+  schedina preamp (volume).
 La vasca non dipende da questi pezzi.
 
 Componenti su cui è disegnato:
@@ -163,10 +174,12 @@ Componenti su cui è disegnato:
 | Pot | Alpha 9 mm RD901F-40-15R1, 10K lineare | boccola M7 lunga 5: pannello a 2,4 mm con tasca da sotto; staccare il dentino anti-rotazione |
 | Encoder | Bourns PEC11R-4220K-S0024 | boccola M7 lunga 7 |
 | OLED | Waveshare 2,42" 128×64 SSD1309 | i fori stanno sotto il vetro: sede nel pannello e 2 staffe stampate; spostare i due 0 Ω sul modulo per passare all'I2C |
-| Tasti | tattili 12×12×7,3 con cappuccio tondo Ø 11,8 | su millefori 50 × 25,5 mm, 2 viti M2,5 |
+| Tasti | Omron B3F-4055 + cappuccio B32-1610 Ø 9,5 (pila 11,5, foro Ø 10,0, sporge 1,8) | su millefori 50 × 25,5 mm, 2 viti M2,5 |
 | Jack 6,35 | ingombro 16 × 17 × 30 mm, boccola 3/8" | IN L/R, OUT L/R, pedale; centri a 18,5 mm: non alzarli, sopra passano i pot |
 | Jack 3,5 | Thonkiconn PJ366ST sulla scheda MIDI | pannello ≤ 3 mm |
-| DC | 2,1 mm da pannello, foro 11 mm | |
+| DC | Lumberg NEB/J 21C, foro a D Ø 12,8 con piatti a 11,8, flangia Ø 16, dado 14, lungo 18,3 | in x i piatti: non ruota |
+| microSD | zoccolo push-push su piastrina 15 × 21, fessura 13 × 2,6 nel pannello posteriore (x 23, z 31,5) | culla stampata sul pannello; fili a D4-D6 di circa 3-5 cm; STIMATO |
+| GAIN | pot doppio 9 mm C50K (Cusack POT-09-DG / Alpha RD902F), ingombro 12,5 × 12,5 × 20 | STIMATO, conservativo |
 | Deviatore | mini DPDT, boccola M6 | INST/LINE |
 | Header del Seed | femmina standard, 8,5 mm | con header bassi cambia `SEED["header_f"]` |
 
@@ -179,16 +192,33 @@ Minuteria del case stampato:
 
 ### Montaggio (case stampato)
 
+Schermatura e masse: `docs/schermatura_massa.md` (nastro di rame, un solo punto di massa, prove). Cablaggio, fili e
+percorsi: `case/cablaggio.md`. L'ordine tiene ogni pezzo raggiungibile finché serve: la vasca resta aperta dall'alto
+fino alla chiusura, il pannello superiore si lavora capovolto accanto alla vasca coi fili lunghi.
+
 0. Stampato in casa: rifila le orecchie della vasca col cutter, raso al bordo del fondo.
 1. Inserti a caldo nelle 5 torrette del pannello superiore (Ø 10, foro da 4).
-2. Veroboard sulle colonnine.
-3. Pannello posteriore con i connettori, calato da sopra fra la parete e i montanti: i dadi dei
-   jack stanno nella finestra.
-4. Sul pannello superiore: OLED (vetro nella sede, 2 staffe), encoder, pot, scheda tasti,
-   footswitch (cablato prima: i fili escono dalla fessura in basso della torre), LED del bypass
-   incollato nel manicotto.
-5. Cablaggio.
-6. Chiusura con 5 viti dal fondo.
+2. Nastro di rame (adesivo conduttivo) nella vasca: fondo, pareti, anelli sulle colonne; Kapton sul rame nelle
+   impronte di veroboard e schedina. Sul pannello superiore: fasce sotto e anelli sotto le torrette. Distanze da
+   piazzole, terminali e jack DC (+9 V sul bossolo) in `schermatura_massa.md`. Prova di continuità e di isolamento
+   (punti A.1-A.3) prima di montare altro.
+3. Veroboard sulle colonnine (4 viti M3×6), Seed3 e TLC2272 negli zoccoli.
+4. Schedina preamp collaudata fuori dal case (`hardware/preamp/collaudo.md`, §1-3 con i J201 scelti per IDSS),
+   poi avvitata sulle sue 2 colonnine; il filo di massa e VA verso la veroboard.
+5. Pannello posteriore fuori dalla vasca, con i connettori montati e i fili già saldati e lunghi: jack IN L/R
+   (calza dal lato del manicotto) e OUT, PEDALE, DC, deviatore INST/LINE, deviatore PRE, **pot GAIN doppio con le
+   due 47K saldate sui terminali usati di ogni sezione**, scheda I/O (MIDI sui due jack 3,5 attraverso il pannello;
+   piastrina microSD sulla culla del pannello, zoccolo con la bocca nella fessura). Fascia di rame sulla faccia interna e capocorda di massa L0 con la
+   sua vite (dado fuori). Poi calato da sopra fra la parete e i montanti: i dadi dei jack stanno nella finestra.
+6. Torretta di massa L1 con il capocorda e il filo F1 verso L0; filo F0 da L0 al manicotto di IN L. È l'unico
+   collegamento del rame al circuito.
+7. Cablaggio di jack, PRE, GAIN, schedina, veroboard, scheda I/O (`case/cablaggio.md`). Con la vasca ancora aperta:
+   regolare i trimmer LEVEL (`collaudo.md`, §4-5): dopo la chiusura non si raggiungono.
+8. Pannello superiore capovolto accanto alla vasca: OLED (vetro nella sede, 2 staffe), encoder, pot, scheda tasti,
+   footswitch (cablato prima: i fili escono dalla fessura in basso della torre), LED del bypass incollato nel
+   manicotto. Fili alla veroboard come da cablaggio; fasce di rame lontane 3 mm dai terminali dei pot.
+9. Prova a case aperto: continuità e isolamento del rame (A.3-A.4), passthrough e preamp. Poi chiusura con 5 viti
+   dal fondo e rumore a case chiuso (`schermatura_massa.md`, §5 B).
 
 **Orientamento dell'OLED**: non blocca la stampa del pannello superiore. Il modulo va con la
 piattina verso chi suona (`OLED_PIATTINA_DAVANTI = True`). Se a banco il testo esce capovolto, si
@@ -276,6 +306,8 @@ successiva, scrivendo una classe con la mappa pin qui sopra.
 10. True bypass: in bypass continuità punta IN → punta OUT su entrambi i canali, LED spento;
     a effetto inserito uscita dalla scheda e LED acceso; nessun colpo alla commutazione.
 11. Preamp JFET (schedina a parte): procedura e valori attesi in `hardware/preamp/collaudo.md`.
+12. Schermatura e masse (continuità del rame, rumore a ingresso chiuso con e senza schermo):
+    `docs/schermatura_massa.md`, §5.
 
 ## Errori noti nei documenti storici
 

@@ -98,19 +98,25 @@ I G-code pronti per la SD sono in `stampa/`. `gcode_check.py` deve dire per ogni
 - ventola dallo strato 11;
 - brim presente.
 
-Sporgenze attese nella vasca: 3,4-4,0 mm (i due strati a ponte sopra le sedi delle viti), 16 mm (fessura
-microSD, 13 mm), 25,6 mm (USB-C). Tutte a ventola accesa.
+Sporgenze attese nella vasca: 3,4-4,0 mm (i due strati a ponte sopra le sedi delle viti), 25,6 mm (USB-C; la fessura microSD non sta più nella vasca ma nel pannello posteriore, foro passante). Tutte a ventola accesa.
 
-## Tempi e grammi (OrcaSlicer, v4 coi profili completi, 3 pareti, infill 15 %; tutto rifatto il 29/09)
+## Tempi e grammi (OrcaSlicer, v4 coi profili completi, 3 pareti, infill 15 %; rifatto il 29/10)
+
+G-code del 29/10 in `stampa/2026-10-29/` (case con preamp, DC a D, tasti B3F/B32, microSD e vite di massa sul
+retro, torretta di massa nella vasca). `python3 gcode_check.py stampa/2026-10-29`: tutti a 85 °C, 245 → 240 °C,
+brim, ventola dallo strato 11 (le piastre di prova non ci arrivano). I file sciolti in `stampa/` sono del 29/09:
+non usarli.
 
 | Lavoro | Strato | Tempo | PETG |
 |---|---|---|---|
-| Piastre di prova (superiore + posteriore) | 0,3 | 1 h 30 + 0 h 37 | 23 + 9 g |
-| Vasca, con le orecchie | 0,2 | 8 h 00 | 107 g |
-| Pannello superiore | 0,3 | 5 h 53 | 92 g |
-| Pannello posteriore | 0,3 | 1 h 21 | 21 g |
-| Staffe OLED, due | 0,3 | 0 h 16 | 3 g |
-| Piatto unico, tutti i pezzi (305 × 325 mm) | 0,3 / 0,2 | 14 h 41 / 16 h 08 | 238 / 206 g |
+| Piastra di prova superiore | 0,3 | 1 h 30 | 23 g |
+| Piastra di prova posteriore (tutti i fori del retro, DC a D, fessura microSD) | 0,3 | 0 h 59 | 15 g |
+| Vasca, con le orecchie | 0,2 | 8 h 07 | 107 g |
+| Pannello superiore | 0,3 | 5 h 55 | 92 g |
+| Pannello posteriore (alto 20,4 in stampa per la culla della microSD) | 0,3 | 1 h 29 | 22 g |
+| Staffe OLED, due | 0,3 | 0 h 09 | 1,4 g |
+
+Il piatto unico non è stato rifatto il 29/10: si stampa pezzo per pezzo (vedi Ordine consigliato).
 
 Il pannello superiore va a 0,3: la profondità del logo (0,5) è tarata su un primo strato da 0,2 più uno da 0,3.
 

@@ -50,7 +50,8 @@ def leggi(path):
 
 
 def main():
-    files = sorted(STAMPA.glob("*.gcode"))
+    cartella = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else STAMPA   # es. stampa/2026-10-29
+    files = sorted(cartella.glob("*.gcode"))
     if not files:
         sys.exit("nessun G-code in case/stampa/")
     for f in files:

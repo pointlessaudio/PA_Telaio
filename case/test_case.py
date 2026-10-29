@@ -18,8 +18,10 @@ SORGENTE = (QUI / "case.py").read_text()
 MUTAZIONI = {
     "pot spostato sopra il Seed": ("POT_X = (132.0, 160.0, 188.0)", "POT_X = (30.0, 160.0, 188.0)"),
     "jack del retro troppo alti": ("Z_RETRO = 18.5", "Z_RETRO = 33.0"),
-    "foro dei tasti più stretto del cappuccio": ("TASTO = dict(cappuccio=11.8, gioco=0.3",
-                                                 "TASTO = dict(cappuccio=11.8, gioco=-0.6"),
+    "foro dei tasti più stretto del cappuccio": ("foro=9.7, pila", "foro=8.6, pila"),
+    "cappuccio dei tasti più largo del foro": ("TASTO = dict(cappuccio=9.5,", "TASTO = dict(cappuccio=12.0,"),
+    "cappuccio dei tasti non sporge dal pannello": ("pila=11.5, sporgenza=1.8", "pila=11.5, sporgenza=0.4"),
+    "cappuccio dei tasti sul corpo del tasto": ("pila=11.5, sporgenza", "pila=10.6, sporgenza"),
     "veroboard spinta sulla colonna posteriore": ("Y_SCHEDA_DIETRO = 95.0", "Y_SCHEDA_DIETRO = 118.0"),
     "USB-C lontana dalla parete": ("USB_GIOCO = 0.6", "USB_GIOCO = 3.0"),
     "case più basso di 4 mm": ("HF, HB = 25.0, 47.0", "HF, HB = 21.0, 43.0"),
@@ -47,6 +49,20 @@ MUTAZIONI = {
     "schedina preamp sulla veroboard": ("SCHEDINA = dict(x=(122.0, 184.0)", "SCHEDINA = dict(x=(60.0, 122.0)"),
     "schedina preamp contro i jack dietro": ("y=(51.0, 98.0), alt=17.5", "y=(60.0, 107.0), alt=17.5"),
     "schedina preamp troppo alta sotto i pot": ("y=(51.0, 98.0), alt=17.5", "y=(51.0, 98.0), alt=30.0"),
+    "vite di massa L0 sul jack IN R": ('MASSA_L0 = ("massa L0", 135.5, 32.0', 'MASSA_L0 = ("massa L0", 146.0, 22.0'),
+    "torretta di massa L1 sotto la veroboard": ("MASSA_L1 = dict(x=109.5, y=101.5", "MASSA_L1 = dict(x=60.0, y=60.0"),
+    # jack DC Lumberg (foro a D) e microSD sul pannello posteriore
+    "foro DC senza piatto (boccola libera di ruotare)": ('if "piatto" in t:', 'if "piatto_x" in t:'),
+    "foro DC con piatti troppo stretti per la boccola": ('s = s & Box(t["piatto"] + TOL_FORI, 40, 40)',
+                                                        's = s & Box(t["piatto"] - 1.0, 40, 40)'),
+    "foro DC tondo da 11 (vecchio) con boccola da 12,8": ('"dc": dict(foro=12.8, piatto=11.8, flangia=16.0',
+                                                         '"dc": dict(foro=12.8, piatto=12.8, flangia=16.0'),
+    "flangia DC Ø 16 contro il bordo del pannello": ('("DC 9V", 22.0, "dc")', '("DC 9V", 12.0, "dc")'),
+    "fessura microSD chiusa": ('fessura=(13.0, 2.6), pcb=(15.0', 'fessura=(10.0, 2.6), pcb=(15.0'),
+    "fessura microSD collidente con il foro del DC": ("SD = dict(x=23.0, z=31.5", "SD = dict(x=23.0, z=28.0"),
+    "microSD contro la scheda MIDI": ("SD = dict(x=23.0, z=31.5", "SD = dict(x=44.0, z=31.5"),
+    "microSD lontana dai pad D4-D6": ("SD = dict(x=23.0, z=31.5", "SD = dict(x=196.0, z=31.5"),
+    "microSD troppo alta sotto il pannello superiore": ("SD = dict(x=23.0, z=31.5", "SD = dict(x=23.0, z=41.0"),
 }
 
 FILTRO = sys.argv[1] if len(sys.argv) > 1 else ""
