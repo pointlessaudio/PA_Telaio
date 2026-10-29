@@ -22,7 +22,7 @@ Niente è ancora comprato, costruito o stampato. Edo vuole **tenere aperte tutte
   112AX/112BX, DC Lumberg a D, tasti Omron B3F + B32), con dentro veroboard, schedina preamp, scheda MIDI, microSD
   sul pannello posteriore, PRE e GAIN sul retro, vite di massa L0 e torretta L1. `OK: 5 pezzi, 106 componenti
   controllati, nessuna collisione`, 35 mutazioni su 35 RILEVATO; stampabilità: 6 pezzi senza supporti. G-code nuovi
-  in `case/stampa/2026-10-29/`. Cablaggio (76 fili, lunghezze di taglio) in `case/cablaggio.md`, schermatura e
+  in `case/stampa/2026-10-29/`. Cablaggio (80 fili, lunghezze di taglio) in `case/cablaggio.md`, schermatura e
   masse in `docs/schermatura_massa.md`. Ancora stimati: pot doppio GAIN, zoccolo microSD, spessore flangia DC.
 - **Componenti:** lista completa e carrelli per ogni strada in `hardware/ordine_componenti.md`. Nessun ordine
   fatto.
@@ -52,9 +52,8 @@ al collaudo, la strada di riserva è un 4PDT con due poli per canale).
 ## Punti aperti (29/09)
 
 - **Schema KiCad (29/10):** in `hardware/kicad/`, generato dalle netlist e verificato contro di esse (netlist di
-  KiCad uguale, ERC senza errori, 6/6 mutazioni rilevate). Manca la PCB. Due scostamenti da sistemare: il contatto
-  della punta dei jack d'ingresso a massa non è in `cablaggio.py`; il polo C del 3PDT nella pagina della
-  veroboard è la versione vecchia (`hardware/kicad/README.md`).
+  KiCad uguale, ERC senza errori, 6/6 mutazioni rilevate). Manca la PCB. I due scostamenti trovati trascrivendo (contatto
+  della punta dei jack d'ingresso, polo C del 3PDT nella pagina) sono sistemati (`hardware/kicad/README.md`).
 - **Preamp (29/10):** procurarsi J201 genuini e tenere quelli con IDSS ≥ 0,5 mA;
   ingombro vero del pot doppio (in `case.py` è stimato); PRE e GAIN anche in `scatola.py` (1590DD) e nella dima;
   rumore col GAIN al minimo da giudicare a orecchio.

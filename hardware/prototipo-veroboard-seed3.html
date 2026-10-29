@@ -3899,13 +3899,14 @@ comuni, le due file esterne le due posizioni.</p>
 <tbody>
 <tr><td>A (sinistro)</td><td>punta jack OUT L</td><td>piazzola OUT L</td><td>punta jack IN L, prima di Rs</td></tr>
 <tr><td>B (destro)</td><td>punta jack OUT R</td><td>piazzola OUT R</td><td>punta jack IN R, prima di Rs</td></tr>
-<tr><td>C (LED)</td><td>catodo LED bypass</td><td>GND</td><td>libero</td></tr>
+<tr><td>C (LED)</td><td>VA tramite 4,7 kΩ saldata sul terminale</td><td>anodo LED bypass</td><td>libero</td></tr>
 </tbody></table></div>
-<p class="cap">Anodo del LED bypass tramite 1 kΩ a +3V3D, dalla scheda I/O: acceso a effetto inserito. In bypass
+<p class="cap">VA arriva dalla piazzola VA EXT; catodo del LED bypass alla massa più vicina (circa 1,5 mA con un LED
+rosso): acceso a effetto inserito. Come in <code>case/cablaggio.md</code> (29/10). In bypass
 l'ingresso resta collegato anche al buffer da 1 MΩ, che non carica il segnale; il deviatore INST/LINE agisce solo
 sul ramo effetto. R14/R18 da 100 kΩ tengono a massa i condensatori d'uscita: niente colpo alla commutazione.
-Il bypass in DSP su K1 resta, per gli effetti con code che devono sfumare. Se vuoi che il firmware conosca lo
-stato del 3PDT, collega il comune del polo C a D1 (libero, 5V-tollerante) invece che al LED.</p>
+Il bypass in DSP su K1 resta, per gli effetti con code che devono sfumare. Il polo C porta VA (8,5 V): non
+collegarlo a un pin del Seed per leggere lo stato del 3PDT.</p>
 
 <h3>Componenti fuori scheda</h3>
 <div class="tbl"><table>

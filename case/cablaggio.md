@@ -68,6 +68,7 @@ alimentazioni rosso/arancione). Schermato: cavetto con calza, calza a massa dal 
 | IN L e | PRE:COM L | VB:IN L | IN L | schermato | bianco | 49 | **70** | si | lato veroboard | PRE comune -> piazzola IN della veroboard (via) |
 | IN L f | ILS:GND L | JIL:sleeve | GND | normale | nero | 101 | **125** | no | - | giunto di massa di Rsh/calze -> manicotto IN (via) |
 | IN L g | JIL:sleeve | VB:IN L GND | GND | normale | nero | 63 | **85** | no | - | manicotto IN -> piazzola GND (via) |
+| IN L h | JIL:tn | JIL:sleeve | GND | normale | nero | 4 | **20** | no | - | ponticello sul jack: contatto della punta a massa, a jack scollegato l'ingresso tace |
 | BYP L | JIL:tip | FS:A byp | IN L | schermato | bianco | 156 | **185** | si | lato jack | ingresso diretto -> 3PDT, posizione bypass (via) |
 | OUT L a | VB:OUT L | FS:A eff | OUT L | normale | bianco | 140 | **170** | no | - | veroboard (100R) -> 3PDT, posizione effetto (via) |
 | OUT L b | FS:A com | JOL:tip | OUT L | schermato | bianco | 107 | **135** | si | lato jack | 3PDT comune -> punta jack OUT (in bypass porta il segnale diretto) (via) |
@@ -79,6 +80,7 @@ alimentazioni rosso/arancione). Schermato: cavetto con calza, calza a massa dal 
 | IN R e | PRE:COM R | VB:IN R | IN R | schermato | rosso | 123 | **150** | si | lato veroboard | PRE comune -> piazzola IN della veroboard (via) |
 | IN R f | ILS:GND R | JIR:sleeve | GND | normale | nero | 116 | **140** | no | - | giunto di massa di Rsh/calze -> manicotto IN (via) |
 | IN R g | JIR:sleeve | VB:IN R GND | GND | normale | nero | 158 | **190** | no | - | manicotto IN -> piazzola GND (via) |
+| IN R h | JIR:tn | JIR:sleeve | GND | normale | nero | 4 | **20** | no | - | ponticello sul jack: contatto della punta a massa, a jack scollegato l'ingresso tace |
 | BYP R | JIR:tip | FS:B byp | IN R | schermato | rosso | 141 | **170** | si | lato jack | ingresso diretto -> 3PDT, posizione bypass (via) |
 | OUT R a | VB:OUT R | FS:B eff | OUT R | normale | rosso | 92 | **115** | no | - | veroboard (100R) -> 3PDT, posizione effetto (via) |
 | OUT R b | FS:B com | JOR:tip | OUT R | schermato | rosso | 126 | **155** | si | lato jack | 3PDT comune -> punta jack OUT (in bypass porta il segnale diretto) (via) |
@@ -145,7 +147,7 @@ alimentazioni rosso/arancione). Schermato: cavetto con calza, calza a massa dal 
 | Tipo | Fili | Lunghezza di taglio totale |
 |---|---|---|
 | intrecciato | 14 | 1510 mm (1.51 m) |
-| normale | 50 | 5365 mm (5.37 m) |
+| normale | 52 | 5405 mm (5.41 m) |
 | schermato | 14 | 1820 mm (1.82 m) |
 
 Componenti fuori scheda da saldare (non sono fili): Rs 10 kOhm sulla punta di IN L e IN R; Rsh 3,3 kOhm fra LINE e il giunto

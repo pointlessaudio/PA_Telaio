@@ -53,13 +53,13 @@ segno di non collegato tolto, massa staccata) e la verifica deve accorgersene og
 La verifica prova che lo schema riproduce le fonti, non che le fonti siano giuste: quelle sono verificate dai
 loro script (`layout.py`, `layout_preamp.py`, `cablaggio.py`).
 
-## Scostamenti trovati trascrivendo
+## Scostamenti trovati trascrivendo (sistemati il 29/10)
 
-- **Polo C del 3PDT (LED del bypass):** la pagina `prototipo-veroboard-seed3.html` ha ancora la versione vecchia
-  (catodo sul comune, anodo con 1 kΩ a 3V3D). Lo schema segue `cablaggio.py` (29/10): R 4,7 kΩ da VA sul comune,
-  posizione effetto all'anodo, catodo a massa.
-- **Contatto della punta dei jack d'ingresso:** la pagina chiede che vada a massa (a jack scollegato l'ingresso
-  non fruscia), ma in `cablaggio.py` quel filo non c'è. Nello schema è un ponticello sul jack, fra contatto e
-  manicotto (J201, J202): da aggiungere al cablaggio.
+- **Polo C del 3PDT (LED del bypass):** la pagina `prototipo-veroboard-seed3.html` aveva la versione vecchia
+  (catodo sul comune, anodo con 1 kΩ a 3V3D). Ora pagina e schema seguono `cablaggio.py`: R 4,7 kΩ da VA sul
+  comune, posizione effetto all'anodo, catodo a massa.
+- **Contatto della punta dei jack d'ingresso:** va a massa (a jack scollegato l'ingresso tace), ma in
+  `cablaggio.py` il filo mancava. Ora c'è: terminale `JIL:tn` / `JIR:tn` e ponticello `IN L h` / `IN R h` verso
+  il manicotto.
 - **GAIN:** ogni gang del pot doppio è usata come reostato, cursore e un capo (pagina di montaggio del preamp);
   il terzo capo resta libero.

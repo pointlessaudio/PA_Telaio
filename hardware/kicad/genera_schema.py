@@ -187,8 +187,8 @@ for p in LP.P:
 NC = "NC"
 FUORI = [
     # ingresso: jack, Rs 10k sulla punta, deviatore INST/LINE con Rsh, deviatore PRE, GAIN con 47k
-    ("J201", "JACK_TS", "IN L (112AX)", {"T": "JIL:tip", "TN": "JIL:sleeve", "S": "JIL:sleeve"}, "Ingressi e preamp"),
-    ("J202", "JACK_TS", "IN R (112AX)", {"T": "JIR:tip", "TN": "JIR:sleeve", "S": "JIR:sleeve"}, "Ingressi e preamp"),
+    ("J201", "JACK_TS", "IN L (112AX)", {"T": "JIL:tip", "TN": "JIL:tn", "S": "JIL:sleeve"}, "Ingressi e preamp"),
+    ("J202", "JACK_TS", "IN R (112AX)", {"T": "JIR:tip", "TN": "JIR:tn", "S": "JIR:sleeve"}, "Ingressi e preamp"),
     ("R201", "R", "10k (Rs L)", {"1": "JIL:tip", "2": "JIL:rs"}, "Ingressi e preamp"),
     ("R202", "R", "10k (Rs R)", {"1": "JIR:tip", "2": "JIR:rs"}, "Ingressi e preamp"),
     ("SW201", "DPDT", "INST/LINE", {"1": NC, "2": "ILS:COM L", "3": "int:rsh L", "4": NC, "5": "ILS:COM R", "6": "int:rsh R"},

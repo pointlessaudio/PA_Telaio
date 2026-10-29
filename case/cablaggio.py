@@ -163,6 +163,7 @@ def terminali(ori=None, org=SCH_ORG0):
         add(f"JI{s}:tip", (x - 3.5, yl, zl), f"tip_{s}", nome, "punta")
         add(f"JI{s}:rs", (x - 3.5, yl, zl), f"in_{s}", nome, "capo libero della Rs 10k sulla punta")
         add(f"JI{s}:sleeve", (x + 3.5, yl, zl), "GND", nome, "manicotto")
+        add(f"JI{s}:tn", (x, yl, zl), "GND", nome, "contatto di commutazione della punta (a massa)")
     for s, nome in (("L", "OUT L"), ("R", "OUT R")):
         x = xr[nome]
         add(f"JO{s}:tip", (x - 3.5, yl, zl), f"jo_{s}", nome, "punta")
@@ -307,6 +308,8 @@ def fili(T):
         w(f"IN {s} f", f"ILS:GND {s}", f"JI{s}:sleeve", "GND", "normale",
           "giunto di massa di Rsh/calze -> manicotto IN")
         w(f"IN {s} g", f"JI{s}:sleeve", f"VB:IN {s} GND", "GND", "normale", "manicotto IN -> piazzola GND")
+        w(f"IN {s} h", f"JI{s}:tn", f"JI{s}:sleeve", "GND", "normale",
+          "ponticello sul jack: contatto della punta a massa, a jack scollegato l'ingresso tace")
         pk = "A" if s == "L" else "B"
         w(f"BYP {s}", f"JI{s}:tip", f"FS:{pk} byp", f"IN {s}", "schermato",
           "ingresso diretto -> 3PDT, posizione bypass", "lato jack", hz=True)
