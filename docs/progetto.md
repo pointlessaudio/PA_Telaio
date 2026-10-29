@@ -77,7 +77,8 @@ banco. Lo stato e i punti aperti stanno in `stato.md`. Percorsi relativi alla ra
   - **Schedina a parte** fra i jack d'ingresso e la scheda principale: il preamp si prova e si toglie senza
     toccare la veroboard verificata. Il buffer TLC2272 dopo il LEVEL è quello della scheda principale.
   - **PRE e GAIN sul pannello posteriore**: PRE (mini DPDT) esclude il preamp (passthrough, come INST/LINE
-    per la linea), GAIN è un pot che si regola di rado.
+    per la linea), GAIN è un pot che si regola di rado. Col PRE spento l'ingresso vede ~500 kΩ
+    (l'ingresso della schedina resta sul nodo INST/LINE): accettato il 29/10, riserva un 4PDT.
   - Aperti: rumore col GAIN al minimo (3,6-3,75 µV contro 3,5), J201 da scegliere con IDSS ≥ 0,5 mA (a guadagni
     moderati quelli con IDSS bassa saturano con la terza armonica sopra), ascolto
     del circuito vero (la sorgente simulata è una resistenza da 10K, non un pickup; modello J201 senza rumore 1/f).

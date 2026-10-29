@@ -42,17 +42,18 @@ Decisioni aperte, per Edo:
 1. contenitore (una delle tre strade);
 2. jack da 6,35: per la versione stampata Switchcraft 112AX/112BX (29/10); per la 1590DD aperta (vedi
    `hardware/ordine_componenti.md`);
-5. deviatore PRE: con un DPDT (un polo per canale) commuta solo l'uscita del preamp e l'ingresso della schedina
-   resta sul nodo INST/LINE, quindi con PRE spento la chitarra vede ~500 kΩ invece di 1 MΩ (`case/cablaggio.md`).
-   Da scegliere: deviatore 4PDT (due poli per canale), oppure accettarlo;
 3. jack MIDI e lettore microSD: per la versione stampata dentro da subito (29/10); per la 1590DD aperta;
 4. per la 1590DD: grezza o verniciata (e colore), stampa UV sì o no.
+
+Decisa (29/10): deviatore PRE resta DPDT. Con PRE spento l'ingresso della schedina resta sul nodo INST/LINE e
+la sorgente vede ~500 kΩ invece di 1 MΩ: accettato (con un pickup passivo si perde un filo di acuti; da sentire
+al collaudo, la strada di riserva è un 4PDT con due poli per canale).
 
 ## Punti aperti (29/09)
 
 - **Preamp (29/10):** procurarsi J201 genuini e tenere quelli con IDSS ≥ 0,5 mA;
   ingombro vero del pot doppio (in `case.py` è stimato); PRE e GAIN anche in `scatola.py` (1590DD) e nella dima;
-  rumore col GAIN al minimo da giudicare a orecchio; deviatore PRE (decisione 5).
+  rumore col GAIN al minimo da giudicare a orecchio.
 - **Chiron:** `TELAIO_1` (29/09) si è staccata al primo strato, la terza stampa su questa macchina che cede lì:
   il problema è l'altezza dell'ugello. Prima di riprovare: pulizia, livellamento a 85 °C nel modo giusto (manuale
   o assistito), prova del foglio, colla (Edo non ce l'ha), controllo della skirt; tutto in `case/stampa_chiron.md`.
