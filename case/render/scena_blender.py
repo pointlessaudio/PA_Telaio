@@ -3,7 +3,7 @@ Render del case PA-TELAIO in Blender (Cycles, headless). Legge le parti STL e sc
 prodotti da render/esporta.py. Ricetta di luce e materiali: skill blender-render-pa
 (nodi Principled espliciti, energie piccole, esposizione negativa).
 
-    /Applications/Blender.app/Contents/MacOS/Blender -b -P render/scena_blender.py -- [prova]
+    /Applications/Blender.app/Contents/MacOS/Blender -b -P render/scena_blender.py -- [cartella] [prova]
 """
 import json
 import math
@@ -16,6 +16,9 @@ from mathutils import Euler, Matrix, Vector
 QUI = Path(__file__).resolve().parent
 PARTI = QUI / "parti"
 ARGS = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
+# cartella d'uscita (relativa a render/): i render non sovrascrivono quelli vecchi
+USCITA = QUI / next((a for a in ARGS if a != "prova"), ".")
+USCITA.mkdir(parents=True, exist_ok=True)
 PROVA = "prova" in ARGS
 MM = 0.001
 SCENA = json.loads((QUI / "scena.json").read_text())
@@ -174,9 +177,15 @@ for j in SCENA["retro"]:
     elif j["tipo"] == "jack35":
         cilindro(f"dado {j['nome']}", M_METALLO, base @ Matrix.Translation((0, 0, -1.0 * MM)), 8.0, 2.0)
         cilindro(f"foro {j['nome']}", M_BUIO, base @ Matrix.Translation((0, 0, -1.6 * MM)), 3.6, 1.3)
-    elif j["tipo"] == "dc":
-        cilindro(f"dado {j['nome']}", M_METALLO, base @ Matrix.Translation((0, 0, -1.2 * MM)), 13.0, 2.4, 6)
-        cilindro(f"foro {j['nome']}", M_BUIO, base @ Matrix.Translation((0, 0, -1.9 * MM)), 6.0, 1.3)
+    elif j["tipo"] == "dc":                       # Lumberg NEB/J 21C: flangia tonda fuori, dado dentro
+        cilindro(f"flangia {j['nome']}", M_METALLO, base @ Matrix.Translation((0, 0, -0.5 * MM)), 16.0, 1.0)
+        cilindro(f"foro {j['nome']}", M_BUIO, base @ Matrix.Translation((0, 0, -0.6 * MM)), 6.0, 1.3)
+    elif j["tipo"] == "pot_doppio":               # GAIN: dado M7 e manopolina sull'albero da 15
+        cilindro(f"dado {j['nome']}", M_METALLO, base @ Matrix.Translation((0, 0, -1.0 * MM)), 10.0, 2.0, 6)
+        cilindro(f"manopola {j['nome']}", M_MANOPOLA, base @ Matrix.Translation((0, 0, -8.0 * MM)), 12.0, 11.0)
+        cubo(f"indice {j['nome']}", M_INDICE, base @ Matrix.Translation((0, 3.0 * MM, -13.55 * MM)), (1.0, 4.5, 0.12))
+    elif j["tipo"] == "vite_massa":               # vite M3 del capocorda L0
+        cilindro(f"testa {j['nome']}", M_METALLO, base @ Matrix.Translation((0, 0, -0.9 * MM)), 5.5, 1.8)
     elif j["tipo"] == "levetta":
         cilindro(f"dado {j['nome']}", M_METALLO, base @ Matrix.Translation((0, 0, -1.0 * MM)), 9.0, 2.0, 6)
         leva = base @ Matrix.Translation((0, 0, -6.5 * MM)) @ Matrix.Rotation(math.radians(18), 4, "X")
@@ -265,7 +274,7 @@ def scatta(nome, direzione, distanza, mira=(0, 0, 0)):
     cam.location = target + Vector(direzione).normalized() * distanza
     cam.rotation_euler = (target - cam.location).to_track_quat("-Z", "Y").to_euler()
     cam_data.dof.focus_distance = (target - cam.location).length
-    scene.render.filepath = str(QUI / f"{nome}{'_prova' if PROVA else ''}.png")
+    scene.render.filepath = str(USCITA / f"{nome}{'_prova' if PROVA else ''}.png")
     bpy.ops.render.render(write_still=True)
 
 

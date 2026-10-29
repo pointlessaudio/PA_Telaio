@@ -8,11 +8,21 @@ A Pointless Audio project, running alongside its plugins.
 
 - stereo 1/4" in and out, instrument (1 MΩ) or line level (INST/LINE switch, −12 dB);
 - input and output stages with two TLC2272 op-amps, on stripboard;
+- discrete JFET input preamp (J201, two stages per channel) on a separate small board, switchable (PRE) with
+  GAIN on the rear: simulated in ngspice, `hardware/preamp/`;
 - 6 pots, a push encoder, 2 keys, a jack for an external dual footswitch;
 - 2.42" 128×64 OLED;
 - TRS type A MIDI in and out, microSD (on a separate I/O board);
 - stereo true bypass with a 3PDT footswitch, plus DSP bypass for trails;
 - enclosure: a parametric 3D-printed case or a 1590DD aluminium box.
+
+![PA-TELAIO, top panel](docs/img/case_fronte.jpg)
+
+| Rear: jacks, MIDI, DC, preamp GAIN and PRE, microSD | Detail |
+|---|---|
+| ![Rear](docs/img/case_retro.jpg) | ![Detail](docs/img/case_dettaglio.jpg) |
+
+*Renders of the model (`case/case.py`, 29 Oct 2026), not photos: the case has not been printed yet.*
 
 ## Status
 
@@ -55,11 +65,11 @@ Python 3.12), no manual venv. Outputs are not in the repository and are regenera
 ```bash
 cd case
 uv run case.py            # builds, checks, exports to out/: "OK ... nessuna collisione" (no collisions)
-uv run test_case.py       # 16 mutations, every line RILEVATO (takes a few minutes)
+uv run test_case.py       # 35 mutations, every line RILEVATO (takes a few minutes)
 uv run stampabilita.py    # layer-by-layer printability, no supports
 uv run scatola.py         # 1590DD box: model, drilling template and coordinates
 uv run piatto_unico.py    # all parts on a single build plate
-uv run render/esporta.py && blender -b -P render/scena_blender.py   # renders into render/
+uv run render/esporta.py && blender -b -P render/scena_blender.py -- YYYY-MM-DD   # renders into render/YYYY-MM-DD/
 ```
 
 - `case/out/`: STL files already oriented for printing, STEP, `assieme.step` and `assieme.glb`; `out/servizio/` is

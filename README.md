@@ -6,8 +6,18 @@ Strumento da tavolo per prototipare effetti audio su [Daisy Seed3](https://elect
 Electro-Smith. Un solo hardware, tanti effetti: si cambia il firmware, non la scatola. L'idea viene da norns e
 dal Torso S-4. Progetto di Pointless Audio, parallelo ai plugin.
 
+![PA-TELAIO, pannello superiore](docs/img/case_fronte.jpg)
+
+| Retro: jack, MIDI, DC, GAIN e PRE del preamp, microSD | Dettaglio |
+|---|---|
+| ![Retro](docs/img/case_retro.jpg) | ![Dettaglio](docs/img/case_dettaglio.jpg) |
+
+*Render del modello (`case/case.py`, 29/10/2026), non foto: il case non è ancora stato stampato.*
+
 - ingresso e uscita stereo da 6,35 mm, strumento (1 MΩ) o linea (deviatore INST/LINE, −12 dB);
 - stadi d'ingresso e d'uscita con due operazionali TLC2272, su veroboard;
+- preamp JFET discreto d'ingresso (J201, due stadi per canale) su una schedina a parte, escludibile (PRE) e con
+  GAIN sul retro: simulato in ngspice, `hardware/preamp/`;
 - 6 potenziometri, un encoder con pulsante, 2 tasti, un jack per doppio pedale esterno;
 - OLED 2,42" 128×64;
 - MIDI TRS tipo A in e out, microSD (scheda I/O a parte);
@@ -56,11 +66,12 @@ Python 3.12), niente venv a mano. Gli output non sono nel repository e si rigene
 ```bash
 cd case
 uv run case.py            # costruisce, verifica, esporta in out/: "OK ... nessuna collisione"
-uv run test_case.py       # 16 mutazioni, ogni riga RILEVATO (qualche minuto)
+uv run test_case.py       # 35 mutazioni, ogni riga RILEVATO (qualche minuto)
+uv run cablaggio.py && uv run test_cablaggio.py   # cablaggio interno: fili, percorsi, lunghezze
 uv run stampabilita.py    # stampabilità strato per strato, senza supporti
 uv run scatola.py         # scatola 1590DD: modello, dima e coordinate di foratura
 uv run piatto_unico.py    # tutti i pezzi su un piatto solo
-uv run render/esporta.py && blender -b -P render/scena_blender.py   # render in render/
+uv run render/esporta.py && blender -b -P render/scena_blender.py -- AAAA-MM-GG   # render in render/AAAA-MM-GG/
 ```
 
 - `case/out/`: STL già orientati per la stampa, STEP, `assieme.step` e `assieme.glb`; `out/servizio/` è la variante

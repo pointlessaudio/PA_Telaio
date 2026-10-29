@@ -63,6 +63,9 @@ def main():
     for nome, x, tipo in C.RETRO:
         t = C.TIPI_RETRO[tipo]
         scena["retro"].append({"nome": nome, "pos": [x, C.Y_PANNELLO_EST, C.Z_RETRO], "tipo": tipo, "foro": t["foro"]})
+    for nome, x, z, tipo in C.RETRO_PRE:            # preamp: GAIN, PRE e vite di massa L0
+        scena["retro"].append({"nome": nome, "pos": [x, C.Y_PANNELLO_EST, z], "tipo": tipo,
+                               "foro": C.TIPI_PRE[tipo]["foro"]})
     scena["usb"] = [C.T_WALL + C.USB_GIOCO, C.seed_y_centro(), C.usb_z()]
     scena["footswitch"] = {**loc_info(C.sul_top(*C.FS_C)), "dado": list(C.FS["dado"]), "attuatore": list(C.FS["attuatore"])}
     scena["pianta"] = [C.W, C.D]
