@@ -24,7 +24,7 @@ norns e Torso S-4. Questa è la fase prototipo: una sola unità.
 | Componenti da comprare, carrelli per ogni strada | `hardware/ordine_componenti.md` |
 | Preamp JFET d'ingresso: simulazione, circuito V4a, collaudo a banco | `hardware/preamp/` (`risultati.md`, `collaudo.md`, `sim/`) |
 | Tre strade per il circuito (veroboard, PCB JLCPCB, CNC) | `hardware/strade_circuito.md` |
-| Schema KiCad (generato dalle netlist, non si modifica a mano) | `hardware/kicad/` (`README.md`, `genera_schema.py`) |
+| Schema KiCad disegnato (10 pagine A3, PDF), verificato contro le netlist | `hardware/kicad/` (`README.md`, `fogli/`) |
 | Case stampato: modello e verifiche (sorgente di verità) | `case/case.py`, `case/test_case.py` |
 | Case stampato in casa sulla Chiron | `case/stampa_chiron.md` |
 | Cablaggio interno: fili, lunghezze di taglio, orientamento della schedina | `case/cablaggio.py`, `case/cablaggio.md` |
@@ -40,7 +40,7 @@ norns e Torso S-4. Questa è la fase prototipo: una sola unità.
 cd hardware && python3 layout.py && python3 test_layout.py && python3 page.py
 cd case && uv run case.py && uv run test_case.py
 cd case && uv run cablaggio.py && uv run test_cablaggio.py && uv run stampabilita.py
-cd hardware/kicad && uv run genera_schema.py && python3 verifica_schema.py && python3 test_schema.py
+cd hardware/kicad && uv run genera_schema.py && python3 disegna_schema.py && python3 verifica_schema.py && python3 test_schema.py
 ```
 
 `layout.py` deve stampare "OK ... nessun corto, nessun aperto", `case.py` "OK ... nessuna collisione", i test di

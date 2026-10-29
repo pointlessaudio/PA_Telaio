@@ -19,3 +19,4 @@ hardware/kicad/*-backups/
 hardware/kicad/fp-info-cache
 hardware/kicad/_autosave-*
 hardware/kicad/*.lck
+hardware/kicad/piazzati.json

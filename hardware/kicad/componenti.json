@@ -1,0 +1,1545 @@
+{
+ "seed_nomi": {
+  "1": "D0",
+  "2": "D1",
+  "3": "D2",
+  "4": "D3",
+  "5": "D4",
+  "6": "D5",
+  "7": "D6",
+  "8": "D7",
+  "9": "D8",
+  "10": "D9",
+  "11": "D10",
+  "12": "D11",
+  "13": "D12",
+  "14": "D13",
+  "15": "D14",
+  "16": "IN 1",
+  "17": "IN 2",
+  "18": "OUT 1",
+  "19": "OUT 2",
+  "20": "AGND",
+  "21": "3V3A",
+  "22": "A0",
+  "23": "A1",
+  "24": "A2",
+  "25": "A3",
+  "26": "A4",
+  "27": "A5",
+  "28": "A6",
+  "29": "A7",
+  "30": "A8",
+  "31": "A9",
+  "32": "A10",
+  "33": "D26",
+  "34": "D27",
+  "35": "A11",
+  "36": "D29",
+  "37": "D30",
+  "38": "3V3D",
+  "39": "VIN",
+  "40": "DGND"
+ },
+ "componenti": {
+  "D1": {
+   "sim": "D",
+   "val": "1N5817",
+   "fp": "Diode_THT:D_DO-41_SOD81_P10.16mm_Horizontal",
+   "layout": "D1",
+   "blocco": "Veroboard: alimentazione, ingressi, uscite",
+   "pins": {
+    "2": "DCIN",
+    "1": "V9"
+   }
+  },
+  "R1": {
+   "sim": "R",
+   "val": "3R3",
+   "fp": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+   "layout": "R1",
+   "blocco": "Veroboard: alimentazione, ingressi, uscite",
+   "pins": {
+    "1": "V9",
+    "2": "VIN_S"
+   }
+  },
+  "C1": {
+   "sim": "CP",
+   "val": "100µF",
+   "fp": "Capacitor_THT:CP_Radial_D5.0mm_P2.50mm",
+   "layout": "C1",
+   "blocco": "Veroboard: alimentazione, ingressi, uscite",
+   "pins": {
+    "1": "VIN_S",
+    "2": "GND"
+   }
+  },
+  "R2": {
+   "sim": "R",
+   "val": "10R",
+   "fp": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+   "layout": "R2",
+   "blocco": "Veroboard: alimentazione, ingressi, uscite",
+   "pins": {
+    "1": "V9",
+    "2": "VA"
+   }
+  },
+  "C2": {
+   "sim": "CP",
+   "val": "100µF",
+   "fp": "Capacitor_THT:CP_Radial_D5.0mm_P2.50mm",
+   "layout": "C2",
+   "blocco": "Veroboard: alimentazione, ingressi, uscite",
+   "pins": {
+    "1": "VA",
+    "2": "GND"
+   }
+  },
+  "C3": {
+   "sim": "C",
+   "val": "100nF",
+   "fp": "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm",
+   "layout": "C3",
+   "blocco": "Veroboard: alimentazione, ingressi, uscite",
+   "pins": {
+    "1": "VA",
+    "2": "GND"
+   }
+  },
+  "R3": {
+   "sim": "R",
+   "val": "10K",
+   "fp": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+   "layout": "R3",
+   "blocco": "Veroboard: alimentazione, ingressi, uscite",
+   "pins": {
+    "1": "VA",
+    "2": "VB"
+   }
+  },
+  "R4": {
+   "sim": "R",
+   "val": "10K",
+   "fp": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+   "layout": "R4",
+   "blocco": "Veroboard: alimentazione, ingressi, uscite",
+   "pins": {
+    "1": "VB",
+    "2": "GND"
+   }
+  },
+  "C4": {
+   "sim": "CP",
+   "val": "47µF",
+   "fp": "Capacitor_THT:CP_Radial_D5.0mm_P2.50mm",
+   "layout": "C4",
+   "blocco": "Veroboard: alimentazione, ingressi, uscite",
+   "pins": {
+    "1": "VB",
+    "2": "GND"
+   }
+  },
+  "C5": {
+   "sim": "C",
+   "val": "100nF",
+   "fp": "Capacitor_THT:C_Rect_L7.2mm_W3.5mm_P5.00mm_FKS2_FKP2_MKS2_MKP2",
+   "layout": "C5",
+   "blocco": "Veroboard: alimentazione, ingressi, uscite",
+   "pins": {
+    "1": "JINL",
+    "2": "INLB"
+   }
+  },
+  "R5": {
+   "sim": "R",
+   "val": "1M",
+   "fp": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+   "layout": "R5",
+   "blocco": "Veroboard: alimentazione, ingressi, uscite",
+   "pins": {
+    "1": "INLB",
+    "2": "VB"
+   }
+  },
+  "R6": {
+   "sim": "R",
+   "val": "1M",
+   "fp": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+   "layout": "R6",
+   "blocco": "Veroboard: alimentazione, ingressi, uscite",
+   "pins": {
+    "1": "JINL",
+    "2": "GND"
+   }
+  },
+  "C19": {
+   "sim": "C",
+   "val": "100pF",
+   "fp": "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm",
+   "layout": "C19",
+   "blocco": "Veroboard: alimentazione, ingressi, uscite",
+   "pins": {
+    "1": "JINL",
+    "2": "GND"
+   }
+  },
+  "R7": {
+   "sim": "R",
+   "val": "1K",
+   "fp": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+   "layout": "R7",
+   "blocco": "Veroboard: alimentazione, ingressi, uscite",
+   "pins": {
+    "1": "U1A_OUT",
+    "2": "INLF"
+   }
+  },
+  "C6": {
+   "sim": "C",
+   "val": "2.2nF",
+   "fp": "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm",
+   "layout": "C6",
+   "blocco": "Veroboard: alimentazione, ingressi, uscite",
+   "pins": {
+    "1": "INLF",
+    "2": "GND"
+   }
+  },
+  "C7": {
+   "sim": "CP",
+   "val": "10µF",
+   "fp": "Capacitor_THT:CP_Radial_D5.0mm_P2.50mm",
+   "layout": "C7",
+   "blocco": "Veroboard: alimentazione, ingressi, uscite",
+   "pins": {
+    "1": "INLF",
+    "2": "SIN1"
+   }
+  },
+  "C8": {
+   "sim": "C",
+   "val": "100nF",
+   "fp": "Capacitor_THT:C_Rect_L7.2mm_W3.5mm_P5.00mm_FKS2_FKP2_MKS2_MKP2",
+   "layout": "C8",
+   "blocco": "Veroboard: alimentazione, ingressi, uscite",
+   "pins": {
+    "1": "JINR",
+    "2": "INRB"
+   }
+  },
+  "R8": {
+   "sim": "R",
+   "val": "1M",
+   "fp": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+   "layout": "R8",
+   "blocco": "Veroboard: alimentazione, ingressi, uscite",
+   "pins": {
+    "1": "INRB",
+    "2": "VB"
+   }
+  },
+  "R9": {
+   "sim": "R",
+   "val": "1M",
+   "fp": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+   "layout": "R9",
+   "blocco": "Veroboard: alimentazione, ingressi, uscite",
+   "pins": {
+    "1": "JINR",
+    "2": "GND"
+   }
+  },
+  "C20": {
+   "sim": "C",
+   "val": "100pF",
+   "fp": "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm",
+   "layout": "C20",
+   "blocco": "Veroboard: alimentazione, ingressi, uscite",
+   "pins": {
+    "1": "JINR",
+    "2": "GND"
+   }
+  },
+  "R10": {
+   "sim": "R",
+   "val": "1K",
+   "fp": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+   "layout": "R10",
+   "blocco": "Veroboard: alimentazione, ingressi, uscite",
+   "pins": {
+    "1": "U1B_OUT",
+    "2": "INRF"
+   }
+  },
+  "C9": {
+   "sim": "C",
+   "val": "2.2nF",
+   "fp": "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm",
+   "layout": "C9",
+   "blocco": "Veroboard: alimentazione, ingressi, uscite",
+   "pins": {
+    "1": "INRF",
+    "2": "GND"
+   }
+  },
+  "C10": {
+   "sim": "CP",
+   "val": "10µF",
+   "fp": "Capacitor_THT:CP_Radial_D5.0mm_P2.50mm",
+   "layout": "C10",
+   "blocco": "Veroboard: alimentazione, ingressi, uscite",
+   "pins": {
+    "1": "INRF",
+    "2": "SIN2"
+   }
+  },
+  "C11": {
+   "sim": "C",
+   "val": "100nF",
+   "fp": "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm",
+   "layout": "C11",
+   "blocco": "Veroboard: alimentazione, ingressi, uscite",
+   "pins": {
+    "1": "VA",
+    "2": "GND"
+   }
+  },
+  "C12": {
+   "sim": "CP",
+   "val": "10µF",
+   "fp": "Capacitor_THT:CP_Radial_D5.0mm_P2.50mm",
+   "layout": "C12",
+   "blocco": "Veroboard: alimentazione, ingressi, uscite",
+   "pins": {
+    "1": "OLC",
+    "2": "SOUT1"
+   }
+  },
+  "R11": {
+   "sim": "R",
+   "val": "10K",
+   "fp": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+   "layout": "R11",
+   "blocco": "Veroboard: alimentazione, ingressi, uscite",
+   "pins": {
+    "1": "OLC",
+    "2": "U2A_NEG"
+   }
+  },
+  "R12": {
+   "sim": "R",
+   "val": "10K",
+   "fp": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+   "layout": "R12",
+   "blocco": "Veroboard: alimentazione, ingressi, uscite",
+   "pins": {
+    "1": "U2A_NEG",
+    "2": "U2A_OUT"
+   }
+  },
+  "C13": {
+   "sim": "C",
+   "val": "390pF",
+   "fp": "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm",
+   "layout": "C13",
+   "blocco": "Veroboard: alimentazione, ingressi, uscite",
+   "pins": {
+    "1": "U2A_NEG",
+    "2": "U2A_OUT"
+   }
+  },
+  "C14": {
+   "sim": "CP",
+   "val": "10µF",
+   "fp": "Capacitor_THT:CP_Radial_D5.0mm_P2.50mm",
+   "layout": "C14",
+   "blocco": "Veroboard: alimentazione, ingressi, uscite",
+   "pins": {
+    "1": "U2A_OUT",
+    "2": "OLO"
+   }
+  },
+  "R13": {
+   "sim": "R",
+   "val": "100R",
+   "fp": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+   "layout": "R13",
+   "blocco": "Veroboard: alimentazione, ingressi, uscite",
+   "pins": {
+    "1": "OLO",
+    "2": "JOUTL"
+   }
+  },
+  "R14": {
+   "sim": "R",
+   "val": "100K",
+   "fp": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+   "layout": "R14",
+   "blocco": "Veroboard: alimentazione, ingressi, uscite",
+   "pins": {
+    "1": "JOUTL",
+    "2": "GND"
+   }
+  },
+  "C15": {
+   "sim": "CP",
+   "val": "10µF",
+   "fp": "Capacitor_THT:CP_Radial_D5.0mm_P2.50mm",
+   "layout": "C15",
+   "blocco": "Veroboard: alimentazione, ingressi, uscite",
+   "pins": {
+    "1": "ORC",
+    "2": "SOUT2"
+   }
+  },
+  "R15": {
+   "sim": "R",
+   "val": "10K",
+   "fp": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+   "layout": "R15",
+   "blocco": "Veroboard: alimentazione, ingressi, uscite",
+   "pins": {
+    "1": "ORC",
+    "2": "U2B_NEG"
+   }
+  },
+  "R16": {
+   "sim": "R",
+   "val": "10K",
+   "fp": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+   "layout": "R16",
+   "blocco": "Veroboard: alimentazione, ingressi, uscite",
+   "pins": {
+    "1": "U2B_NEG",
+    "2": "U2B_OUT"
+   }
+  },
+  "C16": {
+   "sim": "C",
+   "val": "390pF",
+   "fp": "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm",
+   "layout": "C16",
+   "blocco": "Veroboard: alimentazione, ingressi, uscite",
+   "pins": {
+    "1": "U2B_NEG",
+    "2": "U2B_OUT"
+   }
+  },
+  "C17": {
+   "sim": "CP",
+   "val": "10µF",
+   "fp": "Capacitor_THT:CP_Radial_D5.0mm_P2.50mm",
+   "layout": "C17",
+   "blocco": "Veroboard: alimentazione, ingressi, uscite",
+   "pins": {
+    "1": "U2B_OUT",
+    "2": "ORO"
+   }
+  },
+  "R17": {
+   "sim": "R",
+   "val": "100R",
+   "fp": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+   "layout": "R17",
+   "blocco": "Veroboard: alimentazione, ingressi, uscite",
+   "pins": {
+    "1": "ORO",
+    "2": "JOUTR"
+   }
+  },
+  "R18": {
+   "sim": "R",
+   "val": "100K",
+   "fp": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+   "layout": "R18",
+   "blocco": "Veroboard: alimentazione, ingressi, uscite",
+   "pins": {
+    "1": "JOUTR",
+    "2": "GND"
+   }
+  },
+  "C18": {
+   "sim": "C",
+   "val": "100nF",
+   "fp": "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm",
+   "layout": "C18",
+   "blocco": "Veroboard: alimentazione, ingressi, uscite",
+   "pins": {
+    "1": "VA",
+    "2": "GND"
+   }
+  },
+  "U1": {
+   "sim": "TLC2272",
+   "val": "TLC2272",
+   "fp": "Package_DIP:DIP-8_W7.62mm_Socket",
+   "layout": "U1",
+   "blocco": "Seed3 e operazionali",
+   "pins": {
+    "1": "U1A_OUT",
+    "2": "U1A_OUT",
+    "3": "INLB",
+    "4": "GND",
+    "8": "VA",
+    "7": "U1B_OUT",
+    "6": "U1B_OUT",
+    "5": "INRB"
+   }
+  },
+  "U2": {
+   "sim": "TLC2272",
+   "val": "TLC2272",
+   "fp": "Package_DIP:DIP-8_W7.62mm_Socket",
+   "layout": "U2",
+   "blocco": "Seed3 e operazionali",
+   "pins": {
+    "1": "U2A_OUT",
+    "2": "U2A_NEG",
+    "3": "VB",
+    "4": "GND",
+    "8": "VA",
+    "7": "U2B_OUT",
+    "6": "U2B_NEG",
+    "5": "VB"
+   }
+  },
+  "A1": {
+   "sim": "SEED3",
+   "val": "Daisy Seed3",
+   "fp": "",
+   "layout": "SEED",
+   "blocco": "Seed3 e operazionali",
+   "pins": {
+    "1": "D0",
+    "2": "NC",
+    "3": "NC",
+    "4": "ENC_A",
+    "5": "SD_D0",
+    "6": "SD_CMD",
+    "7": "SD_CK",
+    "8": "ENC_B",
+    "9": "ENC_SW",
+    "10": "LED",
+    "11": "FS2",
+    "12": "SCL",
+    "13": "SDA",
+    "14": "MIDI_TX",
+    "15": "MIDI_RX",
+    "16": "SIN1",
+    "17": "SIN2",
+    "18": "SOUT1",
+    "19": "SOUT2",
+    "20": "GND",
+    "21": "3V3A",
+    "22": "POT1",
+    "23": "POT2",
+    "24": "POT3",
+    "25": "POT4",
+    "26": "POT5",
+    "27": "POT6",
+    "28": "NC",
+    "29": "NC",
+    "30": "NC",
+    "31": "NC",
+    "32": "NC",
+    "33": "NC",
+    "34": "NC",
+    "35": "NC",
+    "36": "NC",
+    "37": "NC",
+    "38": "3V3D",
+    "39": "VIN_S",
+    "40": "GND"
+   }
+  },
+  "C101": {
+   "sim": "C",
+   "val": "47n",
+   "fp": "Capacitor_THT:C_Rect_L7.2mm_W3.5mm_P5.00mm_FKS2_FKP2_MKS2_MKP2",
+   "layout": "C1L",
+   "blocco": "Schedina preamp JFET",
+   "pins": {
+    "1": "in_L",
+    "2": "g1a_L"
+   }
+  },
+  "R101": {
+   "sim": "R",
+   "val": "1M",
+   "fp": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+   "layout": "Rg1L",
+   "blocco": "Schedina preamp JFET",
+   "pins": {
+    "1": "g1a_L",
+    "2": "VG"
+   }
+  },
+  "R102": {
+   "sim": "R",
+   "val": "1k",
+   "fp": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+   "layout": "Rstop1L",
+   "blocco": "Schedina preamp JFET",
+   "pins": {
+    "1": "g1a_L",
+    "2": "g1_L"
+   }
+  },
+  "Q101": {
+   "sim": "NJFET",
+   "val": "J201",
+   "fp": "Package_TO_SOT_THT:TO-92_Inline",
+   "layout": "J1L",
+   "blocco": "Schedina preamp JFET",
+   "pins": {
+    "1": "d1_L",
+    "2": "s1_L",
+    "3": "g1_L"
+   }
+  },
+  "R103": {
+   "sim": "R",
+   "val": "27k",
+   "fp": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+   "layout": "Rd1L",
+   "blocco": "Schedina preamp JFET",
+   "pins": {
+    "1": "d1_L",
+    "2": "VA"
+   }
+  },
+  "R104": {
+   "sim": "R",
+   "val": "22k",
+   "fp": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+   "layout": "Rs1L",
+   "blocco": "Schedina preamp JFET",
+   "pins": {
+    "1": "s1_L",
+    "2": "GND"
+   }
+  },
+  "R105": {
+   "sim": "R",
+   "val": "220R",
+   "fp": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+   "layout": "R220_L",
+   "blocco": "Schedina preamp JFET",
+   "pins": {
+    "1": "gb_L",
+    "2": "sp_L"
+   }
+  },
+  "C102": {
+   "sim": "CP",
+   "val": "47u/16V",
+   "fp": "Capacitor_THT:CP_Radial_D5.0mm_P2.50mm",
+   "layout": "Cs1L",
+   "blocco": "Schedina preamp JFET",
+   "pins": {
+    "1": "sp_L",
+    "2": "GND"
+   }
+  },
+  "C103": {
+   "sim": "C",
+   "val": "220n",
+   "fp": "Capacitor_THT:C_Rect_L7.2mm_W3.5mm_P5.00mm_FKS2_FKP2_MKS2_MKP2",
+   "layout": "C2L",
+   "blocco": "Schedina preamp JFET",
+   "pins": {
+    "1": "d1_L",
+    "2": "g2a_L"
+   }
+  },
+  "R106": {
+   "sim": "R",
+   "val": "1M",
+   "fp": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+   "layout": "Rg2L",
+   "blocco": "Schedina preamp JFET",
+   "pins": {
+    "1": "g2a_L",
+    "2": "VG"
+   }
+  },
+  "R107": {
+   "sim": "R",
+   "val": "1k",
+   "fp": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+   "layout": "Rstop2L",
+   "blocco": "Schedina preamp JFET",
+   "pins": {
+    "1": "g2a_L",
+    "2": "g2_L"
+   }
+  },
+  "Q102": {
+   "sim": "NJFET",
+   "val": "J201",
+   "fp": "Package_TO_SOT_THT:TO-92_Inline",
+   "layout": "J2L",
+   "blocco": "Schedina preamp JFET",
+   "pins": {
+    "1": "d2_L",
+    "2": "s2_L",
+    "3": "g2_L"
+   }
+  },
+  "R108": {
+   "sim": "R",
+   "val": "20k",
+   "fp": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+   "layout": "Rd2L",
+   "blocco": "Schedina preamp JFET",
+   "pins": {
+    "1": "d2_L",
+    "2": "VA"
+   }
+  },
+  "R109": {
+   "sim": "R",
+   "val": "15k",
+   "fp": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+   "layout": "Rs2L",
+   "blocco": "Schedina preamp JFET",
+   "pins": {
+    "1": "s2_L",
+    "2": "GND"
+   }
+  },
+  "C104": {
+   "sim": "C",
+   "val": "1u",
+   "fp": "Capacitor_THT:C_Rect_L7.2mm_W3.5mm_P5.00mm_FKS2_FKP2_MKS2_MKP2",
+   "layout": "C3L",
+   "blocco": "Schedina preamp JFET",
+   "pins": {
+    "1": "d2_L",
+    "2": "top_L"
+   }
+  },
+  "RV101": {
+   "sim": "TRIM",
+   "val": "100k",
+   "fp": "Potentiometer_THT:Potentiometer_Bourns_3296W_Vertical",
+   "layout": "TRL",
+   "blocco": "Schedina preamp JFET",
+   "pins": {
+    "1": "top_L",
+    "2": "out_L",
+    "3": "GND"
+   }
+  },
+  "C105": {
+   "sim": "C",
+   "val": "47n",
+   "fp": "Capacitor_THT:C_Rect_L7.2mm_W3.5mm_P5.00mm_FKS2_FKP2_MKS2_MKP2",
+   "layout": "C1R",
+   "blocco": "Schedina preamp JFET",
+   "pins": {
+    "1": "in_R",
+    "2": "g1a_R"
+   }
+  },
+  "R110": {
+   "sim": "R",
+   "val": "1M",
+   "fp": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+   "layout": "Rg1R",
+   "blocco": "Schedina preamp JFET",
+   "pins": {
+    "1": "g1a_R",
+    "2": "VG"
+   }
+  },
+  "R111": {
+   "sim": "R",
+   "val": "1k",
+   "fp": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+   "layout": "Rstop1R",
+   "blocco": "Schedina preamp JFET",
+   "pins": {
+    "1": "g1a_R",
+    "2": "g1_R"
+   }
+  },
+  "Q103": {
+   "sim": "NJFET",
+   "val": "J201",
+   "fp": "Package_TO_SOT_THT:TO-92_Inline",
+   "layout": "J1R",
+   "blocco": "Schedina preamp JFET",
+   "pins": {
+    "1": "d1_R",
+    "2": "s1_R",
+    "3": "g1_R"
+   }
+  },
+  "R112": {
+   "sim": "R",
+   "val": "27k",
+   "fp": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+   "layout": "Rd1R",
+   "blocco": "Schedina preamp JFET",
+   "pins": {
+    "1": "d1_R",
+    "2": "VA"
+   }
+  },
+  "R113": {
+   "sim": "R",
+   "val": "22k",
+   "fp": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+   "layout": "Rs1R",
+   "blocco": "Schedina preamp JFET",
+   "pins": {
+    "1": "s1_R",
+    "2": "GND"
+   }
+  },
+  "R114": {
+   "sim": "R",
+   "val": "220R",
+   "fp": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+   "layout": "R220_R",
+   "blocco": "Schedina preamp JFET",
+   "pins": {
+    "1": "gb_R",
+    "2": "sp_R"
+   }
+  },
+  "C106": {
+   "sim": "CP",
+   "val": "47u/16V",
+   "fp": "Capacitor_THT:CP_Radial_D5.0mm_P2.50mm",
+   "layout": "Cs1R",
+   "blocco": "Schedina preamp JFET",
+   "pins": {
+    "1": "sp_R",
+    "2": "GND"
+   }
+  },
+  "C107": {
+   "sim": "C",
+   "val": "220n",
+   "fp": "Capacitor_THT:C_Rect_L7.2mm_W3.5mm_P5.00mm_FKS2_FKP2_MKS2_MKP2",
+   "layout": "C2R",
+   "blocco": "Schedina preamp JFET",
+   "pins": {
+    "1": "d1_R",
+    "2": "g2a_R"
+   }
+  },
+  "R115": {
+   "sim": "R",
+   "val": "1M",
+   "fp": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+   "layout": "Rg2R",
+   "blocco": "Schedina preamp JFET",
+   "pins": {
+    "1": "g2a_R",
+    "2": "VG"
+   }
+  },
+  "R116": {
+   "sim": "R",
+   "val": "1k",
+   "fp": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+   "layout": "Rstop2R",
+   "blocco": "Schedina preamp JFET",
+   "pins": {
+    "1": "g2a_R",
+    "2": "g2_R"
+   }
+  },
+  "Q104": {
+   "sim": "NJFET",
+   "val": "J201",
+   "fp": "Package_TO_SOT_THT:TO-92_Inline",
+   "layout": "J2R",
+   "blocco": "Schedina preamp JFET",
+   "pins": {
+    "1": "d2_R",
+    "2": "s2_R",
+    "3": "g2_R"
+   }
+  },
+  "R117": {
+   "sim": "R",
+   "val": "20k",
+   "fp": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+   "layout": "Rd2R",
+   "blocco": "Schedina preamp JFET",
+   "pins": {
+    "1": "d2_R",
+    "2": "VA"
+   }
+  },
+  "R118": {
+   "sim": "R",
+   "val": "15k",
+   "fp": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+   "layout": "Rs2R",
+   "blocco": "Schedina preamp JFET",
+   "pins": {
+    "1": "s2_R",
+    "2": "GND"
+   }
+  },
+  "C108": {
+   "sim": "C",
+   "val": "1u",
+   "fp": "Capacitor_THT:C_Rect_L7.2mm_W3.5mm_P5.00mm_FKS2_FKP2_MKS2_MKP2",
+   "layout": "C3R",
+   "blocco": "Schedina preamp JFET",
+   "pins": {
+    "1": "d2_R",
+    "2": "top_R"
+   }
+  },
+  "RV102": {
+   "sim": "TRIM",
+   "val": "100k",
+   "fp": "Potentiometer_THT:Potentiometer_Bourns_3296W_Vertical",
+   "layout": "TRR",
+   "blocco": "Schedina preamp JFET",
+   "pins": {
+    "1": "top_R",
+    "2": "out_R",
+    "3": "GND"
+   }
+  },
+  "R119": {
+   "sim": "R",
+   "val": "39k",
+   "fp": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+   "layout": "Rvt",
+   "blocco": "Schedina preamp JFET",
+   "pins": {
+    "1": "VA",
+    "2": "VG"
+   }
+  },
+  "R120": {
+   "sim": "R",
+   "val": "10k",
+   "fp": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
+   "layout": "Rvb",
+   "blocco": "Schedina preamp JFET",
+   "pins": {
+    "1": "VG",
+    "2": "GND"
+   }
+  },
+  "C109": {
+   "sim": "CP",
+   "val": "22u/16V",
+   "fp": "Capacitor_THT:CP_Radial_D5.0mm_P2.50mm",
+   "layout": "Cvg",
+   "blocco": "Schedina preamp JFET",
+   "pins": {
+    "1": "VG",
+    "2": "GND"
+   }
+  },
+  "C110": {
+   "sim": "CP",
+   "val": "100u/16V",
+   "fp": "Capacitor_THT:CP_Radial_D5.0mm_P2.50mm",
+   "layout": "CB",
+   "blocco": "Schedina preamp JFET",
+   "pins": {
+    "1": "VA",
+    "2": "GND"
+   }
+  },
+  "C111": {
+   "sim": "C",
+   "val": "100n",
+   "fp": "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm",
+   "layout": "CD",
+   "blocco": "Schedina preamp JFET",
+   "pins": {
+    "1": "VA",
+    "2": "GND"
+   }
+  },
+  "J201": {
+   "sim": "JACK_TS",
+   "val": "IN L (112AX)",
+   "fp": "",
+   "layout": "J201",
+   "blocco": "Ingressi e preamp",
+   "pins": {
+    "T": "tip_L",
+    "TN": "GND",
+    "S": "GND"
+   }
+  },
+  "J202": {
+   "sim": "JACK_TS",
+   "val": "IN R (112AX)",
+   "fp": "",
+   "layout": "J202",
+   "blocco": "Ingressi e preamp",
+   "pins": {
+    "T": "tip_R",
+    "TN": "GND",
+    "S": "GND"
+   }
+  },
+  "R201": {
+   "sim": "R",
+   "val": "10k (Rs L)",
+   "fp": "",
+   "layout": "R201",
+   "blocco": "Ingressi e preamp",
+   "pins": {
+    "1": "tip_L",
+    "2": "in_L"
+   }
+  },
+  "R202": {
+   "sim": "R",
+   "val": "10k (Rs R)",
+   "fp": "",
+   "layout": "R202",
+   "blocco": "Ingressi e preamp",
+   "pins": {
+    "1": "tip_R",
+    "2": "in_R"
+   }
+  },
+  "SW201": {
+   "sim": "DPDT",
+   "val": "INST/LINE",
+   "fp": "",
+   "layout": "SW201",
+   "blocco": "Ingressi e preamp",
+   "pins": {
+    "1": "NC",
+    "2": "in_L",
+    "3": "rsh_L",
+    "4": "NC",
+    "5": "in_R",
+    "6": "rsh_R"
+   }
+  },
+  "R203": {
+   "sim": "R",
+   "val": "3k3 (Rsh L)",
+   "fp": "",
+   "layout": "R203",
+   "blocco": "Ingressi e preamp",
+   "pins": {
+    "1": "rsh_L",
+    "2": "GND"
+   }
+  },
+  "R204": {
+   "sim": "R",
+   "val": "3k3 (Rsh R)",
+   "fp": "",
+   "layout": "R204",
+   "blocco": "Ingressi e preamp",
+   "pins": {
+    "1": "rsh_R",
+    "2": "GND"
+   }
+  },
+  "SW202": {
+   "sim": "DPDT",
+   "val": "PRE",
+   "fp": "",
+   "layout": "SW202",
+   "blocco": "Ingressi e preamp",
+   "pins": {
+    "1": "in_L",
+    "2": "JINL",
+    "3": "out_L",
+    "4": "in_R",
+    "5": "JINR",
+    "6": "out_R"
+   }
+  },
+  "RV201": {
+   "sim": "POT2",
+   "val": "GAIN C50K doppio",
+   "fp": "",
+   "layout": "RV201",
+   "blocco": "Ingressi e preamp",
+   "pins": {
+    "1L": "NC",
+    "2L": "gb_L",
+    "3L": "s1_L",
+    "1R": "NC",
+    "2R": "gb_R",
+    "3R": "s1_R"
+   }
+  },
+  "R205": {
+   "sim": "R",
+   "val": "47k (GAIN L)",
+   "fp": "",
+   "layout": "R205",
+   "blocco": "Ingressi e preamp",
+   "pins": {
+    "1": "s1_L",
+    "2": "gb_L"
+   }
+  },
+  "R206": {
+   "sim": "R",
+   "val": "47k (GAIN R)",
+   "fp": "",
+   "layout": "R206",
+   "blocco": "Ingressi e preamp",
+   "pins": {
+    "1": "s1_R",
+    "2": "gb_R"
+   }
+  },
+  "J203": {
+   "sim": "JACK_TS",
+   "val": "OUT L (112AX)",
+   "fp": "",
+   "layout": "J203",
+   "blocco": "Uscite e true bypass",
+   "pins": {
+    "T": "jo_L",
+    "TN": "NC",
+    "S": "GND"
+   }
+  },
+  "J204": {
+   "sim": "JACK_TS",
+   "val": "OUT R (112AX)",
+   "fp": "",
+   "layout": "J204",
+   "blocco": "Uscite e true bypass",
+   "pins": {
+    "T": "jo_R",
+    "TN": "NC",
+    "S": "GND"
+   }
+  },
+  "SW203": {
+   "sim": "3PDT",
+   "val": "true bypass",
+   "fp": "",
+   "layout": "SW203",
+   "blocco": "Uscite e true bypass",
+   "pins": {
+    "A1": "tip_L",
+    "A2": "jo_L",
+    "A3": "JOUTL",
+    "B1": "tip_R",
+    "B2": "jo_R",
+    "B3": "JOUTR",
+    "C1": "NC",
+    "C2": "fs_C_com",
+    "C3": "ledfs_a"
+   }
+  },
+  "R207": {
+   "sim": "R",
+   "val": "4k7",
+   "fp": "",
+   "layout": "R207",
+   "blocco": "Uscite e true bypass",
+   "pins": {
+    "1": "VA",
+    "2": "fs_C_com"
+   }
+  },
+  "D201": {
+   "sim": "LED",
+   "val": "LED bypass",
+   "fp": "",
+   "layout": "D201",
+   "blocco": "Uscite e true bypass",
+   "pins": {
+    "2": "ledfs_a",
+    "1": "GND"
+   }
+  },
+  "J205": {
+   "sim": "DC",
+   "val": "DC 9V (NEB/J 21C)",
+   "fp": "",
+   "layout": "J205",
+   "blocco": "Alimentazione, pedale, massa",
+   "pins": {
+    "1": "GND",
+    "2": "DCIN",
+    "3": "NC"
+   }
+  },
+  "J206": {
+   "sim": "JACK_TRS",
+   "val": "PEDALE (112BX)",
+   "fp": "",
+   "layout": "J206",
+   "blocco": "Alimentazione, pedale, massa",
+   "pins": {
+    "T": "D0",
+    "R": "FS2",
+    "S": "GND"
+   }
+  },
+  "H201": {
+   "sim": "MASSA",
+   "val": "massa L0 (vite)",
+   "fp": "",
+   "layout": "H201",
+   "blocco": "Alimentazione, pedale, massa",
+   "pins": {
+    "1": "GND"
+   }
+  },
+  "H202": {
+   "sim": "MASSA",
+   "val": "massa L1 (torretta)",
+   "fp": "",
+   "layout": "H202",
+   "blocco": "Alimentazione, pedale, massa",
+   "pins": {
+    "1": "GND"
+   }
+  },
+  "ENC201": {
+   "sim": "ENC",
+   "val": "PEC11R",
+   "fp": "",
+   "layout": "ENC201",
+   "blocco": "Controlli",
+   "pins": {
+    "A": "ENC_A",
+    "B": "ENC_B",
+    "C": "GND",
+    "S1": "ENC_SW",
+    "S2": "GND"
+   }
+  },
+  "A201": {
+   "sim": "OLED",
+   "val": "OLED 2,42 pollici I2C",
+   "fp": "",
+   "layout": "A201",
+   "blocco": "Controlli",
+   "pins": {
+    "1": "GND",
+    "2": "3V3D",
+    "3": "SCL",
+    "4": "SDA"
+   }
+  },
+  "SW204": {
+   "sim": "TASTO",
+   "val": "K1",
+   "fp": "",
+   "layout": "SW204",
+   "blocco": "Controlli",
+   "pins": {
+    "1": "D0",
+    "2": "GND"
+   }
+  },
+  "SW205": {
+   "sim": "TASTO",
+   "val": "K2",
+   "fp": "",
+   "layout": "SW205",
+   "blocco": "Controlli",
+   "pins": {
+    "1": "FS2",
+    "2": "GND"
+   }
+  },
+  "R208": {
+   "sim": "R",
+   "val": "1k",
+   "fp": "",
+   "layout": "R208",
+   "blocco": "Controlli",
+   "pins": {
+    "1": "LED",
+    "2": "led_a"
+   }
+  },
+  "D202": {
+   "sim": "LED",
+   "val": "LED",
+   "fp": "",
+   "layout": "D202",
+   "blocco": "Controlli",
+   "pins": {
+    "2": "led_a",
+    "1": "GND"
+   }
+  },
+  "RV202": {
+   "sim": "POT",
+   "val": "B10K",
+   "fp": "",
+   "layout": "RV202",
+   "blocco": "Controlli",
+   "pins": {
+    "1": "GND",
+    "2": "POT1",
+    "3": "3V3A"
+   }
+  },
+  "RV203": {
+   "sim": "POT",
+   "val": "B10K",
+   "fp": "",
+   "layout": "RV203",
+   "blocco": "Controlli",
+   "pins": {
+    "1": "GND",
+    "2": "POT2",
+    "3": "3V3A"
+   }
+  },
+  "RV204": {
+   "sim": "POT",
+   "val": "B10K",
+   "fp": "",
+   "layout": "RV204",
+   "blocco": "Controlli",
+   "pins": {
+    "1": "GND",
+    "2": "POT3",
+    "3": "3V3A"
+   }
+  },
+  "RV205": {
+   "sim": "POT",
+   "val": "B10K",
+   "fp": "",
+   "layout": "RV205",
+   "blocco": "Controlli",
+   "pins": {
+    "1": "GND",
+    "2": "POT4",
+    "3": "3V3A"
+   }
+  },
+  "RV206": {
+   "sim": "POT",
+   "val": "B10K",
+   "fp": "",
+   "layout": "RV206",
+   "blocco": "Controlli",
+   "pins": {
+    "1": "GND",
+    "2": "POT5",
+    "3": "3V3A"
+   }
+  },
+  "RV207": {
+   "sim": "POT",
+   "val": "B10K",
+   "fp": "",
+   "layout": "RV207",
+   "blocco": "Controlli",
+   "pins": {
+    "1": "GND",
+    "2": "POT6",
+    "3": "3V3A"
+   }
+  },
+  "J207": {
+   "sim": "JACK_TRS",
+   "val": "MIDI IN (TRS tipo A)",
+   "fp": "",
+   "layout": "J207",
+   "blocco": "Scheda MIDI",
+   "pins": {
+    "T": "midi_in_T",
+    "R": "midi_in_R",
+    "S": "midi_in_S"
+   }
+  },
+  "R301": {
+   "sim": "R",
+   "val": "220",
+   "fp": "",
+   "layout": "R301",
+   "blocco": "Scheda MIDI",
+   "pins": {
+    "1": "midi_in_R",
+    "2": "opto_A"
+   }
+  },
+  "D301": {
+   "sim": "D",
+   "val": "1N4148",
+   "fp": "",
+   "layout": "D301",
+   "blocco": "Scheda MIDI",
+   "pins": {
+    "1": "opto_A",
+    "2": "midi_in_T"
+   }
+  },
+  "U301": {
+   "sim": "H11L1",
+   "val": "H11L1M",
+   "fp": "",
+   "layout": "U301",
+   "blocco": "Scheda MIDI",
+   "pins": {
+    "1": "opto_A",
+    "2": "midi_in_T",
+    "3": "NC",
+    "4": "MIDI_RX",
+    "5": "GND",
+    "6": "3V3D"
+   }
+  },
+  "R302": {
+   "sim": "R",
+   "val": "270",
+   "fp": "",
+   "layout": "R302",
+   "blocco": "Scheda MIDI",
+   "pins": {
+    "1": "MIDI_RX",
+    "2": "3V3D"
+   }
+  },
+  "C301": {
+   "sim": "C",
+   "val": "100n",
+   "fp": "",
+   "layout": "C301",
+   "blocco": "Scheda MIDI",
+   "pins": {
+    "1": "3V3D",
+    "2": "GND"
+   }
+  },
+  "C302": {
+   "sim": "C",
+   "val": "100n",
+   "fp": "",
+   "layout": "C302",
+   "blocco": "Scheda MIDI",
+   "pins": {
+    "1": "midi_in_S",
+    "2": "GND"
+   }
+  },
+  "J208": {
+   "sim": "JACK_TRS",
+   "val": "MIDI OUT (TRS tipo A)",
+   "fp": "",
+   "layout": "J208",
+   "blocco": "Scheda MIDI",
+   "pins": {
+    "T": "midi_out_T",
+    "R": "midi_out_R",
+    "S": "GND"
+   }
+  },
+  "R303": {
+   "sim": "R",
+   "val": "10",
+   "fp": "",
+   "layout": "R303",
+   "blocco": "Scheda MIDI",
+   "pins": {
+    "1": "MIDI_TX",
+    "2": "midi_out_T"
+   }
+  },
+  "R304": {
+   "sim": "R",
+   "val": "10",
+   "fp": "",
+   "layout": "R304",
+   "blocco": "Scheda MIDI",
+   "pins": {
+    "1": "3V3D",
+    "2": "midi_out_R"
+   }
+  },
+  "J209": {
+   "sim": "MICROSD",
+   "val": "microSD",
+   "fp": "",
+   "layout": "J209",
+   "blocco": "microSD",
+   "pins": {
+    "7": "SD_D0",
+    "8": "sd_DAT1",
+    "1": "sd_DAT2",
+    "2": "sd_DAT3",
+    "3": "SD_CMD",
+    "4": "3V3D",
+    "5": "SD_CK",
+    "6": "GND"
+   }
+  },
+  "R305": {
+   "sim": "R",
+   "val": "47k",
+   "fp": "",
+   "layout": "R305",
+   "blocco": "microSD",
+   "pins": {
+    "1": "SD_D0",
+    "2": "3V3D"
+   }
+  },
+  "R306": {
+   "sim": "R",
+   "val": "47k",
+   "fp": "",
+   "layout": "R306",
+   "blocco": "microSD",
+   "pins": {
+    "1": "SD_CMD",
+    "2": "3V3D"
+   }
+  },
+  "R307": {
+   "sim": "R",
+   "val": "47k",
+   "fp": "",
+   "layout": "R307",
+   "blocco": "microSD",
+   "pins": {
+    "1": "sd_DAT1",
+    "2": "3V3D"
+   }
+  },
+  "R308": {
+   "sim": "R",
+   "val": "47k",
+   "fp": "",
+   "layout": "R308",
+   "blocco": "microSD",
+   "pins": {
+    "1": "sd_DAT2",
+    "2": "3V3D"
+   }
+  },
+  "R309": {
+   "sim": "R",
+   "val": "47k",
+   "fp": "",
+   "layout": "R309",
+   "blocco": "microSD",
+   "pins": {
+    "1": "sd_DAT3",
+    "2": "3V3D"
+   }
+  }
+ }
+}

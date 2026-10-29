@@ -1,4 +1,4 @@
 (sym_lib_table
   (version 7)
-  (lib (name "PA")(type "KiCad")(uri "${KIPRJMOD}/PA.kicad_sym")(options "")(descr "simboli di PA-TELAIO, generati da genera_schema.py"))
+  (lib (name "PA")(type "KiCad")(uri "${KIPRJMOD}/PA.kicad_sym")(options "")(descr "simboli di PA-TELAIO, scritti da disegna_schema.py"))
 )

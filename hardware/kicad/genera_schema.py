@@ -3,7 +3,8 @@
 # dependencies = ["build123d==0.13.0", "numpy"]
 # ///
 """
-Schema KiCad di PA-TELAIO generato dalle netlist del progetto, non disegnato a mano.
+Reti attese dello schema KiCad di PA-TELAIO, calcolate dalle netlist del progetto. Lo schema lo disegna
+disegna_schema.py; verifica_schema.py controlla che il disegno dia esattamente queste reti.
 
 Fonti (sorgenti di verità, questo script non ne cambia nessuna):
   hardware/layout.py                 veroboard principale (Seed3, TLC2272, alimentazione, ingressi, uscite)
@@ -14,10 +15,9 @@ Fonti (sorgenti di verità, questo script non ne cambia nessuna):
 
 Le reti si calcolano come in un montaggio vero: ogni scheda ha le sue reti, ogni terminale fuori scheda è un
 nodo a sé, e solo i fili di cablaggio.py li uniscono. Una massa non cablata esce come rete separata (GND_2)
-e lo script lo segnala. Lo schema usa etichette di rete sui piedini (nessun filo disegnato): corretto per
-costruzione, si rigenera a ogni modifica delle fonti.
+e lo script lo segnala.
 
-    uv run genera_schema.py            # scrive pa-telaio.kicad_sch, pa-telaio.kicad_pro, reti_attese.json
+    uv run genera_schema.py            # scrive reti_attese.json e componenti.json (lo schema lo disegna disegna_schema.py)
 """
 import json
 import sys
@@ -31,84 +31,7 @@ import cablaggio as K  # noqa: E402  (importa case.py, hardware/layout.py e prea
 sys.argv = _argv
 
 L, LP = K.L, K.LP
-NOME = "pa-telaio"
-G = 2.54
-from genera_uuid import uid  # noqa: E402
 
-
-# ============================================================================ simboli
-# ogni simbolo: lista di pin (numero, nome, x, y, angolo, lunghezza) + grafica + larghezza/altezza del corpo.
-# Coordinate del simbolo: y verso l'alto (KiCad); il piedino si collega nel punto (x, y).
-def pin(num, nome, x, y, ang, lun=G):
-    return dict(num=str(num), nome=nome, x=x, y=y, ang=ang, lun=lun)
-
-
-def due_pin(grafica, n1="~", n2="~"):
-    """passivo orizzontale: pin 1 a sinistra, pin 2 a destra"""
-    return dict(pins=[pin(1, n1, -3 * G / 2 - G / 2, 0, 0, G), pin(2, n2, 2 * G, 0, 180, G)],
-                gr=grafica, w=3 * G, h=G, nomi=False)
-
-
-SIMBOLI = {}
-SIMBOLI["R"] = due_pin(["(rectangle (start -2.54 1.016) (end 2.54 -1.016) (stroke (width 0.254) (type default)) (fill (type none)))"])
-SIMBOLI["C"] = due_pin(["(polyline (pts (xy -0.762 1.524) (xy -0.762 -1.524)) (stroke (width 0.3048) (type default)) (fill (type none)))",
-                        "(polyline (pts (xy 0.762 1.524) (xy 0.762 -1.524)) (stroke (width 0.3048) (type default)) (fill (type none)))",
-                        "(polyline (pts (xy -2.54 0) (xy -0.762 0)) (stroke (width 0) (type default)) (fill (type none)))",
-                        "(polyline (pts (xy 0.762 0) (xy 2.54 0)) (stroke (width 0) (type default)) (fill (type none)))"])
-SIMBOLI["CP"] = due_pin(SIMBOLI["C"]["gr"] + ["(text \"+\" (at -2.032 1.27 0) (effects (font (size 1.27 1.27))))"], "+", "-")
-# diodo: anodo (pin 2) a sinistra, catodo (pin 1) a destra, come la convenzione KiCad 1 = K
-_tri = ["(polyline (pts (xy -1.27 1.27) (xy -1.27 -1.27) (xy 1.27 0) (xy -1.27 1.27)) (stroke (width 0.254) (type default)) (fill (type none)))",
-        "(polyline (pts (xy 1.27 1.27) (xy 1.27 -1.27)) (stroke (width 0.254) (type default)) (fill (type none)))",
-        "(polyline (pts (xy -2.54 0) (xy -1.27 0)) (stroke (width 0) (type default)) (fill (type none)))",
-        "(polyline (pts (xy 1.27 0) (xy 2.54 0)) (stroke (width 0) (type default)) (fill (type none)))"]
-SIMBOLI["D"] = dict(pins=[pin(2, "A", -3 * G / 2 - G / 2, 0, 0), pin(1, "K", 2 * G, 0, 180)], gr=_tri, w=3 * G, h=G, nomi=False)
-SIMBOLI["LED"] = dict(SIMBOLI["D"], gr=_tri + [
-    "(polyline (pts (xy 0 1.524) (xy 1.016 2.54)) (stroke (width 0) (type default)) (fill (type none)))",
-    "(polyline (pts (xy 0.762 1.524) (xy 1.778 2.54)) (stroke (width 0) (type default)) (fill (type none)))"])
-
-
-def scatola(sx, dx, sopra=(), sotto=(), w=None):
-    """simbolo a scatola: sx/dx = liste di (numero, nome) dall'alto in basso; sopra/sotto da sinistra"""
-    n = max(len(sx), len(dx), 1)
-    h = 2 * G * ((n + 2) // 2)              # pari in passi di griglia: i piedini cadono sulla griglia da 2,54
-    if w is None:
-        lmax = max([len(nm) for _, nm in list(sx) + list(dx)] + [2])
-        w = max(4 * G, 2 * G * (1 + int((lmax * 1.27 * 2 + 4) / (2 * G))))
-    pins = []
-    top = h / 2
-    for i, (num, nm) in enumerate(sx):
-        pins.append(pin(num, nm, -w / 2 - G, top - G * (i + 1), 0))
-    for i, (num, nm) in enumerate(dx):
-        pins.append(pin(num, nm, w / 2 + G, top - G * (i + 1), 180))
-    for i, (num, nm) in enumerate(sopra):
-        pins.append(pin(num, nm, -w / 2 + G * (i + 1), h / 2 + G, 270))
-    for i, (num, nm) in enumerate(sotto):
-        pins.append(pin(num, nm, -w / 2 + G * (i + 1), -h / 2 - G, 90))
-    gr = [f"(rectangle (start {-w / 2:.3f} {h / 2:.3f}) (end {w / 2:.3f} {-h / 2:.3f}) "
-          "(stroke (width 0.254) (type default)) (fill (type background)))"]
-    return dict(pins=pins, gr=gr, w=w, h=h, nomi=True)
-
-
-SIMBOLI["POT"] = scatola([(1, "1"), (3, "3")], [(2, "cursore")])
-SIMBOLI["TRIM"] = SIMBOLI["POT"]
-SIMBOLI["NJFET"] = scatola([(3, "G")], [(1, "D"), (2, "S")])
-SIMBOLI["TLC2272"] = scatola([(1, "OUTA"), (2, "-INA"), (3, "+INA"), (4, "V-")],
-                             [(8, "V+"), (7, "OUTB"), (6, "-INB"), (5, "+INB")])
-SIMBOLI["SEED3"] = scatola([(p, L.seed_name[p]) for p in range(1, 21)], [(p, L.seed_name[p]) for p in range(40, 20, -1)])
-SIMBOLI["JACK_TS"] = scatola([], [("T", "punta"), ("TN", "contatto punta"), ("S", "manicotto")])
-SIMBOLI["JACK_TRS"] = scatola([], [("T", "punta"), ("R", "anello"), ("S", "manicotto")])
-SIMBOLI["DC"] = scatola([], [("1", "centrale"), ("2", "manicotto"), ("3", "contatto")])
-SIMBOLI["DPDT"] = scatola([("1", "A1"), ("2", "A com"), ("3", "A2")], [("4", "B1"), ("5", "B com"), ("6", "B2")])
-SIMBOLI["3PDT"] = scatola([("A1", "A bypass"), ("A2", "A com"), ("A3", "A effetto"), ("B1", "B bypass"), ("B2", "B com")],
-                          [("B3", "B effetto"), ("C1", "C bypass"), ("C2", "C com"), ("C3", "C effetto")])
-SIMBOLI["POT2"] = scatola([("1L", "L 1"), ("2L", "L cursore"), ("3L", "L 3")], [("1R", "R 1"), ("2R", "R cursore"), ("3R", "R 3")])
-SIMBOLI["ENC"] = scatola([("A", "A"), ("C", "C"), ("B", "B")], [("S1", "S1"), ("S2", "S2")])
-SIMBOLI["OLED"] = scatola([("1", "GND"), ("2", "VCC"), ("3", "SCL"), ("4", "SDA")], [])
-SIMBOLI["TASTO"] = scatola([("1", "1")], [("2", "2")])
-SIMBOLI["H11L1"] = scatola([("1", "anodo"), ("2", "catodo"), ("3", "NC")], [("6", "VCC"), ("4", "uscita"), ("5", "GND")])
-SIMBOLI["MICROSD"] = scatola([("7", "DAT0"), ("8", "DAT1"), ("1", "DAT2"), ("2", "DAT3"), ("3", "CMD")],
-                             [("4", "VDD"), ("5", "CLK"), ("6", "VSS")])
-SIMBOLI["MASSA"] = scatola([("1", "massa")], [])
 
 # ============================================================================ componenti
 # (ref, simbolo, valore, footprint, rif. originale, {pin: nodo}, blocco)
@@ -316,7 +239,13 @@ def main():
     (QUI / "reti_attese.json").write_text(json.dumps(
         {"reti": {k: sorted(v) for k, v in sorted(attese.items())}, "nc": sorted(map(list, nc_pin))}, indent=1,
         ensure_ascii=False))
-    scrivi_schema(rete_di)
+    comp = {}
+    for ref, sim, val, fp, orig, m, blocco in COMP:
+        comp[ref] = dict(sim=sim, val=val, fp=fp, layout=orig, blocco=blocco,
+                         pins={p: ("NC" if n == NC or (n.startswith("VB/NC") and sim == "SEED3") else rete_di[n])
+                               for p, n in m.items()})
+    (QUI / "componenti.json").write_text(json.dumps(
+        {"seed_nomi": {str(k): v for k, v in L.seed_name.items()}, "componenti": comp}, indent=1, ensure_ascii=False))
     print(f"{len(COMP)} componenti, {len(attese)} reti, {len(nc_pin)} piedini non collegati (NC)")
     err = []
     if orfani:
@@ -330,115 +259,8 @@ def main():
         err.append("riferimenti doppi: " + str(sorted({r for r in refs if refs.count(r) > 1})))
     for e in err:
         print("ERRORE:", e)
-    print("OK: schema scritto" if not err else "schema scritto CON ERRORI")
+    print("OK: reti_attese.json e componenti.json scritti" if not err else "scritti CON ERRORI")
     return 1 if err else 0
-
-
-# ============================================================================ scrittura del .kicad_sch
-def fx(v):
-    return f"{v:.3f}".rstrip("0").rstrip(".")
-
-
-def lib_symbol(nome, s, prefisso="PA:"):
-    pins = []
-    for p in s["pins"]:
-        pins.append(f'(pin passive line (at {fx(p["x"])} {fx(p["y"])} {p["ang"]}) (length {fx(p["lun"])}) '
-                    f'(name "{p["nome"]}" (effects (font (size 1.27 1.27)))) '
-                    f'(number "{p["num"]}" (effects (font (size 1.27 1.27)))))')
-    nomi = "(pin_names (offset 0.508))" if s["nomi"] else "(pin_names (offset 0) hide)"
-    return (f'(symbol "{prefisso}{nome}" (pin_numbers hide) {nomi} (exclude_from_sim no) (in_bom yes) (on_board yes)\n'
-            f'  (property "Reference" "X" (at 0 0 0) (effects (font (size 1.27 1.27))))\n'
-            f'  (property "Value" "{nome}" (at 0 0 0) (effects (font (size 1.27 1.27))))\n'
-            f'  (property "Footprint" "" (at 0 0 0) (effects (font (size 1.27 1.27)) hide))\n'
-            f'  (property "Datasheet" "" (at 0 0 0) (effects (font (size 1.27 1.27)) hide))\n'
-            f'  (property "Description" "" (at 0 0 0) (effects (font (size 1.27 1.27)) hide))\n'
-            f'  (symbol "{nome}_0_1" {" ".join(s["gr"])})\n'
-            f'  (symbol "{nome}_1_1" {" ".join(pins)}))')
-
-
-def lungo_etichetta(t):
-    return 1.27 * 0.75 * len(t) + 2.0
-
-
-def griglia(v):
-    return round(v / G) * G
-
-
-def scrivi_schema(rete_di):
-    radice = uid("radice")
-    usati = sorted({c[1] for c in COMP})
-    out = [f'(kicad_sch (version 20231120) (generator "pa_telaio_genera_schema") (generator_version "8.0") '
-           f'(uuid "{radice}") (paper "A0")',
-           '(title_block (title "PA-TELAIO") (comment 1 "generato da hardware/kicad/genera_schema.py: non modificare a mano") '
-           '(comment 2 "fonti: hardware/layout.py, hardware/preamp/layout_preamp.py, case/cablaggio.py"))',
-           "(lib_symbols"]
-    out += [lib_symbol(n, SIMBOLI[n]) for n in usati]
-    out.append(")")
-    # impaginazione: un blocco dopo l'altro, a scaffali
-    blocchi = []
-    for c in COMP:
-        if c[6] not in blocchi:
-            blocchi.append(c[6])
-    LARG = 1150.0
-    x0, y = 25.4, 30.48
-    for b in blocchi:
-        out.append(f'(text "{b}" (exclude_from_sim no) (at {fx(x0)} {fx(y)} 0) (effects (font (size 3.5 3.5) bold) (justify left bottom)) (uuid "{uid("t", b)}"))')
-        y += 7.62
-        x, h_riga = x0, 0.0
-        for ref, sim, val, fp, orig, m, blocco in COMP:
-            if blocco != b:
-                continue
-            s = SIMBOLI[sim]
-            et_sx = max([lungo_etichetta(rete_di.get(m.get(p["num"], NC), "")) for p in s["pins"] if p["ang"] == 0] + [0])
-            et_dx = max([lungo_etichetta(rete_di.get(m.get(p["num"], NC), "")) for p in s["pins"] if p["ang"] == 180] + [0])
-            larg = s["w"] + 2 * G + et_sx + et_dx + 10.0
-            alt = s["h"] + 2 * G + 8.0
-            if x + larg > LARG:
-                x, y, h_riga = x0, y + h_riga, 0.0
-            cx = griglia(x + et_sx + G + s["w"] / 2)
-            cy = griglia(y + 5.08 + s["h"] / 2)
-            out.append(istanza(radice, ref, sim, val, fp, orig, cx, cy, s))
-            for p in s["pins"]:
-                n = m.get(p["num"], NC)
-                px, py = cx + p["x"], cy - p["y"]
-                if n == NC or (sim == "SEED3" and n.startswith("VB/NC")):
-                    out.append(f'(no_connect (at {fx(px)} {fx(py)}) (uuid "{uid("nc", ref, p["num"])}"))')
-                    continue
-                ang, gius = {0: (180, "right"), 180: (0, "left"), 270: (90, "left"), 90: (270, "right")}[p["ang"]]
-                out.append(f'(label "{rete_di[n]}" (at {fx(px)} {fx(py)} {ang}) (fields_autoplaced yes) '
-                           f'(effects (font (size 1.27 1.27)) (justify {gius} bottom)) (uuid "{uid("l", ref, p["num"])}"))')
-            x += larg
-            h_riga = max(h_riga, alt)
-        y += h_riga + 7.62
-    out.append(f'(sheet_instances (path "/" (page "1")))')
-    out.append(")")
-    (QUI / f"{NOME}.kicad_sch").write_text("\n".join(out) + "\n")
-    # libreria di progetto con gli stessi simboli, registrata nella tabella del progetto
-    (QUI / "PA.kicad_sym").write_text(
-        '(kicad_symbol_lib (version 20231120) (generator "pa_telaio_genera_schema") (generator_version "8.0")\n'
-        + "\n".join(lib_symbol(n, SIMBOLI[n], "") for n in sorted(SIMBOLI)) + "\n)\n")
-    (QUI / "sym-lib-table").write_text(
-        '(sym_lib_table\n  (version 7)\n  (lib (name "PA")(type "KiCad")(uri "${KIPRJMOD}/PA.kicad_sym")(options "")'
-        '(descr "simboli di PA-TELAIO, generati da genera_schema.py"))\n)\n')
-    pro = QUI / f"{NOME}.kicad_pro"
-    if not pro.exists():
-        pro.write_text(json.dumps({"meta": {"filename": f"{NOME}.kicad_pro", "version": 1}}, indent=2) + "\n")
-
-
-def istanza(radice, ref, sim, val, fp, orig, cx, cy, s):
-    pins = " ".join(f'(pin "{p["num"]}" (uuid "{uid("p", ref, p["num"])}"))' for p in s["pins"])
-    yr = cy - s["h"] / 2 - 2.0
-    yv = cy + s["h"] / 2 + 3.2
-    return (f'(symbol (lib_id "PA:{sim}") (at {fx(cx)} {fx(cy)} 0) (unit 1) (exclude_from_sim no) (in_bom yes) '
-            f'(on_board yes) (dnp no) (uuid "{uid("s", ref)}")\n'
-            f'  (property "Reference" "{ref}" (at {fx(cx)} {fx(yr)} 0) (effects (font (size 1.27 1.27))))\n'
-            f'  (property "Value" "{val}" (at {fx(cx)} {fx(yv)} 0) (effects (font (size 1.27 1.27))))\n'
-            f'  (property "Footprint" "{fp}" (at {fx(cx)} {fx(cy)} 0) (effects (font (size 1.27 1.27)) hide))\n'
-            f'  (property "Datasheet" "" (at {fx(cx)} {fx(cy)} 0) (effects (font (size 1.27 1.27)) hide))\n'
-            f'  (property "Description" "" (at {fx(cx)} {fx(cy)} 0) (effects (font (size 1.27 1.27)) hide))\n'
-            f'  (property "Layout" "{orig}" (at {fx(cx)} {fx(cy)} 0) (effects (font (size 1.27 1.27)) hide))\n'
-            f'  {pins}\n'
-            f'  (instances (project "{NOME}" (path "/{radice}" (reference "{ref}") (unit 1)))))')
 
 
 if __name__ == "__main__":
