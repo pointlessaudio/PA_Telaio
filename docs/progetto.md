@@ -65,7 +65,8 @@ banco. Lo stato e i punti aperti stanno in `stato.md`. Percorsi relativi alla ra
   - **Gate polarizzati a VG = 1,73 V da un partitore comune, senza trimmer di drain.** La corrente di riposo è
     ~(VG − Vgs)/Rs e dipende poco dall'esemplare: sui cinque angoli del J201 i drain stanno fra 5,0 e 6,2 V.
     Lo schema Fetzer ha trimmer di drain; qui si evitano.
-  - **GAIN sul primo stadio** (reostato 25K con 220R in serie e 47 µF sul source): è lì che si fa il carattere;
+  - **GAIN sul primo stadio** (doppio C50K usato come reostato, con 47K in parallelo per gang, 220R in serie e 47 µF sul
+    source; deciso il 29/10 perché il doppio C25K non si trova: stessi estremi del 25K): è lì che si fa il carattere;
     la spinta parte presto (THD all'1 % a 30-35 mVpp in ingresso, GAIN al massimo) con seconda armonica dominante.
   - **Secondo stadio lineare** (Rs 15K non bypassata, guadagno ~1,3): separatore e pilota del LEVEL. La prima
     versione lo aveva bypassato e tagliava lui, bruscamente; con la Rs non bypassata e meno corrente nel primo
@@ -77,7 +78,8 @@ banco. Lo stato e i punti aperti stanno in `stato.md`. Percorsi relativi alla ra
     toccare la veroboard verificata. Il buffer TLC2272 dopo il LEVEL è quello della scheda principale.
   - **PRE e GAIN sul pannello posteriore**: PRE (mini DPDT) esclude il preamp (passthrough, come INST/LINE
     per la linea), GAIN è un pot che si regola di rado.
-  - Aperti: rumore col GAIN al minimo (3,6-3,75 µV contro 3,5), pot GAIN doppio C25K introvabile, ascolto
+  - Aperti: rumore col GAIN al minimo (3,6-3,75 µV contro 3,5), J201 da scegliere con IDSS ≥ 0,5 mA (a guadagni
+    moderati quelli con IDSS bassa saturano con la terza armonica sopra), ascolto
     del circuito vero (la sorgente simulata è una resistenza da 10K, non un pickup; modello J201 senza rumore 1/f).
   Collaudo a banco: `hardware/preamp/collaudo.md`.
 

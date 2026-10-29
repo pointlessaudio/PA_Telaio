@@ -30,6 +30,7 @@ F0 = 1000.0
 # ha Beta=1.07m Vto=-0.93, IDSS = Beta*Vto^2 = 0,93 mA. Gli angoli cambiano solo Beta e Vto.
 J201_BASE = ("Betatce=-0.5 Vtotc=-2.5m Lambda=6.75m Is=1.72f Xti=0 Rd=10 Rs=12 "
              "Cgd=1p Cgs=1p Fc=0.5 M=500m Pb=0.8 Kf=0 Af=1")
+IDSS_MIN = 0.5e-3   # J201 scelti a banco (collaudo.md): la spinta si giudica solo su questi
 ANGOLI = {           # nome: (IDSS A, Vp V)
     "basso":    (0.2e-3, -0.3),
     "basso-Vp": (0.2e-3, -0.6),
@@ -43,7 +44,7 @@ ANGOLI = {           # nome: (IDSS A, Vp V)
 C = dict(
     Rsrc=10e3, C1=47e-9, Rg=1e6, Rstop=1e3,
     Rvg_top=39e3, Rvg_bot=10e3, Cvg=22e-6,
-    Rd1=27e3, Rs1=22e3, Pgain=25e3, Rgmin=220.0, Cs1=47e-6,     # stadio 1: GAIN = reostato + Cs1 su Rs1
+    Rd1=27e3, Rs1=22e3, Pgain=50e3, Rgpar=47e3, Rgmin=220.0, Cs1=47e-6,  # stadio 1: GAIN = reostato + Cs1 su Rs1
     C2=220e-9,
     Rd2=20e3, Rs2a=15e3, Rs2b=None, Cs2=None,                    # stadio 2: Rs non bypassata, quasi lineare
     C3=1e-6, Plevel=100e3, Rload=1e6,
@@ -150,9 +151,13 @@ def modello(idss, vp):
 
 
 def netlist(idss, vp, gain, level, analisi, vin_pk=0.1):
-    """gain in [0, 1]: reostato con curva A montato al contrario (a 1 resta solo Rgmin)."""
+    """gain in [0, 1]: reostato curva C (antilogaritmica, cioè A al contrario), con Rgpar saldata sui suoi due
+    terminali (None = senza), più Rgmin sulla schedina. A GAIN 1 resta solo Rgmin."""
     p = C
-    rpot = p["Pgain"] * log_taper(1 - gain) + p["Rgmin"]
+    rpot = p["Pgain"] * log_taper(1 - gain)
+    if p["Rgpar"]:
+        rpot = rpot * p["Rgpar"] / (rpot + p["Rgpar"])
+    rpot += p["Rgmin"]
     rlv_bot = max(p["Plevel"] * level, 1.0)
     rlv_top = max(p["Plevel"] - rlv_bot, 1.0)
     return f"""preamp
@@ -296,7 +301,8 @@ def criteri(res, nz_max):
     tetto = max(m["vpp"] for m in res.values())
     level = USCITA_MAX / tetto
     gin = {(n, g): ginocchio(n, g) for n in ANGOLI for g in (0.5, 1.0)}
-    h2_3 = [v[2] for v in gin.values() if v]
+    scelti = [n for n, (idss, _) in ANGOLI.items() if idss >= IDSS_MIN]
+    h2_3 = [gin[(n, g)][2] for n in scelti for g in (0.5, 1.0) if gin[(n, g)]]
     knee = [gin[(n, 1.0)][0] for n in ANGOLI if gin[(n, 1.0)]]
     print("\nGinocchio (dB fra THD 1 % e 10 %; H2-H3 al 3 % e al 10 % di THD):")
     for (n, g), v in gin.items():
@@ -310,8 +316,8 @@ def criteri(res, nz_max):
         ("pulito: GAIN 0, 1 Vpp in, THD <= 3 %", f"{pulito*100:.2f} %", pulito <= 0.03),
         ("tetto d'uscita -> LEVEL per <= 3,4 Vpp", f"{tetto:.2f} Vpp, LEVEL {level:.2f}", level >= 0.5),
         ("rumore all'ingresso <= 3,5 uV", f"{nz_max*1e6:.2f} uV", nz_max <= 3.5e-6),
-        ("spinta: H2-H3 >= +3 dB al 3 % (GAIN 0,5 e 1)", f"{min(h2_3):+.1f} dB al peggio",
-         len(h2_3) == 2 * len(ANGOLI) and min(h2_3) >= 3),
+        (f"spinta, IDSS >= {IDSS_MIN*1e3:.1f} mA: H2-H3 >= +3 dB al 3 %", f"{min(h2_3):+.1f} dB al peggio",
+         len(h2_3) == 2 * len(scelti) and min(h2_3) >= 3),
         ("ginocchio GAIN 1: >= 10 dB fra 1 e 10 %", f"{min(knee):.0f}...{max(knee):.0f} dB",
          len(knee) == len(ANGOLI) and min(knee) >= 10),
     ]

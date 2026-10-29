@@ -99,7 +99,7 @@ Canale L in alto (righe 1-9), R in basso (righe 10-18, specchiato).</p>
 consecutive: D, S, G (nel canale L dal basso verso l'alto; nel R dall'alto verso il basso, quindi il componente va girato di 180&deg;).
 Verificare con il tester prima di saldare.</p>
 <h2>Componenti</h2><table><tr><th>Riferimenti</th><th>N.</th><th>Valore</th><th>Montaggio</th></tr>{bom_html}</table>
-<h2>Piazzole esterne</h2><table>{pad_html}</table>
+<h2>Piazzole esterne</h2><p>GAIN: pot doppio 9 mm C50K usato come reostato (cursore e un capo), con una 47k saldata direttamente sui due terminali usati di ogni gang. A GAIN al massimo la resistenza va a zero: se il guadagno sale girando a sinistra, usare l'altro capo.</p><table>{pad_html}</table>
 <h2>Ponticelli e cavi</h2><table>{link_html}</table>
 <h2>Tagli ({len(L.CUTS)})</h2><table>{cut_html}</table>
 <h2>Fori di fissaggio M3 (3,2 mm)</h2><p>{fori}. Forare prima di montare.</p>

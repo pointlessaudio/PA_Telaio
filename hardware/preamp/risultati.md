@@ -1,6 +1,8 @@
 # Preamp JFET d'ingresso: simulazione (29/10/2026)
 
-Simulato in ngspice, non ancora costruito né ascoltato. Circuito attuale: **V4a**.
+Simulato in ngspice, non ancora costruito né ascoltato. Circuito attuale: **V4a**, con GAIN doppio C50K ‖ 47k
+(§Pot del GAIN). La tabella dei risultati qui sotto è del V4a col reostato da 25k; i numeri col C50K ‖ 47k sono
+nel paragrafo della scelta e in `sim/uscita.txt`.
 
 ```
 cd hardware/preamp/sim
@@ -20,7 +22,7 @@ sorgente + 10k ─ 47n ─┬─ 1k ─ G  J1  D ─┬─ 27k ─ VA        J2:
                       1M                │                      S ─ 15k ─ massa (niente bypass)
                       │                 └─ 220n ─ gate J2   uscita: D2 ─ 1µ ─ LEVEL 100k (trimmer) ─ buffer TLC2272 (1M)
                      VG = 1,73 V        S ─┬─ 22k ─ massa
-   (39k / 10k da VA, 22µ)                  └─ GAIN: reostato 25k curva A al contrario + 220R ─ 47µ ─ massa
+   (39k / 10k da VA, 22µ)                  └─ GAIN: doppio C50K (reostato) ‖ 47k + 220R ─ 47µ ─ massa
 ```
 
 - **Gate polarizzati a VG** da un partitore comune: la corrente di riposo è ~(VG − Vgs)/Rs e dipende poco
@@ -56,7 +58,7 @@ Come si comporta (angolo «modello»): col GAIN al massimo la THD passa l'1 % a 
 più su, con la seconda armonica 28 dB sopra la terza al 3 %. Oltre il 10 % la saturazione diventa più simmetrica
 e la terza armonica cresce: è il limite dell'escursione, a distorsione già alta.
 
-## Pot del GAIN: il doppio C25K non si trova (29/10)
+## Pot del GAIN: doppio C50K con 47k in parallelo (29/10)
 
 In simulazione il GAIN è un reostato da 25k con curva antilogaritmica (C). Doppio da 9 mm C25K non risulta in
 vendita (Cusack/Tayda: curva C doppia solo 50K e 100K; vedi `hardware/ordine_componenti.md`). Tre strade simulate
@@ -71,7 +73,12 @@ con lo stesso script (criteri completi su 5 angoli):
 Nelle due varianti col 50K la metà corsa cade a 12-16 dB di guadagno, e lì i J201 con IDSS bassa (angoli «basso»
 e «basso-Vp», 0,2 mA) saturano con la terza armonica sopra. Gli angoli con IDSS ≥ 0,5 mA restano a +4 dB o più.
 Il 25K evitava quella zona per caso, non per merito. Rimedio pratico, indipendente dal pot: **scegliere i J201
-con IDSS ≥ 0,5 mA** (si misura a banco con gate e source in corto, vedi `collaudo.md`). Scelta del pot aperta.
+con IDSS ≥ 0,5 mA** (si misura a banco con gate e source in corto, vedi `collaudo.md`).
+
+**Scelta: doppio C50K con 47k in parallelo per gang**, e J201 con IDSS ≥ 0,5 mA. `sim_preamp.py` ora simula
+questo (`Pgain=50e3, Rgpar=47e3`) e giudica la spinta solo sugli angoli con IDSS ≥ 0,5 mA (`IDSS_MIN`); gli angoli
+«basso» restano nelle tabelle di `uscita.txt`. Criteri con questa scelta: tutti PASS tranne il rumore col GAIN al
+minimo (3,72 µV); spinta +4,1 dB al peggio, guadagno +5,2…+25,7 dB, LEVEL 0,80.
 
 ## Come ci si è arrivati
 

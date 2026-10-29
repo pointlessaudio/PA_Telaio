@@ -12,7 +12,7 @@ import sys
 import sim_preamp as S
 
 # circuito della prima simulazione (V0), da cui partono le varianti
-BASE = dict(S.C, Rd1=20e3, Rs1=15e3, Rs2a=8.2e3, Rs2b=6.8e3, Cs2=47e-6)
+BASE = dict(S.C, Rd1=20e3, Rs1=15e3, Rs2a=8.2e3, Rs2b=6.8e3, Cs2=47e-6, Pgain=25e3, Rgpar=None)
 ESTREMI = ("basso", "modello", "alto")
 
 

@@ -18,7 +18,7 @@ cambio di circa 0,86 € per dollaro (da ricontrollare).
 | Case stampato, in casa o da un servizio, coi pezzi su cui è disegnato | Banzai, TME, Amazon, Exploding Shed, Musikding per la stripboard | circa 190-200 €, più la stampa (servizio: 97-261 €) |
 
 Per tutte le strade c'è anche il **preamp JFET** d'ingresso (29/10, sezione dopo «Comune a tutte le strade»): non è
-compreso nei totali sopra, e il pot GAIN è ancora da decidere.
+compreso nei totali sopra. GAIN: doppio C50K con una 47k in parallelo per gang (deciso il 29/10).
 
 Per tutte le strade c'è anche la **variante AliExpress** (06/10): tutto il generico da AliExpress, e restano solo
 TME, l'OLED ed eventualmente Tayda. È nella sezione prima della lista completa.
@@ -64,6 +64,7 @@ da confermare col layout della schedina. Prezzi: solo quelli con la fonte, il re
 | 20K | 2 | Rd2 |
 | 15K | 2 | Rs2 |
 | 220R | 2 | minimo del GAIN, in serie al reostato |
+| 47K | 2 | in parallelo al GAIN, saldata sui due terminali usati di ogni gang |
 | 39K + 10K | 1 + 1 | partitore di VG (1,73 V), comune ai due canali |
 | Film 47 nF | 2 | ingresso |
 | Film 220 nF | 2 | fra i due stadi |
@@ -73,7 +74,7 @@ da confermare col layout della schedina. Prezzi: solo quelli con la fonte, il re
 | Elettrolitico ≥ 16 V 100 µF | 1 | filtro di VA sulla schedina (uso da fissare col layout) |
 | Ceramico 100 nF | 2 | disaccoppiamento di VA |
 | **Trimmer 100K** (LEVEL) | 2 | uno per canale, regolati una volta; meglio multigiro o cermet |
-| **Pot doppio 9 mm 25K** (GAIN) | 1 | usato come reostato, curva C; vedi sotto |
+| **Pot doppio 9 mm C50K** (GAIN) | 1 | usato come reostato, con 47K in parallelo per gang; vedi sotto |
 | **Mini deviatore DPDT** («PRE») | 1 | pannello posteriore |
 | Stripboard | 1 | basta un ritaglio di una 100×160 |
 | Filo e cavetto schermato dal jack alla schedina | | come nella lista completa |
@@ -94,7 +95,7 @@ ma non un tipo diverso.
 - Comunque: comprarne almeno 4 e **misurarli** (collaudo, passo 2: Vd1 fra 4,5 e 6,5 V); le scorte servono a
   scegliere due esemplari vicini per i due canali.
 
-### Pot GAIN: il doppio C25K non si trova
+### Pot GAIN: doppio C50K con 47K in parallelo (deciso il 29/10)
 
 In simulazione il GAIN è un reostato da 25K con la legge della curva A **al contrario** (la resistenza cala verso
 il massimo guadagno). Con un pot a curva C (antilogaritmica) si ottiene usando cursore e capo orario; il terzo
@@ -111,12 +112,12 @@ Cercato il 29/10:
   Pagina non apribile da qui: prezzo e stock da verificare.
 - **Musikding**: non verificato.
 
-Strade per il GAIN, da decidere (finché non si sceglie, il pot non va ordinato):
-1. **Doppio C50K** e riscalare il circuito a 50K: il minimo di guadagno e la legge cambiano; serve un'altra
-   simulazione, non fatta.
-2. **Doppio C100K** (il più facile da trovare), con una resistenza in parallelo per scendere verso 25K: cambia
-   anche la forma della curva; da simulare.
-3. **Due singoli Alpha C25K**, uno per canale: due manopole, o una sola con un albero comune.
+Scelta (29/10): **doppio C50K con una 47K in parallelo per gang**, saldata direttamente sui due terminali usati.
+Il massimo della resistenza scende a ~24K, quindi gli estremi del guadagno restano quelli del 25K (+5…+26 dB);
+la metà corsa cade più in basso (~4K contro ~2,3K). Simulato in `hardware/preamp/risultati.md`. Con questa
+scelta i J201 vanno presi con IDSS ≥ 0,5 mA (vedi `hardware/preamp/collaudo.md`).
+Scartate: doppio C50K senza 47K (minimo di guadagno più basso, più rumore al minimo: 4,3 µV), due singoli
+Alpha C25K (due manopole).
 
 ### Dove si compra
 
@@ -124,7 +125,7 @@ Strade per il GAIN, da decidere (finché non si sceglie, il pot non va ordinato)
 |---|---|---|
 | J201, passivi, film, elettrolitici, trimmer | TME (disponibilità e prezzi da verificare) | «Comune a tutte le strade», TME |
 | Deviatore PRE | Tayda A-4568 (0,59 $, 28/09) o Musikding (0,80 €) | quello della strada scelta |
-| Pot GAIN | da decidere (sopra) | |
+| Pot GAIN doppio C50K | Cusack POT-09-DG (stompboxparts.com, 1,30 $, 29/10) o Tayda (da verificare) | |
 | Stripboard | ritaglio della 100×160 Musikding già nel carrello | |
 
 ## Strada 1590DD da Tayda, forata a macchina: circa 150-170 €

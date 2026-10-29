@@ -29,8 +29,8 @@ Niente è ancora comprato, costruito o stampato. Edo vuole **tenere aperte tutte
   banco in `hardware/preamp/collaudo.md`. Criteri della simulazione: 8 su 9 passati (punto di lavoro senza
   trimmer, banda, guadagno minimo e massimo, pulito, tetto d'uscita, spinta, ginocchio). Il nono no: **rumore
   riportato all'ingresso col GAIN al minimo, 3,6-3,75 µV contro il limite di 3,5** (da metà in su 2,0-2,4 µV);
-  punto aperto, da giudicare a orecchio. Aperto anche il pot GAIN: il doppio C25K non si trova; le alternative
-  col C50K sono simulate in `risultati.md` (§Pot del GAIN). Schedina su stripboard 24 × 18 fori verificata da
+  punto aperto, da giudicare a orecchio. GAIN: doppio C50K con 47k in parallelo per gang (29/10), J201
+  con IDSS ≥ 0,5 mA. Schedina su stripboard 24 × 18 fori verificata da
   script (`hardware/preamp/layout_preamp.py`); PRE, GAIN e volume della schedina sono in `case/case.py`.
 
 Decisioni aperte, per Edo:
@@ -41,8 +41,7 @@ Decisioni aperte, per Edo:
 
 ## Punti aperti (29/09)
 
-- **Preamp (29/10):** decidere il pot GAIN (doppio C50K, doppio C50K con 47k in parallelo, o due singoli Alpha
-  C25K: dati in `hardware/preamp/risultati.md`); procurarsi J201 genuini e tenere quelli con IDSS ≥ 0,5 mA;
+- **Preamp (29/10):** procurarsi J201 genuini e tenere quelli con IDSS ≥ 0,5 mA;
   ingombro vero del pot doppio (in `case.py` è stimato); orientamento della schedina nel case col cablaggio; PRE e
   GAIN anche in `scatola.py` (1590DD) e nella dima; rumore col GAIN al minimo da giudicare a orecchio.
 - **Chiron:** `TELAIO_1` (29/09) si è staccata al primo strato, la terza stampa su questa macchina che cede lì:

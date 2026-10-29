@@ -135,9 +135,9 @@ PADS = [
     ("IN R", (0, 17), "in_R", "dal jack IN R"),
     ("OUT L", (23, 7), "out_L", "verso il deviatore PRE, canale L"),
     ("OUT R", (23, 10), "out_R", "verso il deviatore PRE, canale R"),
-    ("GAIN A L", (3, 3), "s1_L", "pot GAIN L, capo verso S1"),
+    ("GAIN A L", (3, 3), "s1_L", "pot GAIN L (doppio C50K), capo verso S1; 47k fra i due capi, sul pot"),
     ("GAIN B L", (3, 1), "gb_L", "pot GAIN L, ritorno verso 220R"),
-    ("GAIN A R", (3, 14), "s1_R", "pot GAIN R, capo verso S1"),
+    ("GAIN A R", (3, 14), "s1_R", "pot GAIN R (doppio C50K), capo verso S1; 47k fra i due capi, sul pot"),
     ("GAIN B R", (3, 16), "gb_R", "pot GAIN R, ritorno verso 220R"),
 ]
 
@@ -429,5 +429,5 @@ if __name__ == "__main__":
     alt = max(p["h"] for p in P)
     print(f"OK: {len(P)} componenti, {len(LINKS)} ponticelli, {len(WIRES)} cavi, {len(PADS)} piazzole, "
           f"{len(CUTS)} tagli, {len(island_nets)} isole, {len(net_islands)} net, nessun corto, nessun aperto.")
-    print(f"Scheda {W} x {H} fori = {W * PASSO:.1f} x {H * PASSO:.1f} mm (volume case 62 x 47 x 16); "
+    print(f"Scheda {W} x {H} fori = {W * PASSO:.1f} x {H * PASSO:.1f} mm (volume case 62 x 47 x 17,5); "
           f"altezza massima componenti {alt} mm; fori di fissaggio {FORI_FISSAGGIO}.")
