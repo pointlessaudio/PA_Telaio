@@ -12,3 +12,10 @@ case/stampa/
 case/render/*
 !case/render/esporta.py
 !case/render/scena_blender.py
+
+# KiCad: file locali e di lavoro
+hardware/kicad/*.kicad_prl
+hardware/kicad/*-backups/
+hardware/kicad/fp-info-cache
+hardware/kicad/_autosave-*
+hardware/kicad/*.lck

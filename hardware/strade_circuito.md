@@ -5,7 +5,7 @@ prima di ordinare.
 
 | | Veroboard | PCB montata da JLCPCB | PCB fresata in casa (CNC) |
 |---|---|---|---|
-| Pronta da costruire | sì: `layout.py` verificato, 57 tagli | no: serve lo schema in KiCad (non installato) e il routing | no: serve lo stesso KiCad, poi gerber → G-code (FlatCAM o simili) |
+| Pronta da costruire | sì: `layout.py` verificato, 57 tagli | no: lo schema KiCad c'è (`kicad/`, 29/10), manca il disegno della PCB | no: stesso schema e stessa PCB, poi gerber → G-code (FlatCAM o simili) |
 | Costo | solo componenti | circa 65-100 € (5 circuiti, 2 montati, scheda I/O inclusa) | lastra ramata 2-5 €, frese a V; se la CNC non c'è, una 3018 costa 150-250 € |
 | Tempi | una sera di montaggio | 1-2 settimane di disegno + 1-2 di spedizione | disegno come JLCPCB, poi un pomeriggio di prove di fresatura |
 | Operazionali | TLC2272 DIP | OPA1652 SMD (montato da loro), quello dei circuiti del datasheet Seed3 | TLC2272 DIP, o OPA1652 su SOIC se te la senti di saldarlo |
@@ -19,8 +19,8 @@ prima di ordinare.
 
 - **Veroboard**: la strada per provare subito il circuito, che non è mai stato acceso. Il limite è la massa,
   e conta proprio negli stadi analogici sensibili come un preamp ad alto guadagno.
-- **JLCPCB**: la strada per la versione buona, a circuito provato. Lo schema in KiCad serve comunque e si ricava
-  dalla netlist di `layout.py`.
+- **JLCPCB**: la strada per la versione buona, a circuito provato. Lo schema KiCad è in `kicad/`, generato
+  dalle netlist di `layout.py`, `layout_preamp.py` e `cablaggio.py` e verificato contro di esse (29/10).
 - **CNC**: sta in mezzo. Ha senso solo se la macchina c'è già o la vuoi per altri lavori; si fa con lo
   stesso KiCad della PCB, quindi il disegno vale per entrambe.
 
