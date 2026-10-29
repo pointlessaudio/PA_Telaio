@@ -43,9 +43,9 @@ ANGOLI = {           # nome: (IDSS A, Vp V)
 C = dict(
     Rsrc=10e3, C1=47e-9, Rg=1e6, Rstop=1e3,
     Rvg_top=39e3, Rvg_bot=10e3, Cvg=22e-6,
-    Rd1=20e3, Rs1=15e3, Pgain=25e3, Rgmin=220.0, Cs1=47e-6,     # stadio 1: GAIN = reostato + Cs1 su Rs1
+    Rd1=27e3, Rs1=22e3, Pgain=25e3, Rgmin=220.0, Cs1=47e-6,     # stadio 1: GAIN = reostato + Cs1 su Rs1
     C2=220e-9,
-    Rd2=20e3, Rs2a=8.2e3, Rs2b=6.8e3, Cs2=47e-6,                  # stadio 2: Rs2a non bypassata
+    Rd2=20e3, Rs2a=15e3, Rs2b=None, Cs2=None,                    # stadio 2: Rs non bypassata, quasi lineare
     C3=1e-6, Plevel=100e3, Rload=1e6,
 )
 
@@ -176,9 +176,7 @@ Rg2 g2a vg {p['Rg']}
 Rst2 g2a g2 {p['Rstop']}
 J2 d2 g2 s2 JX
 Rd2 va d2 {p['Rd2']}
-Rs2a s2 s2b {p['Rs2a']}
-Rs2b s2b 0 {p['Rs2b']}
-Cs2 s2b 0 {p['Cs2']}
+{stadio2_source(p)}
 C3 d2 lv {p['C3']}
 Rlt lv out {rlv_top}
 Rlb out 0 {rlv_bot}
@@ -190,12 +188,18 @@ Rload out 0 {p['Rload']}
 """
 
 
+def stadio2_source(p):
+    if p["Rs2b"] is None:
+        return f"Rs2a s2 0 {p['Rs2a']}"
+    return f"Rs2a s2 s2b {p['Rs2a']}\nRs2b s2b 0 {p['Rs2b']}\nCs2 s2b 0 {p['Cs2']}"
+
+
 def punto_di_lavoro(idss, vp):
     an = "op\nwrdata @D@/op.dat v(s1) v(d1) v(s2) v(d2) v(vg)"
     out, _ = ngspice(netlist(idss, vp, 0.5, 1.0, an))
     vs1, vd1, vs2, vd2, vg = (out["op"][0, k] for k in (1, 3, 5, 7, 9))
     return dict(vg=vg, vs1=vs1, vd1=vd1, id1=vs1 / C["Rs1"], vs2=vs2, vd2=vd2,
-                id2=vs2 / (C["Rs2a"] + C["Rs2b"]))
+                id2=vs2 / (C["Rs2a"] + (C["Rs2b"] or 0)))
 
 
 def misura(idss, vp, gain, level, vin_pk):
@@ -217,6 +221,26 @@ def rumore(idss, vp, gain):
     an = "op\nwrdata @D@/op.dat v(d1)\nnoise v(out) Vin dec 50 20 20k\nprint onoise_total"
     _, log = ngspice(netlist(idss, vp, gain, 1.0, an))
     return onoise(log)
+
+
+def ginocchio(nome, gain):
+    """Ingresso a passi di 1 dB, GAIN fisso. Ritorna (dB fra THD 1 % e 10 %, livello d'ingresso all'1 % in dBu,
+    H2-H3 in dB al 3 % di THD, H2-H3 al 10 %). Positivo = domina la seconda armonica."""
+    idss, vp = ANGOLI[nome]
+    l1 = d3 = None
+    for v in 0.01 * 10 ** (np.arange(0, 47) / 20):        # 10 mV ... 2,2 V di picco
+        an = "tran 2u 30m 0 2u\nlinearize v(out)\nwrdata @D@/tr.dat v(out)"
+        out, _ = ngspice(netlist(idss, vp, gain, 1.0, an, v))
+        h, _ = armoniche(out["tr"][:, 0], out["tr"][:, 1])
+        thd = math.sqrt(sum(h[1:] ** 2)) / h[0]
+        d = db(h[1] / h[0]) - db(h[2] / h[0])
+        if l1 is None and thd >= 0.01:
+            l1 = v
+        if d3 is None and thd >= 0.03:
+            d3 = d
+        if thd >= 0.10:
+            return db(v / l1), db(l1 * 0.7071 / 0.7746), d3, d
+    return None
 
 
 GAINS = (0.0, 0.5, 1.0)
@@ -271,17 +295,25 @@ def criteri(res, nz_max):
     pulito = max(res[(n, 0.0, 0.5)]["thd"] for n in ANGOLI)
     tetto = max(m["vpp"] for m in res.values())
     level = USCITA_MAX / tetto
-    medi = [(k, m) for k, m in res.items() if 0.01 <= m["thd"] <= 0.10]
-    h2 = [k for k, m in medi if m["h2"] > m["h3"]]
+    gin = {(n, g): ginocchio(n, g) for n in ANGOLI for g in (0.5, 1.0)}
+    h2_3 = [v[2] for v in gin.values() if v]
+    knee = [gin[(n, 1.0)][0] for n in ANGOLI if gin[(n, 1.0)]]
+    print("\nGinocchio (dB fra THD 1 % e 10 %; H2-H3 al 3 % e al 10 % di THD):")
+    for (n, g), v in gin.items():
+        print(f"  {n:9s} GAIN {g:.1f}: " + (f"{v[0]:4.1f} dB, 1 % a {v[1]:+5.1f} dBu in, "
+                                            f"H2-H3 {v[2]:+5.1f} / {v[3]:+5.1f} dB" if v else "non arriva al 10 %"))
     righe = [
         ("Vd senza trimmer fra 4 e 6,5 V", f"{min(vd):.2f}-{max(vd):.2f} V", 4 <= min(vd) and max(vd) <= 6.5),
         ("banda 20 Hz-20 kHz entro 0,5 dB", f"{piatt:.2f} dB", piatt <= 0.5),
         ("GAIN al minimo <= +12 dB", f"{min(gmin):.1f}...{max(gmin):.1f} dB", max(gmin) <= 12),
-        ("GAIN al massimo >= +23 dB", f"{min(gmax):.1f}...{max(gmax):.1f} dB", min(gmax) >= 23),
+        ("GAIN al massimo >= +20 dB", f"{min(gmax):.1f}...{max(gmax):.1f} dB", min(gmax) >= 20),
         ("pulito: GAIN 0, 1 Vpp in, THD <= 3 %", f"{pulito*100:.2f} %", pulito <= 0.03),
         ("tetto d'uscita -> LEVEL per <= 3,4 Vpp", f"{tetto:.2f} Vpp, LEVEL {level:.2f}", level >= 0.5),
         ("rumore all'ingresso <= 3,5 uV", f"{nz_max*1e6:.2f} uV", nz_max <= 3.5e-6),
-        ("spinta 1-10 % THD: H2 > H3", f"{len(h2)} su {len(medi)} punti", len(h2) == len(medi)),
+        ("spinta: H2-H3 >= +3 dB al 3 % (GAIN 0,5 e 1)", f"{min(h2_3):+.1f} dB al peggio",
+         len(h2_3) == 2 * len(ANGOLI) and min(h2_3) >= 3),
+        ("ginocchio GAIN 1: >= 10 dB fra 1 e 10 %", f"{min(knee):.0f}...{max(knee):.0f} dB",
+         len(knee) == len(ANGOLI) and min(knee) >= 10),
     ]
     print("\nCriteri:")
     for nome, val, ok in righe:

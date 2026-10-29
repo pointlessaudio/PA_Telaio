@@ -22,6 +22,8 @@ norns e Torso S-4. Questa è la fase prototipo: una sola unità.
 | Decisioni prese, mappa pin, case, montaggio, firmware, verifiche a banco | `docs/progetto.md` |
 | Circuito, veroboard, netlist (sorgente di verità) | `hardware/layout.py`, pagina `hardware/prototipo-veroboard-seed3.html` |
 | Componenti da comprare, carrelli per ogni strada | `hardware/ordine_componenti.md` |
+| Preamp JFET d'ingresso: simulazione, circuito V4a, collaudo a banco | `hardware/preamp/` (`risultati.md`, `collaudo.md`, `sim/`) |
+| Tre strade per il circuito (veroboard, PCB JLCPCB, CNC) | `hardware/strade_circuito.md` |
 | Case stampato: modello e verifiche (sorgente di verità) | `case/case.py`, `case/test_case.py` |
 | Case stampato in casa sulla Chiron | `case/stampa_chiron.md` |
 | Case stampato da un servizio | `case/servizio_stampa.md` |

@@ -60,6 +60,26 @@ banco. Lo stato e i punti aperti stanno in `stato.md`. Percorsi relativi alla ra
 - **Pannello posteriore piatto** (28/09): lastra di 2,4 mm montata da dentro contro la parete, la
   finestra della vasca le fa da cornice (rientra di 2,4 mm). La prima versione aveva una flangia a U
   che si era staccata dal corpo e sporgeva nel vuoto: l'ha trovato `stampabilita.py`.
+- **Preamp JFET d'ingresso (29/10).** Due stadi a J201 per canale, simulati (`hardware/preamp/`, circuito V4a;
+  non costruito). Scelte principali:
+  - **Gate polarizzati a VG = 1,73 V da un partitore comune, senza trimmer di drain.** La corrente di riposo è
+    ~(VG − Vgs)/Rs e dipende poco dall'esemplare: sui cinque angoli del J201 i drain stanno fra 5,0 e 6,2 V.
+    Lo schema Fetzer ha trimmer di drain; qui si evitano.
+  - **GAIN sul primo stadio** (reostato 25K con 220R in serie e 47 µF sul source): è lì che si fa il carattere;
+    la spinta parte presto (THD all'1 % a 30-35 mVpp in ingresso, GAIN al massimo) con seconda armonica dominante.
+  - **Secondo stadio lineare** (Rs 15K non bypassata, guadagno ~1,3): separatore e pilota del LEVEL. La prima
+    versione lo aveva bypassato e tagliava lui, bruscamente; con la Rs non bypassata e meno corrente nel primo
+    stadio (V4a) la saturazione è più graduale.
+  - **LEVEL come tetto per il codec.** Trimmer 100K regolato una volta (~0,80): il preamp da solo arriva a
+    4,2 Vpp, il codec ne regge 3,6, con LEVEL a 0,80 non può saturare qualunque sia il GAIN. Serve anche a
+    pareggiare i due canali (±3 dB fra esemplari).
+  - **Schedina a parte** fra i jack d'ingresso e la scheda principale: il preamp si prova e si toglie senza
+    toccare la veroboard verificata. Il buffer TLC2272 dopo il LEVEL è quello della scheda principale.
+  - **PRE e GAIN sul pannello posteriore**: PRE (mini DPDT) esclude il preamp (passthrough, come INST/LINE
+    per la linea), GAIN è un pot che si regola di rado.
+  - Aperti: rumore col GAIN al minimo (3,6-3,75 µV contro 3,5), pot GAIN doppio C25K introvabile, ascolto
+    del circuito vero (la sorgente simulata è una resistenza da 10K, non un pickup; modello J201 senza rumore 1/f).
+  Collaudo a banco: `hardware/preamp/collaudo.md`.
 
 ## Hardware: la sorgente di verità è `hardware/layout.py`
 
@@ -94,7 +114,7 @@ riga 2 fori 2 e 29, riga 38 foro 29, riga 44 foro 8.
 ```
 cd case
 uv run case.py            # costruisce, verifica, esporta in case/out/: "OK ... nessuna collisione"
-uv run test_case.py       # 16 mutazioni, ogni riga RILEVATO (qualche minuto)
+uv run test_case.py       # 21 mutazioni, ogni riga RILEVATO (qualche minuto)
 uv run stampabilita.py    # stampabilità strato per strato (vedi stampa_chiron.md)
 uv run render/esporta.py && /Applications/Blender.app/Contents/MacOS/Blender -b -P render/scena_blender.py
 ```
@@ -106,6 +126,8 @@ un ingombro (altezze per tipo in `ALTEZZE`). Poi controlla:
 - USB-C allineata alla parete e spessori di pannello per le boccole;
 - aria fra le manopole;
 - logo inciso davvero e finestra dell'OLED aperta su tutti i pixel.
+
+Preamp JFET d'ingresso (30/10): sul retro GAIN (pot doppio 9 mm, x 109 z 33,5, ingombro STIMATO) e PRE (deviatore, x 109 z 18,5), nella vasca il volume 62 × 47 × 16 della schedina (x 122-184, y 51-98) con 2 colonnine PROVVISORIE; vedi `RETRO_PRE` e `SCHEDINA` in `case.py`.
 
 Gli ingombri stanno nei dizionari in testa a `case.py`: se compri un pezzo diverso, cambialo lì e
 rilancia. Uscite: `out/` (STL già orientati per la stampa, STEP, `assieme.step` e `.glb`),
@@ -119,6 +141,8 @@ corpi di questo file (`scatola_1590DD.md`).
 
 Verificato il 29/09: `OK: 5 pezzi, 97 componenti controllati, nessuna collisione` (93 più le 4 teste delle viti
 della veroboard). 16 mutazioni su 16 RILEVATO (giro completo del 29/09), comprese le 3 dei fori di fissaggio.
+29/10, col preamp: `OK: 5 pezzi, 101 componenti controllati, nessuna collisione`; 21 mutazioni su 21 RILEVATO (18 nel
+giro completo, le 3 della schedina rilanciate dopo aver portato il volume a 17,5 mm).
 
 **Il modello è disegnato sui pezzi di partenza, non su quelli dei carrelli.** Prima di stampare i pannelli
 va riallineato:
@@ -249,6 +273,7 @@ successiva, scrivendo una classe con la mappa pin qui sopra.
 9. Deviatore INST/LINE: livello con una sorgente di linea a +4 dBu.
 10. True bypass: in bypass continuità punta IN → punta OUT su entrambi i canali, LED spento;
     a effetto inserito uscita dalla scheda e LED acceso; nessun colpo alla commutazione.
+11. Preamp JFET (schedina a parte): procedura e valori attesi in `hardware/preamp/collaudo.md`.
 
 ## Errori noti nei documenti storici
 

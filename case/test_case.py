@@ -41,6 +41,12 @@ MUTAZIONI = {
         "FORI_FISSAGGIO = L.FORI_FISSAGGIO", "FORI_FISSAGGIO = [(1, 1), (28, 1), (7, 43), (29, 38)]"),
     "testa della vite della veroboard su un componente": (
         "FORI_FISSAGGIO = L.FORI_FISSAGGIO", "FORI_FISSAGGIO = [(1, 1), (28, 1), (2, 37), (28, 37)]"),
+    # preamp d'ingresso: GAIN, PRE e volume della schedina
+    "GAIN sopra il jack IN L": ("GAIN_X, GAIN_Z = 109.0, 33.5", "GAIN_X, GAIN_Z = 125.0, 19.0"),
+    "PRE troppo vicino al jack IN L": ("PRE_X, PRE_Z = 109.0, Z_RETRO", "PRE_X, PRE_Z = 118.0, Z_RETRO"),
+    "schedina preamp sulla veroboard": ("SCHEDINA = dict(x=(122.0, 184.0)", "SCHEDINA = dict(x=(60.0, 122.0)"),
+    "schedina preamp contro i jack dietro": ("y=(51.0, 98.0), alt=17.5", "y=(60.0, 107.0), alt=17.5"),
+    "schedina preamp troppo alta sotto i pot": ("y=(51.0, 98.0), alt=17.5", "y=(51.0, 98.0), alt=30.0"),
 }
 
 FILTRO = sys.argv[1] if len(sys.argv) > 1 else ""

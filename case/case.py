@@ -143,6 +143,31 @@ TIPI_RETRO = {
     "dc": dict(foro=11.0, max_pannello=4.0, corpo=(13.0, 13.0, 22.0)),       # DC 2,1 da pannello
     "levetta": dict(foro=6.0, max_pannello=6.0, corpo=(13.0, 13.0, 20.0)),   # mini deviatore DPDT
 }
+# Preamp JFET d'ingresso (hardware/preamp/risultati.md, V4a): GAIN doppio da 9 mm e deviatore PRE sul retro, a
+# destra del PEDALE, nel varco fra PEDALE (x 93) e IN L (x 125). Il varco è largo solo 16 mm fra i corpi dei
+# jack da 6,35: il deviatore sta alla quota dei jack, il pot sopra di lui (stesso x). Il pannello posteriore
+# li riceve come gli altri; RETRO e TIPI_RETRO restano intatti perché li importa scatola.py.
+# Pot doppio Alpha 9 mm, serie RD902F (boccola M7x0,75 come il singolo RD901F, albero 6 mm lungo 15).
+# INGOMBRO STIMATO, NON DA DATASHEET: non ho trovato il disegno quotato dell'RD902F-40-15R1 (il catalogo Alpha
+# 9 mm multigang e` solo in PDF con testo illeggibile). Uso il corpo del singolo (11,5 largo, 10 alto, qui
+# arrotondati a 12) con profondita` stimata 18 mm = 7 del singolo + ~8 della seconda gang + 3 dei pin.
+# Da confrontare con il disegno Alpha/Mouser prima di stampare il pannello.
+POT_DOPPIO = dict(foro=7.0, max_pannello=3.0, corpo=(12.0, 12.0, 18.0), manopola=(16.0, 15.0), dado=2.0)
+GAIN_X, GAIN_Z = 109.0, 33.5     # pot sopra il deviatore: foro a 33,5 - 18,5 = 15 mm dal centro del PRE
+PRE_X, PRE_Z = 109.0, Z_RETRO    # mini deviatore DPDT (boccola M6) come INST/LINE: tipo "levetta"
+RETRO_PRE = [("GAIN", GAIN_X, GAIN_Z, "pot_doppio"), ("PRE", PRE_X, PRE_Z, "levetta")]
+TIPI_PRE = {"pot_doppio": dict(foro=POT_DOPPIO["foro"], max_pannello=POT_DOPPIO["max_pannello"],
+                               corpo=POT_DOPPIO["corpo"]), "levetta": TIPI_RETRO["levetta"]}
+
+# Volume della schedina preamp davanti ai jack d'ingresso (IN L/R, OUT L/R), nella vasca: colonnine 4 mm +
+# scheda 1,6 + componenti 11,5 (hardware/preamp/layout_preamp.py) = 17,1, arrotondato a 17,5.
+# Colonnine sui fori di hardware/preamp/layout_preamp.py, FORI_FISSAGGIO = [(21, 1), (21, 16)], con il foro 0
+# della striscia verso x minore e la striscia 0 verso y minore. ORIENTAMENTO PROVVISORIO: da fissare col
+# cablaggio verso jack, PRE e GAIN.
+SCHEDINA = dict(x=(122.0, 184.0), y=(51.0, 98.0), alt=17.5, colonnina=4.0, colonnina_d=6.0)
+SCHEDINA_FORI = [(21, 1), (21, 16)]           # copia di layout_preamp.FORI_FISSAGGIO (quello importa numpy)
+SCHEDINA_COLONNINE = [(SCHEDINA["x"][0] + (fx + 0.5) * 2.54, SCHEDINA["y"][0] + (fy + 0.5) * 2.54)
+                      for fx, fy in SCHEDINA_FORI]
 # Scheda MIDI (millefori saldata sui due Thonkiconn) e scheda microSD
 MIDI_SCHEDA = dict(x=(34.0, 66.0), z=(12.5, 35.0), prof=16.0)
 SD = dict(x=(T_WALL, 25.0), y=(34.0, 54.0), z=(12.0, 16.5), fessura=(13.0, 2.6), z_fessura=14.4)
@@ -367,6 +392,11 @@ def vasca():
         v += Pos(x, y, T_FLOOR + DISTANZIALE / 2 - 0.01) * cil(DISTANZIALE_D, DISTANZIALE + 0.02)
         v -= Pos(x, y, Z_SCHEDA - 5.5 / 2 + 0.01) * cil(PILOTA_M3, 5.5)
 
+    # colonnine della schedina preamp (PROVVISORIE: vedi SCHEDINA)
+    for (x, y) in SCHEDINA_COLONNINE:
+        v += Pos(x, y, T_FLOOR + SCHEDINA["colonnina"] / 2 - 0.01) * cil(SCHEDINA["colonnina_d"], SCHEDINA["colonnina"] + 0.02)
+        v -= Pos(x, y, T_FLOOR + SCHEDINA["colonnina"] - 5.5 / 2 + 0.01) * cil(PILOTA_M3, 5.5)
+
     # USB-C del Seed e fessura microSD sulla parete sinistra
     uy, uz = seed_y_centro(), usb_z()
     ut = SEED["usb_taglio"]
@@ -406,6 +436,8 @@ def pannello_posteriore():
     p = fillet(p.edges().filter_by(Axis.Y), R_PANNELLO)
     for (nome, x, tipo) in RETRO:
         p -= Pos(x, D, Z_RETRO) * Rot(90, 0, 0) * cil(TIPI_RETRO[tipo]["foro"] + TOL_FORI, 20)
+    for (nome, x, z, tipo) in RETRO_PRE:
+        p -= Pos(x, D, z) * Rot(90, 0, 0) * cil(TIPI_PRE[tipo]["foro"] + TOL_FORI, 20)
     return p
 
 
@@ -504,6 +536,15 @@ def componenti():
             continue                                   # stanno sulla scheda MIDI
         bw, bh, bd = TIPI_RETRO[tipo]["corpo"]
         c.append((nome, box(x - bw / 2, x + bw / 2, yi - bd, yi, Z_RETRO - bh / 2, Z_RETRO + bh / 2), "retro"))
+    for (nome, x, z, tipo) in RETRO_PRE:
+        bw, bh, bd = TIPI_PRE[tipo]["corpo"]
+        c.append((nome, box(x - bw / 2, x + bw / 2, yi - bd, yi, z - bh / 2, z + bh / 2), "retro"))
+    mg, md = POT_DOPPIO["manopola"], POT_DOPPIO["dado"]
+    c.append(("manopola GAIN", Pos(GAIN_X, Y_PANNELLO_EST + md + 0.5 + mg[1] / 2, GAIN_Z) * Rot(90, 0, 0)
+              * cil(mg[0], mg[1]), "manopole"))
+    sx, sy = SCHEDINA["x"], SCHEDINA["y"]
+    z0 = T_FLOOR + SCHEDINA["colonnina"] + 0.02
+    c.append(("schedina preamp", box(*sx, *sy, z0, T_FLOOR + SCHEDINA["alt"]), "schedina"))
     mx0, mx1 = MIDI_SCHEDA["x"]
     c.append(("scheda MIDI", box(mx0, mx1, yi - MIDI_SCHEDA["prof"], yi, *MIDI_SCHEDA["z"]), "retro"))
     c.append(("scheda microSD", box(SD["x"][0] + 0.02, SD["x"][1], *SD["y"], *SD["z"]), "sd"))
@@ -581,6 +622,19 @@ def verifica(pezzi, comp):
     for (nome, x, tipo) in RETRO:
         if T_REAR > TIPI_RETRO[tipo]["max_pannello"]:
             errori.append(f"pannello posteriore troppo spesso per {nome}")
+    for (nome, x, z, tipo) in RETRO_PRE:
+        if T_REAR > TIPI_PRE[tipo]["max_pannello"]:
+            errori.append(f"pannello posteriore troppo spesso per {nome}")
+        # foro nel pannello: dentro la lastra e a distanza dai fori vicini (bordo-bordo, minimo 3 mm)
+        r = TIPI_PRE[tipo]["foro"] / 2 + TOL_FORI / 2
+        altri = [(x2, Z_RETRO, TIPI_RETRO[t2]["foro"]) for (_, x2, t2) in RETRO] + \
+                [(x2, z2, TIPI_PRE[t2]["foro"]) for (n2, x2, z2, t2) in RETRO_PRE if n2 != nome]
+        for (x2, z2, f2) in altri:
+            gap = math.dist((x, z), (x2, z2)) - r - (f2 / 2 + TOL_FORI / 2)
+            if gap < 3.0:
+                errori.append(f"foro di {nome} a {gap:.1f} mm da un altro foro del retro (minimo 3)")
+        if z + r > z_sotto(Y_PANNELLO_INT) - GIOCO - 2.0 or x - r < R_PIANTA or x + r > W - R_PIANTA:
+            errori.append(f"foro di {nome} fuori dalla lastra del pannello posteriore")
 
     # spazio fra le manopole (bordo-bordo)
     pots = [(x, y) for x in POT_X for y in POT_Y]

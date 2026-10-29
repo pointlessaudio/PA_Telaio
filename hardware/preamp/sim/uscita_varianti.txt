@@ -1,0 +1,110 @@
+V0 (prima simulazione)
+Escursione dei drain rispetto al riposo (V): + verso VA (interdizione), - verso il source (ohmico)
+  basso    GAIN 0.0 Vin 1.00 | D1 riposo 6.09: +1.82/-1.89 | D2 riposo 6.09: +1.97/-2.78
+  basso    GAIN 0.5 Vin 0.50 | D1 riposo 6.09: +2.26/-3.29 | D2 riposo 6.09: +1.96/-2.79
+  basso    GAIN 1.0 Vin 0.25 | D1 riposo 6.09: +2.26/-3.98 | D2 riposo 6.09: +1.96/-2.79
+  basso    GAIN 1.0 Vin 1.00 | D1 riposo 6.09: +2.33/-4.14 | D2 riposo 6.09: +1.95/-2.79
+  modello  GAIN 0.0 Vin 1.00 | D1 riposo 5.45: +1.78/-1.83 | D2 riposo 5.45: +2.51/-2.02
+  modello  GAIN 0.5 Vin 0.50 | D1 riposo 5.45: +2.36/-2.56 | D2 riposo 5.45: +2.52/-2.04
+  modello  GAIN 1.0 Vin 0.25 | D1 riposo 5.45: +2.37/-2.79 | D2 riposo 5.45: +2.52/-2.04
+  modello  GAIN 1.0 Vin 1.00 | D1 riposo 5.45: +2.92/-3.00 | D2 riposo 5.45: +2.52/-2.04
+  alto     GAIN 0.0 Vin 1.00 | D1 riposo 5.02: +1.69/-1.38 | D2 riposo 5.02: +2.14/-1.47
+  alto     GAIN 0.5 Vin 0.50 | D1 riposo 5.02: +2.18/-1.79 | D2 riposo 5.02: +2.68/-1.50
+  alto     GAIN 1.0 Vin 0.25 | D1 riposo 5.02: +2.01/-1.87 | D2 riposo 5.02: +2.74/-1.49
+  alto     GAIN 1.0 Vin 1.00 | D1 riposo 5.02: +3.30/-2.18 | D2 riposo 5.02: +2.91/-1.50
+
+V4a (scelta)
+Escursione dei drain rispetto al riposo (V): + verso VA (interdizione), - verso il source (ohmico)
+  basso    GAIN 0.0 Vin 1.00 | D1 riposo 6.24: +1.94/-2.04 | D2 riposo 6.09: +1.97/-2.01
+  basso    GAIN 0.5 Vin 0.50 | D1 riposo 6.24: +2.20/-3.85 | D2 riposo 6.09: +1.97/-2.17
+  basso    GAIN 1.0 Vin 0.25 | D1 riposo 6.24: +2.20/-4.17 | D2 riposo 6.09: +1.97/-2.18
+  basso    GAIN 1.0 Vin 1.00 | D1 riposo 6.24: +2.20/-4.28 | D2 riposo 6.09: +1.96/-2.19
+  modello  GAIN 0.0 Vin 1.00 | D1 riposo 5.61: +1.91/-1.98 | D2 riposo 5.45: +1.95/-1.57
+  modello  GAIN 0.5 Vin 0.50 | D1 riposo 5.61: +2.66/-2.80 | D2 riposo 5.45: +2.52/-1.60
+  modello  GAIN 1.0 Vin 0.25 | D1 riposo 5.61: +2.57/-2.98 | D2 riposo 5.45: +2.52/-1.59
+  modello  GAIN 1.0 Vin 1.00 | D1 riposo 5.61: +2.77/-3.14 | D2 riposo 5.45: +2.53/-1.59
+  alto     GAIN 0.0 Vin 1.00 | D1 riposo 5.17: +1.82/-1.50 | D2 riposo 5.02: +1.44/-1.14
+  alto     GAIN 0.5 Vin 0.50 | D1 riposo 5.17: +2.50/-1.97 | D2 riposo 5.02: +1.90/-1.17
+  alto     GAIN 1.0 Vin 0.25 | D1 riposo 5.17: +2.21/-2.03 | D2 riposo 5.02: +1.93/-1.16
+  alto     GAIN 1.0 Vin 1.00 | D1 riposo 5.17: +3.15/-2.28 | D2 riposo 5.02: +2.67/-1.17
+
+V0 base  {}
+  guadagno: minimo 9.0...10.5 dB, massimo 23.8...29.2 dB
+  GAIN 0 basso     ginocchio 1->10 %:  4.0 dB  (1 % a  -5.8 dBu in)  H2-H3:  +3.2 dB al 3 %,  +0.7 dB al 10 %
+  GAIN 0 modello   ginocchio 1->10 %:  4.0 dB  (1 % a  -4.8 dBu in)  H2-H3:  -4.5 dB al 3 %,  -4.8 dB al 10 %
+  GAIN 0 alto      ginocchio 1->10 %:  4.0 dB  (1 % a  -7.8 dBu in)  H2-H3:  +0.2 dB al 3 %,  +1.9 dB al 10 %
+  GAIN 1 basso     ginocchio 1->10 %: 13.0 dB  (1 % a -33.8 dBu in)  H2-H3: -28.2 dB al 3 %,  -4.0 dB al 10 %
+  GAIN 1 modello   ginocchio 1->10 %: 11.0 dB  (1 % a -29.8 dBu in)  H2-H3:  +4.9 dB al 3 %,  -0.8 dB al 10 %
+  GAIN 1 alto      ginocchio 1->10 %:  6.0 dB  (1 % a -24.8 dBu in)  H2-H3:  +6.7 dB al 3 %,  +5.2 dB al 10 %
+
+V1a drain piu' alto  {'Rd1': 15000.0, 'Rd2': 15000.0}
+  guadagno: minimo 4.5...5.9 dB, massimo 19.3...24.7 dB
+  GAIN 0 basso     ginocchio 1->10 %:  3.0 dB  (1 % a  -2.8 dBu in)  H2-H3:  +2.3 dB al 3 %,  +2.6 dB al 10 %
+  GAIN 0 modello   ginocchio 1->10 %:  5.0 dB  (1 % a  -1.8 dBu in)  H2-H3:  -3.5 dB al 3 %, -10.5 dB al 10 %
+  GAIN 0 alto      ginocchio 1->10 %:  4.0 dB  (1 % a  -0.8 dBu in)  H2-H3:  -5.0 dB al 3 %,  -9.2 dB al 10 %
+  GAIN 1 basso     ginocchio 1->10 %: 17.0 dB  (1 % a -34.8 dBu in)  H2-H3: +18.0 dB al 3 %,  -7.3 dB al 10 %
+  GAIN 1 modello   ginocchio 1->10 %: 17.0 dB  (1 % a -30.8 dBu in)  H2-H3: +17.0 dB al 3 %, -17.5 dB al 10 %
+  GAIN 1 alto      ginocchio 1->10 %: 15.0 dB  (1 % a -26.8 dBu in)  H2-H3: +15.8 dB al 3 %,  -0.8 dB al 10 %
+
+V1b drain piu' alto  {'Rd1': 12000.0, 'Rd2': 12000.0}
+  guadagno: minimo 0.9...2.3 dB, massimo 15.7...21.1 dB
+  GAIN 0 basso     ginocchio 1->10 %:  3.0 dB  (1 % a  -0.8 dBu in)  H2-H3:  +0.1 dB al 3 %,  -0.6 dB al 10 %
+  GAIN 0 modello   ginocchio 1->10 %:  4.0 dB  (1 % a  +1.2 dBu in)  H2-H3:  -0.4 dB al 3 %,  -3.4 dB al 10 %
+  GAIN 0 alto      non arriva al 10 %
+  GAIN 1 basso     ginocchio 1->10 %: 19.0 dB  (1 % a -35.8 dBu in)  H2-H3: +22.8 dB al 3 %, -27.0 dB al 10 %
+  GAIN 1 modello   ginocchio 1->10 %: 19.0 dB  (1 % a -31.8 dBu in)  H2-H3: +22.0 dB al 3 %, -63.6 dB al 10 %
+  GAIN 1 alto      ginocchio 1->10 %: 19.0 dB  (1 % a -27.8 dBu in)  H2-H3: +21.1 dB al 3 %, -12.0 dB al 10 %
+
+V2a Rs mai tutta bypassata  {'Rgmin': 1000.0}
+  guadagno: minimo 8.9...10.4 dB, massimo 21.2...25.1 dB
+  GAIN 0 basso     ginocchio 1->10 %:  4.0 dB  (1 % a  -5.8 dBu in)  H2-H3:  +3.3 dB al 3 %,  +0.9 dB al 10 %
+  GAIN 0 modello   ginocchio 1->10 %:  4.0 dB  (1 % a  -4.8 dBu in)  H2-H3:  -5.0 dB al 3 %,  -4.5 dB al 10 %
+  GAIN 0 alto      ginocchio 1->10 %:  3.0 dB  (1 % a  -6.8 dBu in)  H2-H3:  +0.1 dB al 3 %,  +1.9 dB al 10 %
+  GAIN 1 basso     ginocchio 1->10 %:  6.0 dB  (1 % a -22.8 dBu in)  H2-H3:  -9.4 dB al 3 %,  -1.0 dB al 10 %
+  GAIN 1 modello   ginocchio 1->10 %:  5.0 dB  (1 % a -19.8 dBu in)  H2-H3:  +2.2 dB al 3 %,  -3.4 dB al 10 %
+  GAIN 1 alto      ginocchio 1->10 %:  4.0 dB  (1 % a -19.8 dBu in)  H2-H3:  +3.6 dB al 3 %,  +4.5 dB al 10 %
+
+V2b Rs mai tutta bypassata  {'Rgmin': 2200.0}
+  guadagno: minimo 8.8...10.2 dB, massimo 18.5...21.5 dB
+  GAIN 0 basso     ginocchio 1->10 %:  4.0 dB  (1 % a  -5.8 dBu in)  H2-H3:  +3.5 dB al 3 %,  +1.4 dB al 10 %
+  GAIN 0 modello   ginocchio 1->10 %:  4.0 dB  (1 % a  -4.8 dBu in)  H2-H3:  -5.8 dB al 3 %,  -4.2 dB al 10 %
+  GAIN 0 alto      ginocchio 1->10 %:  4.0 dB  (1 % a  -6.8 dBu in)  H2-H3:  -0.1 dB al 3 %,  +0.7 dB al 10 %
+  GAIN 1 basso     ginocchio 1->10 %:  3.0 dB  (1 % a -15.8 dBu in)  H2-H3:  -1.7 dB al 3 %,  -0.3 dB al 10 %
+  GAIN 1 modello   ginocchio 1->10 %:  3.0 dB  (1 % a -14.8 dBu in)  H2-H3:  -0.1 dB al 3 %,  -3.0 dB al 10 %
+  GAIN 1 alto      ginocchio 1->10 %:  4.0 dB  (1 % a -16.8 dBu in)  H2-H3:  +2.1 dB al 3 %,  +4.0 dB al 10 %
+
+V3a secondo stadio lineare  {'Rs2a': 15000.0, 'Rs2b': 1.0, 'Cs2': 1e-12}
+  guadagno: minimo 4.5...5.6 dB, massimo 19.3...24.4 dB
+  GAIN 0 basso     ginocchio 1->10 %:  2.0 dB  (1 % a  +0.2 dBu in)  H2-H3:  -8.1 dB al 3 %, -11.8 dB al 10 %
+  GAIN 0 modello   ginocchio 1->10 %:  3.0 dB  (1 % a  -1.8 dBu in)  H2-H3:  +1.2 dB al 3 %,  -4.4 dB al 10 %
+  GAIN 0 alto      ginocchio 1->10 %:  4.0 dB  (1 % a  -4.8 dBu in)  H2-H3:  +0.4 dB al 3 %,  -8.2 dB al 10 %
+  GAIN 1 basso     ginocchio 1->10 %: 20.0 dB  (1 % a -35.8 dBu in)  H2-H3: +27.2 dB al 3 %, -48.9 dB al 10 %
+  GAIN 1 modello   ginocchio 1->10 %: 15.0 dB  (1 % a -31.8 dBu in)  H2-H3: +26.6 dB al 3 %,  +9.1 dB al 10 %
+  GAIN 1 alto      ginocchio 1->10 %: 12.0 dB  (1 % a -27.8 dBu in)  H2-H3: +17.2 dB al 3 %,  +5.6 dB al 10 %
+
+V3b secondo stadio lineare  {'Rd2': 12000.0, 'Rs2a': 15000.0, 'Rs2b': 1.0, 'Cs2': 1e-12}
+  guadagno: minimo 0.7...1.9 dB, massimo 15.5...20.6 dB
+  GAIN 0 basso     ginocchio 1->10 %:  3.0 dB  (1 % a  +0.2 dBu in)  H2-H3:  -1.8 dB al 3 %,  -5.8 dB al 10 %
+  GAIN 0 modello   ginocchio 1->10 %:  3.0 dB  (1 % a  +0.2 dBu in)  H2-H3:  -0.4 dB al 3 %,  -0.6 dB al 10 %
+  GAIN 0 alto      ginocchio 1->10 %:  4.0 dB  (1 % a  -2.8 dBu in)  H2-H3:  +1.0 dB al 3 %,  +3.3 dB al 10 %
+  GAIN 1 basso     ginocchio 1->10 %: 20.0 dB  (1 % a -35.8 dBu in)  H2-H3: +27.2 dB al 3 %, -25.3 dB al 10 %
+  GAIN 1 modello   ginocchio 1->10 %: 19.0 dB  (1 % a -31.8 dBu in)  H2-H3: +26.6 dB al 3 %, -24.5 dB al 10 %
+  GAIN 1 alto      ginocchio 1->10 %: 16.0 dB  (1 % a -27.8 dBu in)  H2-H3: +25.7 dB al 3 %,  -6.7 dB al 10 %
+
+V4a V3a + meno corrente nel primo stadio (scelta)  {'Rs2a': 15000.0, 'Rs2b': None, 'Cs2': None, 'Rs1': 22000.0, 'Rd1': 27000.0}
+  guadagno: minimo 5.2...6.3 dB, massimo 20.5...25.7 dB
+  GAIN 0 basso     ginocchio 1->10 %:  3.0 dB  (1 % a  -0.8 dBu in)  H2-H3:  -7.5 dB al 3 %, -15.5 dB al 10 %
+  GAIN 0 modello   ginocchio 1->10 %:  4.0 dB  (1 % a  -2.8 dBu in)  H2-H3:  +1.0 dB al 3 %,  -3.0 dB al 10 %
+  GAIN 0 alto      ginocchio 1->10 %:  4.0 dB  (1 % a  -5.8 dBu in)  H2-H3:  +1.8 dB al 3 %,  -3.3 dB al 10 %
+  GAIN 1 basso     ginocchio 1->10 %: 20.0 dB  (1 % a -37.8 dBu in)  H2-H3: +28.5 dB al 3 %, -16.8 dB al 10 %
+  GAIN 1 modello   ginocchio 1->10 %: 16.0 dB  (1 % a -33.8 dBu in)  H2-H3: +28.0 dB al 3 %,  +9.6 dB al 10 %
+  GAIN 1 alto      ginocchio 1->10 %: 12.0 dB  (1 % a -29.8 dBu in)  H2-H3: +16.3 dB al 3 %,  +8.2 dB al 10 %
+
+V4b V3a + meno corrente, Rd1 30k  {'Rs2a': 15000.0, 'Rs2b': None, 'Cs2': None, 'Rs1': 22000.0, 'Rd1': 30000.0}
+  guadagno: minimo 6.1...7.2 dB, massimo 21.3...26.5 dB
+  GAIN 0 basso     ginocchio 1->10 %:  2.0 dB  (1 % a  -0.8 dBu in)  H2-H3:  -6.0 dB al 3 %, -13.4 dB al 10 %
+  GAIN 0 modello   ginocchio 1->10 %:  4.0 dB  (1 % a  -3.8 dBu in)  H2-H3:  +0.6 dB al 3 %,  -6.4 dB al 10 %
+  GAIN 0 alto      ginocchio 1->10 %:  4.0 dB  (1 % a  -6.8 dBu in)  H2-H3:  -6.5 dB al 3 %, -12.7 dB al 10 %
+  GAIN 1 basso     ginocchio 1->10 %: 19.0 dB  (1 % a -37.8 dBu in)  H2-H3: +27.6 dB al 3 %, -24.1 dB al 10 %
+  GAIN 1 modello   ginocchio 1->10 %: 15.0 dB  (1 % a -33.8 dBu in)  H2-H3: +26.9 dB al 3 %,  +8.9 dB al 10 %
+  GAIN 1 alto      ginocchio 1->10 %: 12.0 dB  (1 % a -29.8 dBu in)  H2-H3: +16.1 dB al 3 %,  +0.6 dB al 10 %

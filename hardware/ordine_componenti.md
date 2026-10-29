@@ -17,6 +17,9 @@ cambio di circa 0,86 € per dollaro (da ricontrollare).
 | Scatola 1590DD da Musikding, forata a mano con la dima | Musikding, TME, Amazon, Exploding Shed | circa 170-180 € (stima) |
 | Case stampato, in casa o da un servizio, coi pezzi su cui è disegnato | Banzai, TME, Amazon, Exploding Shed, Musikding per la stripboard | circa 190-200 €, più la stampa (servizio: 97-261 €) |
 
+Per tutte le strade c'è anche il **preamp JFET** d'ingresso (29/10, sezione dopo «Comune a tutte le strade»): non è
+compreso nei totali sopra, e il pot GAIN è ancora da decidere.
+
 Per tutte le strade c'è anche la **variante AliExpress** (06/10): tutto il generico da AliExpress, e restano solo
 TME, l'OLED ed eventualmente Tayda. È nella sezione prima della lista completa.
 
@@ -42,6 +45,87 @@ da evitare, e ha dogana.
 
 **Rimandato:** lettore microSD Adafruit 4682 (DigiKey 3,00 €). Per il primo collaudo non serve. I moduli "per
 Arduino" (AMS1117 + 74LVC125) non vanno: funzionano solo in SPI.
+
+## Preamp JFET (29/10): schedina a parte, uguale per tutte le strade
+
+Distinta per **2 canali** del circuito V4a (`preamp/risultati.md`; procedura in `preamp/collaudo.md`). È una
+schedina su stripboard fra i jack d'ingresso e la scheda principale; il buffer TLC2272 che segue il LEVEL è quello
+già sulla scheda principale, quindi nessun operazionale in più. Il preamp è simulato, non costruito: la lista è
+da confermare col layout della schedina. Prezzi: solo quelli con la fonte, il resto "da verificare".
+
+| Parte | Q.tà | Note |
+|---|---|---|
+| **J201**, TO-92 | 4 (meglio 6) | vedi sotto: provenienza e scelta degli esemplari |
+| Zoccoli o strip a pin per i J201 | 4 | per cambiare esemplare senza dissaldare |
+| Resistenza 1/4 W 1 % film metallico 1M | 4 | gate di J1 e J2, per canale |
+| 1K | 4 | stopper dei gate, 2 per canale |
+| 27K | 2 | Rd1 |
+| 22K | 2 | Rs1 |
+| 20K | 2 | Rd2 |
+| 15K | 2 | Rs2 |
+| 220R | 2 | minimo del GAIN, in serie al reostato |
+| 39K + 10K | 1 + 1 | partitore di VG (1,73 V), comune ai due canali |
+| Film 47 nF | 2 | ingresso |
+| Film 220 nF | 2 | fra i due stadi |
+| Film 1 µF | 2 | uscita, prima del LEVEL (poliestere/MKT, passo 5 o 7,5 mm) |
+| Elettrolitico ≥ 16 V 47 µF | 2 | bypass del GAIN, uno per canale |
+| Elettrolitico ≥ 16 V 22 µF | 1 | filtro di VG |
+| Elettrolitico ≥ 16 V 100 µF | 1 | filtro di VA sulla schedina (uso da fissare col layout) |
+| Ceramico 100 nF | 2 | disaccoppiamento di VA |
+| **Trimmer 100K** (LEVEL) | 2 | uno per canale, regolati una volta; meglio multigiro o cermet |
+| **Pot doppio 9 mm 25K** (GAIN) | 1 | usato come reostato, curva C; vedi sotto |
+| **Mini deviatore DPDT** («PRE») | 1 | pannello posteriore |
+| Stripboard | 1 | basta un ritaglio di una 100×160 |
+| Filo e cavetto schermato dal jack alla schedina | | come nella lista completa |
+
+Il deviatore PRE è dello stesso tipo di INST/LINE (Tayda A-4568, mini DPDT on-on, 0,59 $ al 28/09): in totale ne
+servono 2. I fori di PRE e GAIN sul pannello posteriore vanno aggiunti a dima e modello (non ancora fatto).
+
+### J201: provenienza
+
+Molti J201 TO-92 in giro sono falsi o rimarcati: sui forum dei costruttori (PedalPCB, diystompboxes) ricorrono lotti
+con Vp e IDSS fuori dal datasheet o di un altro tipo. Sono racconti, non test, e sui J201 di Tayda i pareri sono
+contrastanti. Il circuito tollera tutta la fascia del datasheet (IDSS 0,2-1,0 mA, Vp −0,3…−1,5 V) senza trimmer,
+ma non un tipo diverso.
+- **Canali affidabili**: un distributore autorizzato (TME, Mouser, DigiKey) o il produttore; stock non
+  controllato. Un forum dice che il TO-92 viene ancora da Linear Systems e InterFET (non verificato).
+- **Alternativa**: MMBFJ201 in SOT-23 su adattatore SOT-23→DIP. Si salda SMD; non ho verificato se il SOT-23
+  soffra degli stessi falsi.
+- Comunque: comprarne almeno 4 e **misurarli** (collaudo, passo 2: Vd1 fra 4,5 e 6,5 V); le scorte servono a
+  scegliere due esemplari vicini per i due canali.
+
+### Pot GAIN: il doppio C25K non si trova
+
+In simulazione il GAIN è un reostato da 25K con la legge della curva A **al contrario** (la resistenza cala verso
+il massimo guadagno). Con un pot a curva C (antilogaritmica) si ottiene usando cursore e capo orario; il terzo
+capo si lega al cursore.
+
+Cercato il 29/10:
+- **Alpha 9 mm doppio C25K: non trovato** da nessun venditore. Esiste il **singolo** Alpha 9 mm «reverse audio»
+  25K, angolo retto, albero 6,35, a circa 1,90 $ da Amplified Parts e Tubes and More (prezzo letto in un risultato
+  di ricerca: le pagine dei negozi non si aprono da qui). Ne servirebbero due, e il GAIN non sarebbe una sola
+  manopola.
+- **Doppio 9 mm Cusack (SKU POT-09-DG, stompboxparts.com)**: curva C solo da **50K e 100K**; nessun 25K di
+  nessuna curva. 1,30 $ al pezzo (pagina letta il 29/10; stock non indicato).
+- **Tayda**: l'antilog doppio compare da 50K e 100K; un utente PedalPCB riferisce che il C25K non lo avevano.
+  Pagina non apribile da qui: prezzo e stock da verificare.
+- **Musikding**: non verificato.
+
+Strade per il GAIN, da decidere (finché non si sceglie, il pot non va ordinato):
+1. **Doppio C50K** e riscalare il circuito a 50K: il minimo di guadagno e la legge cambiano; serve un'altra
+   simulazione, non fatta.
+2. **Doppio C100K** (il più facile da trovare), con una resistenza in parallelo per scendere verso 25K: cambia
+   anche la forma della curva; da simulare.
+3. **Due singoli Alpha C25K**, uno per canale: due manopole, o una sola con un albero comune.
+
+### Dove si compra
+
+| Parte | Dove | Carrello |
+|---|---|---|
+| J201, passivi, film, elettrolitici, trimmer | TME (disponibilità e prezzi da verificare) | «Comune a tutte le strade», TME |
+| Deviatore PRE | Tayda A-4568 (0,59 $, 28/09) o Musikding (0,80 €) | quello della strada scelta |
+| Pot GAIN | da decidere (sopra) | |
+| Stripboard | ritaglio della 100×160 Musikding già nel carrello | |
 
 ## Strada 1590DD da Tayda, forata a macchina: circa 150-170 €
 

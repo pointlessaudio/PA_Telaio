@@ -24,6 +24,15 @@ Niente è ancora comprato, costruito o stampato. Edo vuole **tenere aperte tutte
 - **Firmware:** `firmware/collaudo` aggiornato il 28/09, **non compilato**: su questo Mac manca la toolchain
   ARM (`arm-none-eabi-gcc`); la versione precedente compilava.
 
+- **Preamp JFET d'ingresso** (29/10): simulato in ngspice, **non costruito né ascoltato**. Circuito V4a in
+  `hardware/preamp/risultati.md`, distinta in `hardware/ordine_componenti.md` (sezione Preamp JFET), procedura a
+  banco in `hardware/preamp/collaudo.md`. Criteri della simulazione: 8 su 9 passati (punto di lavoro senza
+  trimmer, banda, guadagno minimo e massimo, pulito, tetto d'uscita, spinta, ginocchio). Il nono no: **rumore
+  riportato all'ingresso col GAIN al minimo, 3,6-3,75 µV contro il limite di 3,5** (da metà in su 2,0-2,4 µV);
+  punto aperto, da giudicare a orecchio. Aperto anche il pot GAIN: il doppio C25K non si trova; le alternative
+  col C50K sono simulate in `risultati.md` (§Pot del GAIN). Schedina su stripboard 24 × 18 fori verificata da
+  script (`hardware/preamp/layout_preamp.py`); PRE, GAIN e volume della schedina sono in `case/case.py`.
+
 Decisioni aperte, per Edo:
 1. contenitore (una delle tre strade);
 2. jack da 6,35: combinazione mista, tutti Switchcraft o tutti Tayda (vedi `hardware/ordine_componenti.md`);
@@ -32,6 +41,10 @@ Decisioni aperte, per Edo:
 
 ## Punti aperti (29/09)
 
+- **Preamp (29/10):** decidere il pot GAIN (doppio C50K, doppio C50K con 47k in parallelo, o due singoli Alpha
+  C25K: dati in `hardware/preamp/risultati.md`); procurarsi J201 genuini e tenere quelli con IDSS ≥ 0,5 mA;
+  ingombro vero del pot doppio (in `case.py` è stimato); orientamento della schedina nel case col cablaggio; PRE e
+  GAIN anche in `scatola.py` (1590DD) e nella dima; rumore col GAIN al minimo da giudicare a orecchio.
 - **Chiron:** `TELAIO_1` (29/09) si è staccata al primo strato, la terza stampa su questa macchina che cede lì:
   il problema è l'altezza dell'ugello. Prima di riprovare: pulizia, livellamento a 85 °C nel modo giusto (manuale
   o assistito), prova del foglio, colla (Edo non ce l'ha), controllo della skirt; tutto in `case/stampa_chiron.md`.
