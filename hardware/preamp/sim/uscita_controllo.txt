@@ -1,0 +1,6 @@
+  guadagno AC a 1 kHz (dB)               6.0206   atteso 6.0206   OK
+  H1 (V)                                 0.2000   atteso 0.2   OK
+  H2/H1 (dB)                           -38.0609   atteso -38.06   OK
+  H3/H1 (dB, atteso < -100)           -196.8976   atteso < -100   OK
+  rumore 10k 20Hz-20kHz (uV)             1.8199   atteso 1.82   OK
+CONTROLLO OK
