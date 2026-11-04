@@ -1,6 +1,6 @@
 # Verifiche del progetto (da CLAUDE.md) — 2026-11-04
 
-Stato: **parziale**. Il file viene aggiornato e ripushato dopo ogni punto completato.
+Stato: **completo** per quello che si può eseguire qui. Restano fuori le due verifiche che richiedono KiCad 10 (vedi problema 2).
 
 - Commit misurato: `613ab6a` (`main`). Il repo non ha modifiche dopo le verifiche (`git status` pulito).
 - Macchina: container cloud Linux x86_64; Python di sistema 3.13.18, uv con 3.11.18 / 3.12.3 / 3.13.18 disponibili.
@@ -19,8 +19,8 @@ Stato: **parziale**. Il file viene aggiornato e ripushato dopo ogni punto comple
 | `case/stampabilita.py` | PASS: «6 pezzi stampabili senza supporti» |
 | `hardware/kicad/genera_schema.py` | FAIL con 3.11 (importa `cablaggio`), PASS con 3.12: «127 componenti, 94 reti, 21 piedini NC» |
 | `hardware/kicad/disegna_schema.py` | PASS: «fogli scritti» |
-| `hardware/kicad/verifica_schema.py` | NON ESEGUITA: manca `kicad-cli` (in corso: tentativo di installare KiCad) |
-| `hardware/kicad/test_schema.py` | NON ESEGUITA: manca `kicad-cli` (in corso) |
+| `hardware/kicad/verifica_schema.py` | NON ESEGUITA: KiCad 10 non installabile nel container (vedi problema 2) |
+| `hardware/kicad/test_schema.py` | NON ESEGUITA: come sopra |
 
 ## Comandi
 
@@ -55,7 +55,11 @@ cd hardware/kicad && UV_PYTHON=3.12 uv run genera_schema.py && python3 disegna_s
 
 - Gravità: informativa (limite dell'ambiente, non del repo).
 - `verifica_schema.py:18-20` cerca `kicad-cli` nell'app KiCad del Mac, poi nel `PATH`. Qui non c'è.
+- Il progetto richiede KiCad 10 (`hardware/kicad/README.md:34`). Ubuntu 24.04 offre solo KiCad 7.0.11 (`apt-cache policy kicad`), troppo vecchio.
+- Il PPA ufficiale `ppa.launchpadcontent.net/kicad/kicad-10.0-releases` è bloccato dalla politica di rete dell'ambiente (proxy: `CONNECT tunnel failed, response 403`).
+- Per eseguirle nel cloud bisogna aggiungere `ppa.launchpadcontent.net` agli Allowed domains dell'ambiente (impostazioni dell'ambiente cloud, Network access). In alternativa si lanciano sul Mac.
 
 ## Cosa non è stato fatto
 
-- `verifica_schema.py` e `test_schema.py`: in attesa di KiCad.
+- `verifica_schema.py` e `test_schema.py`: non eseguite, manca KiCad 10 (problema 2).
+- Nessuna correzione applicata al codice: il fix del problema 1 è solo proposto.
